@@ -1,0 +1,55 @@
+2023-01-26 12:15:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE [*]User\000d\000a(\000d\000a    `userId`    INT            NOT NULL    AUTO_INCREMENT, \000d\000a    `name`      VARCHAR(45)    NULL, \000d\000a    `email`     VARCHAR(45)    NULL, \000d\000a    `password`  VARCHAR(45)    NULL, \000d\000a    `phone`     VARCHAR(45)    NULL, \000d\000a    `address`   VARCHAR(45)    NULL, \000d\000a    `imageURL`  TEXT           NULL, \000d\000a    `created`   TIMESTAMP      NULL, \000d\000a    `updated`   TIMESTAMP      NULL, \000d\000a    `status`    VARCHAR(20)    NULL, \000d\000a     PRIMARY KEY (userId)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE User
+(
+    `userId`    INT            NOT NULL    AUTO_INCREMENT, 
+    `name`      VARCHAR(45)    NULL, 
+    `email`     VARCHAR(45)    NULL, 
+    `password`  VARCHAR(45)    NULL, 
+    `phone`     VARCHAR(45)    NULL, 
+    `address`   VARCHAR(45)    NULL, 
+    `imageURL`  TEXT           NULL, 
+    `created`   TIMESTAMP      NULL, 
+    `updated`   TIMESTAMP      NULL, 
+    `status`    VARCHAR(20)    NULL, 
+     PRIMARY KEY (userId)
+) [42001-214]
+2023-01-26 12:17:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE [*]User\000d\000a(\000d\000a    `userId`    INT            NOT NULL    AUTO_INCREMENT, \000d\000a    `name`      VARCHAR(45)    NULL, \000d\000a    `email`     VARCHAR(45)    NULL, \000d\000a    `password`  VARCHAR(45)    NULL, \000d\000a    `phone`     VARCHAR(45)    NULL, \000d\000a    `address`   VARCHAR(45)    NULL, \000d\000a    `imageURL`  TEXT           NULL, \000d\000a    `created`   TIMESTAMP      NULL, \000d\000a    `updated`   TIMESTAMP      NULL, \000d\000a    `status`    VARCHAR(20)    NULL, \000d\000a     PRIMARY KEY (userId)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE User
+(
+    `userId`    INT            NOT NULL    AUTO_INCREMENT, 
+    `name`      VARCHAR(45)    NULL, 
+    `email`     VARCHAR(45)    NULL, 
+    `password`  VARCHAR(45)    NULL, 
+    `phone`     VARCHAR(45)    NULL, 
+    `address`   VARCHAR(45)    NULL, 
+    `imageURL`  TEXT           NULL, 
+    `created`   TIMESTAMP      NULL, 
+    `updated`   TIMESTAMP      NULL, 
+    `status`    VARCHAR(20)    NULL, 
+     PRIMARY KEY (userId)
+) [42001-214]
+2023-01-26 12:17:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE [*]User\000d\000a(\000d\000a    `userId`    INT            NOT NULL    AUTO_INCREMENT, \000d\000a     PRIMARY KEY (userId)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE User
+(
+    `userId`    INT            NOT NULL    AUTO_INCREMENT, 
+     PRIMARY KEY (userId)
+) [42001-214]
+2023-01-26 12:19:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE [*]user\000d\000a(\000d\000a    `userId`    INT            NOT NULL    AUTO_INCREMENT, \000d\000a    `name`      VARCHAR(45)    NULL, \000d\000a    `email`     VARCHAR(45)    NULL, \000d\000a    `password`  VARCHAR(45)    NULL, \000d\000a    `phone`     VARCHAR(45)    NULL, \000d\000a    `address`   VARCHAR(45)    NULL, \000d\000a    `imageURL`  TEXT           NULL, \000d\000a    `created`   TIMESTAMP      NULL, \000d\000a    `updated`   TIMESTAMP      NULL, \000d\000a    `status`    VARCHAR(20)    NULL, \000d\000a     PRIMARY KEY (userId)\000d\000a)"; expected "identifier"; SQL statement:
+CREATE TABLE user
+(
+    `userId`    INT            NOT NULL    AUTO_INCREMENT, 
+    `name`      VARCHAR(45)    NULL, 
+    `email`     VARCHAR(45)    NULL, 
+    `password`  VARCHAR(45)    NULL, 
+    `phone`     VARCHAR(45)    NULL, 
+    `address`   VARCHAR(45)    NULL, 
+    `imageURL`  TEXT           NULL, 
+    `created`   TIMESTAMP      NULL, 
+    `updated`   TIMESTAMP      NULL, 
+    `status`    VARCHAR(20)    NULL, 
+     PRIMARY KEY (userId)
+) [42001-214]

@@ -1,8 +1,8 @@
 ﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
 
--- User Table Create SQL
--- 테이블 생성 SQL - User
-CREATE TABLE User
+-- users Table Create SQL
+-- 테이블 생성 SQL - users
+CREATE TABLE users
 (
     `userId`    INT            NOT NULL    AUTO_INCREMENT, 
     `name`      VARCHAR(45)    NULL, 
@@ -35,14 +35,14 @@ CREATE TABLE post
      PRIMARY KEY (postId)
 );
 
--- Foreign Key 설정 SQL - post(userId) -> User(userId)
+-- Foreign Key 설정 SQL - post(userId) -> users(userId)
 ALTER TABLE post
-    ADD CONSTRAINT FK_post_userId_User_userId FOREIGN KEY (userId)
-        REFERENCES User (userId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT FK_post_userId_users_userId FOREIGN KEY (userId)
+        REFERENCES users (userId) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- Foreign Key 삭제 SQL - post(userId)
 -- ALTER TABLE post
--- DROP FOREIGN KEY FK_post_userId_User_userId;
+-- DROP FOREIGN KEY FK_post_userId_users_userId;
 
 
 -- wishList Table Create SQL
@@ -58,14 +58,14 @@ CREATE TABLE wishList
      PRIMARY KEY (wishListId)
 );
 
--- Foreign Key 설정 SQL - wishList(userId) -> User(userId)
+-- Foreign Key 설정 SQL - wishList(userId) -> users(userId)
 ALTER TABLE wishList
-    ADD CONSTRAINT FK_wishList_userId_User_userId FOREIGN KEY (userId)
-        REFERENCES User (userId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT FK_wishList_userId_users_userId FOREIGN KEY (userId)
+        REFERENCES users (userId) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 -- Foreign Key 삭제 SQL - wishList(userId)
 -- ALTER TABLE wishList
--- DROP FOREIGN KEY FK_wishList_userId_User_userId;
+-- DROP FOREIGN KEY FK_wishList_userId_users_userId;
 
 
 -- category Table Create SQL
