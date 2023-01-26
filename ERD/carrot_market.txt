@@ -1,5 +1,18 @@
 ﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
 
+-- category Table Create SQL
+-- 테이블 생성 SQL - category
+CREATE TABLE category
+(
+    `categoryId`  INT            NOT NULL    AUTO_INCREMENT, 
+    `category`    VARCHAR(45)    NULL, 
+    `created`     TIMESTAMP      NULL, 
+    `updated`     TIMESTAMP      NULL, 
+    `status`      VARCHAR(20)    NULL, 
+     PRIMARY KEY (categoryId)
+);
+
+
 -- users Table Create SQL
 -- 테이블 생성 SQL - users
 CREATE TABLE users
@@ -44,6 +57,15 @@ ALTER TABLE post
 -- ALTER TABLE post
 -- DROP FOREIGN KEY FK_post_userId_users_userId;
 
+-- Foreign Key 설정 SQL - post(categoryId) -> category(categoryId)
+ALTER TABLE post
+    ADD CONSTRAINT FK_post_categoryId_category_categoryId FOREIGN KEY (categoryId)
+        REFERENCES category (categoryId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - post(categoryId)
+-- ALTER TABLE post
+-- DROP FOREIGN KEY FK_post_categoryId_category_categoryId;
+
 
 -- wishList Table Create SQL
 -- 테이블 생성 SQL - wishList
@@ -66,28 +88,6 @@ ALTER TABLE wishList
 -- Foreign Key 삭제 SQL - wishList(userId)
 -- ALTER TABLE wishList
 -- DROP FOREIGN KEY FK_wishList_userId_users_userId;
-
-
--- category Table Create SQL
--- 테이블 생성 SQL - category
-CREATE TABLE category
-(
-    `categoryId`  INT            NOT NULL    AUTO_INCREMENT, 
-    `category`    VARCHAR(45)    NULL, 
-    `created`     TIMESTAMP      NULL, 
-    `updated`     TIMESTAMP      NULL, 
-    `status`      VARCHAR(20)    NULL, 
-     PRIMARY KEY (categoryId)
-);
-
--- Foreign Key 설정 SQL - category(categoryId) -> post(categoryId)
-ALTER TABLE category
-    ADD CONSTRAINT FK_category_categoryId_post_categoryId FOREIGN KEY (categoryId)
-        REFERENCES post (categoryId) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
--- Foreign Key 삭제 SQL - category(categoryId)
--- ALTER TABLE category
--- DROP FOREIGN KEY FK_category_categoryId_post_categoryId;
 
 
 -- postImage Table Create SQL

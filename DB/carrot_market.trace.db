@@ -53,3 +53,54 @@ CREATE TABLE user
     `status`    VARCHAR(20)    NULL, 
      PRIMARY KEY (userId)
 ) [42001-214]
+2023-01-26 12:25:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE post\000d\000a    ADD CONSTRAINT FK_post_userId_User_userId FOREIGN KEY (userId)\000d\000a        REFERENCES [*]User (userId) ON DELETE RESTRICT ON UPDATE RESTRICT"; expected "identifier"; SQL statement:
+ALTER TABLE post
+    ADD CONSTRAINT FK_post_userId_User_userId FOREIGN KEY (userId)
+        REFERENCES User (userId) ON DELETE RESTRICT ON UPDATE RESTRICT [42001-214]
+2023-01-26 12:26:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Constraint "PRIMARY KEY | UNIQUE (CATEGORYID)" not found; SQL statement:
+ALTER TABLE category
+    ADD CONSTRAINT FK_category_categoryId_post_categoryId FOREIGN KEY (categoryId)
+        REFERENCES post (categoryId) ON DELETE RESTRICT ON UPDATE RESTRICT [90057-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:258)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:72)
+	at org.h2.command.ddl.AlterTable.update(AlterTable.java:46)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:252)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:188)
+	at org.h2.server.web.WebThread.run(WebThread.java:101)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-01-26 12:28:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Constraint "PRIMARY KEY | UNIQUE (CATEGORYID)" not found; SQL statement:
+ALTER TABLE category
+    ADD CONSTRAINT FK_category_categoryId_post_categoryId FOREIGN KEY (categoryId)
+        REFERENCES post (categoryId) ON DELETE RESTRICT ON UPDATE RESTRICT [90057-214]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:258)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:72)
+	at org.h2.command.ddl.AlterTable.update(AlterTable.java:46)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:252)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:188)
+	at org.h2.server.web.WebThread.run(WebThread.java:101)
+	at java.base/java.lang.Thread.run(Thread.java:833)
