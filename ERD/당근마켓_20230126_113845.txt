@@ -18,33 +18,6 @@ CREATE TABLE User
 );
 
 
--- postImage Table Create SQL
--- 테이블 생성 SQL - postImage
-CREATE TABLE postImage
-(
-    `ImageId`   INT            NOT NULL    AUTO_INCREMENT, 
-    `postId`    INT            NULL, 
-    `imageURL`  TEXT           NULL, 
-    `created`   TIMESTAMP      NULL, 
-    `updated`   TIMESTAMP      NULL, 
-    `status`    VARCHAR(20)    NULL, 
-     PRIMARY KEY (ImageId)
-);
-
-
--- category Table Create SQL
--- 테이블 생성 SQL - category
-CREATE TABLE category
-(
-    `categoryId`  INT            NOT NULL    AUTO_INCREMENT, 
-    `category`    VARCHAR(45)    NULL, 
-    `created`     TIMESTAMP      NULL, 
-    `updated`     TIMESTAMP      NULL, 
-    `status`      VARCHAR(20)    NULL, 
-     PRIMARY KEY (categoryId)
-);
-
-
 -- post Table Create SQL
 -- 테이블 생성 SQL - post
 CREATE TABLE post
@@ -71,24 +44,6 @@ ALTER TABLE post
 -- ALTER TABLE post
 -- DROP FOREIGN KEY FK_post_userId_User_userId;
 
--- Foreign Key 설정 SQL - post(categoryId) -> category(categoryId)
-ALTER TABLE post
-    ADD CONSTRAINT FK_post_categoryId_category_categoryId FOREIGN KEY (categoryId)
-        REFERENCES category (categoryId) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
--- Foreign Key 삭제 SQL - post(categoryId)
--- ALTER TABLE post
--- DROP FOREIGN KEY FK_post_categoryId_category_categoryId;
-
--- Foreign Key 설정 SQL - post(postId) -> postImage(postId)
-ALTER TABLE post
-    ADD CONSTRAINT FK_post_postId_postImage_postId FOREIGN KEY (postId)
-        REFERENCES postImage (postId) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
--- Foreign Key 삭제 SQL - post(postId)
--- ALTER TABLE post
--- DROP FOREIGN KEY FK_post_postId_postImage_postId;
-
 
 -- wishList Table Create SQL
 -- 테이블 생성 SQL - wishList
@@ -103,13 +58,58 @@ CREATE TABLE wishList
      PRIMARY KEY (wishListId)
 );
 
--- Foreign Key 설정 SQL - wishList(wishListId) -> User(userId)
+-- Foreign Key 설정 SQL - wishList(userId) -> User(userId)
 ALTER TABLE wishList
-    ADD CONSTRAINT FK_wishList_wishListId_User_userId FOREIGN KEY (wishListId)
+    ADD CONSTRAINT FK_wishList_userId_User_userId FOREIGN KEY (userId)
         REFERENCES User (userId) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
--- Foreign Key 삭제 SQL - wishList(wishListId)
+-- Foreign Key 삭제 SQL - wishList(userId)
 -- ALTER TABLE wishList
--- DROP FOREIGN KEY FK_wishList_wishListId_User_userId;
+-- DROP FOREIGN KEY FK_wishList_userId_User_userId;
+
+
+-- category Table Create SQL
+-- 테이블 생성 SQL - category
+CREATE TABLE category
+(
+    `categoryId`  INT            NOT NULL    AUTO_INCREMENT, 
+    `category`    VARCHAR(45)    NULL, 
+    `created`     TIMESTAMP      NULL, 
+    `updated`     TIMESTAMP      NULL, 
+    `status`      VARCHAR(20)    NULL, 
+     PRIMARY KEY (categoryId)
+);
+
+-- Foreign Key 설정 SQL - category(categoryId) -> post(categoryId)
+ALTER TABLE category
+    ADD CONSTRAINT FK_category_categoryId_post_categoryId FOREIGN KEY (categoryId)
+        REFERENCES post (categoryId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - category(categoryId)
+-- ALTER TABLE category
+-- DROP FOREIGN KEY FK_category_categoryId_post_categoryId;
+
+
+-- postImage Table Create SQL
+-- 테이블 생성 SQL - postImage
+CREATE TABLE postImage
+(
+    `ImageId`   INT            NOT NULL    AUTO_INCREMENT, 
+    `postId`    INT            NULL, 
+    `imageURL`  TEXT           NULL, 
+    `created`   TIMESTAMP      NULL, 
+    `updated`   TIMESTAMP      NULL, 
+    `status`    VARCHAR(20)    NULL, 
+     PRIMARY KEY (ImageId)
+);
+
+-- Foreign Key 설정 SQL - postImage(postId) -> post(postId)
+ALTER TABLE postImage
+    ADD CONSTRAINT FK_postImage_postId_post_postId FOREIGN KEY (postId)
+        REFERENCES post (postId) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - postImage(postId)
+-- ALTER TABLE postImage
+-- DROP FOREIGN KEY FK_postImage_postId_post_postId;
 
 
