@@ -29,6 +29,7 @@ public class User {
     private String profileImageUrl;
 
     @Setter
+    @Lob
     private String token;
 
     @Column(nullable = false)
