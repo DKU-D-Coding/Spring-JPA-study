@@ -38,6 +38,6 @@ public class Like extends BaseEntity {
         @Column(name = "item_id")
         private Long itemId;
         @Column(name = "member_id")
-        private String memberId;
+        private Long memberId;
     }
 }

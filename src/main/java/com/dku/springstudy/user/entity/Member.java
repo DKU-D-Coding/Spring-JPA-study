@@ -19,7 +19,11 @@ import java.util.List;
 public class Member extends BaseEntity {
 
     @Id
+    @GeneratedValue
     @Column(name = "member_id")
+    private Long id;
+
+    @Column(unique = true)
     private String email;
 
     private String password;
