@@ -36,6 +36,7 @@ public class UserService {
                 .email(signUpRequest.getEmail())
                 .password(encodedPassword)
                 .phoneNumber(signUpRequest.getPhoneNumber())
+                .profileImageUrl("https://user-images.githubusercontent.com/79920930/215020145-7d548f6e-a45e-4041-913c-24a16081a07a.jpg")
                 .nickname(signUpRequest.getNickname())
                 .role(Role.USER)
                 .build();
