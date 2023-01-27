@@ -1,4 +1,4 @@
-package com.dku.springstudy.config.swagger;
+package com.dku.springstudy.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,6 @@ public class SwaggerConfig {
                 .version("1.0")
                 .build();
     }
-
     @Bean
     public Docket allApi(){
         return new Docket(DocumentationType.SWAGGER_2)

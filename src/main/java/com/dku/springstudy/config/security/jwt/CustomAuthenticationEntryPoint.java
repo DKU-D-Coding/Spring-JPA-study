@@ -1,7 +1,6 @@
 package com.dku.springstudy.config.security.jwt;
 
 import com.dku.springstudy.exception.JwtTokenError;
-import com.dku.springstudy.exception.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;

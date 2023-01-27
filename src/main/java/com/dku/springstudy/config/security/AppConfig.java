@@ -1,4 +1,4 @@
-package com.dku.springstudy.config;
+package com.dku.springstudy.config.security;
 
 import com.dku.springstudy.config.security.jwt.CustomAuthenticationEntryPoint;
 import com.dku.springstudy.config.security.jwt.JwtAuthenticationFilter;
@@ -38,7 +38,7 @@ public class AppConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/i/**").access("hasRole('ADMIN')")
-                .antMatchers("/account/sign-up", "/account/login").permitAll()
+                .antMatchers("/account/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterAfter(jwtAuthenticationFilter, CorsFilter.class)
