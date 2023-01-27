@@ -1,5 +1,6 @@
 package com.dku.springstudy.domain;
 
+import com.dku.springstudy.domain.common.BaseTimeEntity;
 import com.dku.springstudy.domain.constant.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
