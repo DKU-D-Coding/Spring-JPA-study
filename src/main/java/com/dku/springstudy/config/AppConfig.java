@@ -1,5 +1,6 @@
 package com.dku.springstudy.config;
 
+import com.dku.springstudy.config.security.jwt.CustomAuthenticationEntryPoint;
 import com.dku.springstudy.config.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 public class AppConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -29,9 +31,13 @@ public class AppConfig {
         return http
                 .csrf().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/i/**").access("hasRole('ADMIN')")
                 .antMatchers("/account/sign-up", "/account/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
