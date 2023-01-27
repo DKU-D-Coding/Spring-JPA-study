@@ -36,7 +36,8 @@ public class JwtProvider {
         Subject atkSubject = Subject.atk(
                 userResponse.getUserId(),
                 userResponse.getEmail(),
-                userResponse.getNickname());
+                userResponse.getNickname(),
+                userResponse.getRole());
         String atk = createToken(atkSubject, atkLive);
         return new TokenResponse(atk, null);
     }
@@ -47,7 +48,8 @@ public class JwtProvider {
         Date date = new Date();
         return Jwts.builder()
                 .setSubject(claims.getId())
-                .setClaims(claims)
+                .claim("userId", subject.getUserId())
+                .claim("role",subject.getRole().name())
                 .setIssuedAt(date)
                 .setExpiration(new Date(date.getTime() + tokenLive))
                 .signWith(SignatureAlgorithm.HS256, key)

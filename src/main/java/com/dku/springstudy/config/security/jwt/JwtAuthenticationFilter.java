@@ -41,10 +41,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("Filter is running...");
 
             if (token != null && !token.equalsIgnoreCase("null")) {
-                // userId 가져오기. 위조된 경우 예외 처리된다.
                 Claims claims = jwtProvider.validateAndGetUserId(token);
-                String userId = claims.getSubject();
-                String userRole = (String) claims.get("ROLE");
+                String userId = (String) claims.get("userId");
+                String userRole = (String) claims.get("role");
                 Date expiration = claims.getExpiration();
                 log.info("Authenticated user ID : " + userId);
                 log.info("Authenticated expiration : " + expiration);
@@ -58,7 +57,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 securityContext.setAuthentication(authentication);
                 SecurityContextHolder.setContext(securityContext);
             }
-
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             logger.error("Could not set user authentication in security context {}", e);
