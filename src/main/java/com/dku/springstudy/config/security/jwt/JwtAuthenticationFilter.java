@@ -42,6 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (token != null && !token.equalsIgnoreCase("null")) {
                 Claims claims = jwtProvider.validateAndGetUserId(token);
+                String requestURI = request.getRequestURI();
+                System.out.println(claims);
+                if (claims.get("type").equals("RTK") && !requestURI.equals("/account/reissue")) {
+                    throw new JwtException("토큰을 확인하세요.");
+                }
                 String userId = (String) claims.get("userId");
                 String userRole = (String) claims.get("role");
                 Date expiration = claims.getExpiration();
