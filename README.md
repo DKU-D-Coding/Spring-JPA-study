@@ -23,3 +23,6 @@ D-Coding 백엔드 스터디
 
 - 요구사항대로 당근마켓 ERD 그려보기
 - 요구사항 API 구현 (가능한 만큼)
+
+![dcoding-erd](https://user-images.githubusercontent.com/85729858/215239770-a2ac0b3a-cd5b-443d-b7a3-d026ce9ae5c5.png)
+
