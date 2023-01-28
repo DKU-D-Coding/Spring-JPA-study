@@ -1,13 +1,13 @@
-package com.dku.springstudy;
+package com.project.carrot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringStudyApplication {
+public class CarrotApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringStudyApplication.class, args);
+		SpringApplication.run(CarrotApplication.class, args);
 	}
 
 }
