@@ -1,4 +1,4 @@
-package com.dku.springstudy.dto.user;
+package com.dku.springstudy.dto.user.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
