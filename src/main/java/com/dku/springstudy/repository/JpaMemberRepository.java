@@ -17,4 +17,10 @@ public class JpaMemberRepository implements MemberRepository {
         em.persist(newMember);
         return newMember;
     }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        Member member = em.find(Member.class, email);
+        return Optional.ofNullable(member);
+    }
 }
