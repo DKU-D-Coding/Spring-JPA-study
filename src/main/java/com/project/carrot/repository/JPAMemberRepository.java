@@ -32,4 +32,14 @@ public class JPAMemberRepository implements MemberRepository{
                 , Member.class).setParameter("UserName",UserName).getResultList();
         return result.stream().findAny();
     }
+
+    @Override
+    public Optional<Member> findByPass(String UserPass) {
+        List<Member> result = em.createQuery("select m from Member m where UserPass= :UserPass"
+                , Member.class).setParameter("UserPass",UserPass).getResultList();
+
+        return result.stream().findAny();
+    }
+
+
 }

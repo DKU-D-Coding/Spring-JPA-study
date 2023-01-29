@@ -1,6 +1,6 @@
 package com.project.carrot;
 
-import com.project.carrot.domain.Service.MemberService;
+import com.project.carrot.Service.MemberService;
 import com.project.carrot.repository.JPAMemberRepository;
 import com.project.carrot.repository.MemberRepository;
 import org.springframework.context.annotation.Bean;

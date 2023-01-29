@@ -10,4 +10,5 @@ public interface MemberRepository{
     Member save(Member member);
     Optional<Member> findByEmail(String email);
     Optional<Member> findByName(String name);
+    Optional<Member> findByPass(String pass);
 }
