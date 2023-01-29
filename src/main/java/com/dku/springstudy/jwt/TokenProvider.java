@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +23,8 @@ public class TokenProvider {
 
     private final CustomUserDetailsService customUserDetailsService;
 
-    // TODO: @Value를 사용
-    private String secretKey = "alkmcldnenlsodoewkrkkdjsmlskopkemdmimmvfdsnlkdsmflsjdodf";
+    @Value("${jwt.secret-key}")
+    private String secretKey;
 
     private final Long accessTokenValidMilliSecond = 24 * 60 * 60 * 1000L; // 1일
     private final Long refreshTokenValidMilliSecond = 30 * 24 * 60 * 60 * 1000L; // 30일
