@@ -6,6 +6,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 5
+
+  redis:
+    host: localhost
+    port: 6379
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -13,3 +18,13 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+jwt:
+  secret: caf4bd8949582e4f85f8750c5e44bfba217e4a346c79c204cd2fb2a37071694bde9e55edab2f81b4fa6d2cd7a7d54e7e313c1a869f43cd30f5f37f462ce051b3
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: false

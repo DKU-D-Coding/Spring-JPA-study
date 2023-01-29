@@ -1,22 +1,18 @@
 package com.dku.springstudy.domain;
 
 import com.dku.springstudy.enums.Category;
-import com.dku.springstudy.repository.ItemLikeRepository;
-import com.dku.springstudy.repository.ItemRepository;
-import com.dku.springstudy.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
+import com.dku.springstudy.repository.jpa.ItemLikeRepository;
+import com.dku.springstudy.repository.jpa.ItemRepository;
+import com.dku.springstudy.repository.jpa.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -38,7 +34,7 @@ class EntityTest {
         memberRepository.save(member);
 
         //when
-        Member findMember = memberRepository.findByUsername("동현").get();
+        Member findMember = memberRepository.findByName("동현").get();
 
         //then
         assertThat(findMember).isEqualTo(member);

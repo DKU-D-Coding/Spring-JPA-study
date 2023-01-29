@@ -1,4 +1,4 @@
-package com.dku.springstudy.repository;
+package com.dku.springstudy.repository.jpa;
 
 import com.dku.springstudy.domain.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
