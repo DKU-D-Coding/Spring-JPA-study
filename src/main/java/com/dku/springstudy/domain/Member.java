@@ -1,9 +1,7 @@
 package com.dku.springstudy.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -12,7 +10,10 @@ import java.sql.Timestamp;
 @Setter //Lombok
 @ToString //Lombok
 @Table(name = "USERS")
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USERID")
     private Long id;
@@ -34,4 +35,5 @@ public class User {
     private Timestamp updated;
     @Column(name = "STATUS")
     private String status;
+
 }

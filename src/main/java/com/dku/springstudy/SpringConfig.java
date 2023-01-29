@@ -1,6 +1,6 @@
 package com.dku.springstudy;
 
-import com.dku.springstudy.repository.UserRepository;
+import com.dku.springstudy.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +13,8 @@ public class SpringConfig {
     private final EntityManager em;
 
     @Bean
-    public UserRepository userRepository(){
-        return new UserRepository(em);
+    public MemberRepository userRepository(){
+        return new MemberRepository(em);
     }
 
 }
