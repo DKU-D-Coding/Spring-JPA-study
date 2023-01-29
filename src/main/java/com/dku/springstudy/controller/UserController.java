@@ -6,6 +6,7 @@ import com.dku.springstudy.model.User;
 import com.dku.springstudy.repository.UserRepository;
 import com.dku.springstudy.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -43,9 +44,10 @@ public class UserController {
 
     @GetMapping("/account/reissue")
     @ApiOperation(value = "access토큰 재발급", notes = "access 토큰이 만료된 경우 refresh 토큰을 이용하여 access 토큰을 갱신합니다.")
-    public TokenResponse reissue(@AuthenticationPrincipal String userId) throws JsonProcessingException {
+    public ResponseDTO<?> reissue(@AuthenticationPrincipal String userId) throws JsonProcessingException {
         User user = userRepository.findById(userId).orElseThrow(()->new IllegalStateException("오류 : 유저없음"));
         UserResponse userResponse = UserResponse.of(user);
-        return jwtProvider.reissueAtk(userResponse);
+        TokenResponse tokens = jwtProvider.reissueAtk(userResponse);
+        return new ResponseDTO<>(HttpStatus.OK.value(),tokens);
     }
 }
