@@ -2,6 +2,8 @@ package com.dku.springstudy.config;
 
 import com.dku.springstudy.jwt.JwtAuthenticationFilter;
 import com.dku.springstudy.jwt.TokenProvider;
+import com.dku.springstudy.jwt.exception.JwtAccessDeniedHandler;
+import com.dku.springstudy.jwt.exception.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,6 +44,10 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .usernameParameter("email") // 식별 데이터를 email로 사용
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
