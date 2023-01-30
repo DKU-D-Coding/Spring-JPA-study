@@ -22,7 +22,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void signUp(SignUpRequest signUpRequest){
+    public void signUp(SignUpRequestDTO signUpRequest){
 
         boolean isExist = userRepository.existsByEmail(signUpRequest.getEmail());
         if(isExist){
@@ -44,7 +44,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse login(LoginRequest loginRequest) throws JsonProcessingException {
+    public UserResponseDTO login(LoginRequestDTO loginRequest) throws JsonProcessingException {
         User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new IllegalStateException("아이디 혹은 비밀번호를 확인하세요."));
 
@@ -53,15 +53,15 @@ public class UserService {
             throw new IllegalStateException("아이디 혹은 비밀번호를 확인하세요.");
         }
 
-        UserResponse userResponse = UserResponse.of(user);
+        UserResponseDTO userResponse = UserResponseDTO.of(user);
         final String token = jwtProvider.createTokensByLogin(userResponse).getAtk();
         user.setToken(token);
 
-        return UserResponse.of(user);
+        return UserResponseDTO.of(user);
     }
 
     @Transactional
-    public UserInformationChangeResponseDTO changeImageAndNickname(@AuthenticationPrincipal String userId, UserImageChangeDTO userImageChangeDTO){
+    public UserInformationChangeResponseDTO changeImageAndNickname(@AuthenticationPrincipal String userId, UserInformationChangeRequestDTO userImageChangeDTO){
         User user = userRepository.findById(userId).orElseThrow(()-> new IllegalStateException("오류 : 없는 사용자 입니다."));
         String newImage = userImageChangeDTO.getImageUrl();
         String newNickname = userImageChangeDTO.getNickname();

@@ -3,7 +3,7 @@ package com.dku.springstudy.dto;
 import lombok.Data;
 
 @Data
-public class SignUpRequest {
+public class SignUpRequestDTO {
     private final String email;
     private final String password;
     private final String username;

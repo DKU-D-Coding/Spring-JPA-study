@@ -5,7 +5,7 @@ import com.dku.springstudy.model.User;
 import lombok.Data;
 
 @Data
-public class UserResponse {
+public class UserResponseDTO {
     private final String userId;
 
     private final String email;
@@ -13,15 +13,15 @@ public class UserResponse {
     private final String nickname;
     private Role role = Role.USER;
 
-    public UserResponse(String userId, String email, String nickname, Role role) {
+    public UserResponseDTO(String userId, String email, String nickname, Role role) {
         this.userId = userId;
         this.email = email;
         this.nickname = nickname;
         this.role = role;
     }
 
-    public static UserResponse of(User user) {
-        return new UserResponse(
+    public static UserResponseDTO of(User user) {
+        return new UserResponseDTO(
                 user.getId(),
                 user.getEmail(),
                 user.getNickname(),

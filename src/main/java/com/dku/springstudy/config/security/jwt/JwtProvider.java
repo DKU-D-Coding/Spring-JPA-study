@@ -1,8 +1,8 @@
 package com.dku.springstudy.config.security.jwt;
 
 import com.dku.springstudy.config.security.RedisDao;
-import com.dku.springstudy.dto.TokenResponse;
-import com.dku.springstudy.dto.UserResponse;
+import com.dku.springstudy.dto.TokensResponseDTO;
+import com.dku.springstudy.dto.UserResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -38,7 +38,7 @@ public class JwtProvider {
         key = Base64.getEncoder().encodeToString(key.getBytes());
     }
 
-    public TokenResponse reissueAtk(UserResponse userResponse) throws JsonProcessingException {
+    public TokensResponseDTO reissueAtk(UserResponseDTO userResponse) throws JsonProcessingException {
         String rtkInRedis = redisDao.getValues(userResponse.getEmail());
         if (Objects.isNull(rtkInRedis)) throw new IllegalStateException("인증 정보가 만료되었습니다.");
         Subject atkSubject = Subject.atk(
@@ -47,9 +47,9 @@ public class JwtProvider {
                 userResponse.getNickname(),
                 userResponse.getRole());
         String atk = createToken(atkSubject, atkLive);
-        return new TokenResponse(atk, null);
+        return new TokensResponseDTO(atk, null);
     }
-    public TokenResponse createTokensByLogin(UserResponse userResponse) throws JsonProcessingException {
+    public TokensResponseDTO createTokensByLogin(UserResponseDTO userResponse) throws JsonProcessingException {
         Subject atkSubject = Subject.atk(
                 userResponse.getUserId(),
                 userResponse.getEmail(),
@@ -63,7 +63,7 @@ public class JwtProvider {
         String atk = createToken(atkSubject, atkLive);
         String rtk = createToken(rtkSubject, rtkLive);
         redisDao.setValues(userResponse.getEmail(), rtk, Duration.ofMillis(rtkLive));
-        return new TokenResponse(atk, rtk);
+        return new TokensResponseDTO(atk, rtk);
     }
 
     private String createToken(Subject subject, Long tokenLive) throws JsonProcessingException {

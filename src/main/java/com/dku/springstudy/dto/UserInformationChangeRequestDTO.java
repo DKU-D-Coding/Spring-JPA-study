@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserImageChangeDTO {
+public class UserInformationChangeRequestDTO {
     private String imageUrl;
     private String nickname;
 }
