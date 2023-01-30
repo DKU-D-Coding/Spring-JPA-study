@@ -2,7 +2,7 @@ package com.dku.springstudy.like.entity;
 
 import com.dku.springstudy.global.BaseEntity;
 import com.dku.springstudy.item.entity.Item;
-import com.dku.springstudy.user.entity.Member;
+import com.dku.springstudy.Member.entity.Member;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
