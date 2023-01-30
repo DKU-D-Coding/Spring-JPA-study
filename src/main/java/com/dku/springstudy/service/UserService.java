@@ -1,14 +1,13 @@
 package com.dku.springstudy.service;
 
 import com.dku.springstudy.config.security.jwt.JwtProvider;
-import com.dku.springstudy.dto.LoginRequest;
-import com.dku.springstudy.dto.SignUpRequest;
-import com.dku.springstudy.dto.UserResponse;
+import com.dku.springstudy.dto.*;
 import com.dku.springstudy.model.Role;
 import com.dku.springstudy.model.User;
 import com.dku.springstudy.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,5 +58,21 @@ public class UserService {
         user.setToken(token);
 
         return UserResponse.of(user);
+    }
+
+    @Transactional
+    public UserInformationChangeResponseDTO changeImageAndNickname(@AuthenticationPrincipal String userId, UserImageChangeDTO userImageChangeDTO){
+        User user = userRepository.findById(userId).orElseThrow(()-> new IllegalStateException("오류 : 없는 사용자 입니다."));
+        String newImage = userImageChangeDTO.getImageUrl();
+        String newNickname = userImageChangeDTO.getNickname();
+
+        user.changeProfileImageAndNickname(newImage,newNickname);
+
+        UserInformationChangeResponseDTO userResponse = UserInformationChangeResponseDTO.builder().
+                imageUrl(userImageChangeDTO.getImageUrl())
+                .nickname(userImageChangeDTO.getNickname())
+                .build();
+
+        return userResponse;
     }
 }

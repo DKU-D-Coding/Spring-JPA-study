@@ -4,6 +4,7 @@ import com.dku.springstudy.config.security.jwt.JwtProvider;
 import com.dku.springstudy.dto.*;
 import com.dku.springstudy.model.User;
 import com.dku.springstudy.repository.UserRepository;
+import com.dku.springstudy.service.S3Service;
 import com.dku.springstudy.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
@@ -12,11 +13,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +27,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final JwtProvider jwtProvider;
+    private final S3Service s3Service;
 
     @PostMapping("/account/sign-up")
     @ApiOperation(value = "회원가입", notes = "SignUpRequest 객체로 받아 유저를 등록합니다.")
@@ -49,5 +51,15 @@ public class UserController {
         UserResponse userResponse = UserResponse.of(user);
         TokenResponse tokens = jwtProvider.reissueAtk(userResponse);
         return new ResponseDTO<>(HttpStatus.OK.value(),tokens);
+    }
+
+    @PutMapping("/change/image")
+    @ApiOperation(value = "회원정보 수정", notes = "프로필 이미지와 닉네임을 변경 할 수 있습니다.")
+    public ResponseDTO<?> changePersonalInformation(@AuthenticationPrincipal String userId, UserImageChangeDTO userImageChangeDTO,
+                                                    @RequestPart("file") MultipartFile file) throws IOException {
+        String imgPath = s3Service.upload(file);
+        userImageChangeDTO.setImageUrl(imgPath);
+        UserInformationChangeResponseDTO userResponse = userService.changeImageAndNickname(userId, userImageChangeDTO);
+        return new ResponseDTO<>(HttpStatus.OK.value(), userResponse);
     }
 }

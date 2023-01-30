@@ -40,4 +40,9 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public void changeProfileImageAndNickname(String url, String nickname){
+        this.profileImageUrl = url;
+        this.nickname = nickname;
+    }
 }
