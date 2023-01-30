@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter @Builder
 @Entity
-public class Board {
+public class Board extends BaseTimeEntity {
     @Id @GeneratedValue
     @Column(name = "board_id")
     private Long id;

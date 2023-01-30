@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Builder
 @Entity
-public class Images {
+public class Images extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "image_id")

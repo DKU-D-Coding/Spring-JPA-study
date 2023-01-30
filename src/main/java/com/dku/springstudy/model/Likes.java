@@ -8,7 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter @Builder
 @Entity
-public class Likes {
+public class Likes extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "likes_id")

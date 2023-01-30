@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter @Builder
 @Table(name = "Users", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Entity
-public class User {
+public class User extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(generator = "system-uuid")
