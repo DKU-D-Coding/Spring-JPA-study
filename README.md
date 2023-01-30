@@ -1,23 +1,43 @@
 > 당근마켓 backend server project
 
 <p align="center">
-<img width="200" src="https://user-images.githubusercontent.com/79920930/214882442-15270259-4aec-47af-ae91-0f5a0d92086b.png">
-<img width="200" src="https://user-images.githubusercontent.com/79920930/214882451-7175d9d4-40ae-4b82-8ca1-911c41c763d8.png">
-<img width="200" src="https://user-images.githubusercontent.com/79920930/214884316-9b45406e-3861-4818-8a88-824d05b618fa.png">
-<img width="200" src="https://user-images.githubusercontent.com/79920930/214884325-862906ff-7d98-47a3-88ea-00d3232a995c.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/214882442-15270259-4aec-47af-ae91-0f5a0d92086b.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/214882451-7175d9d4-40ae-4b82-8ca1-911c41c763d8.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/214884316-9b45406e-3861-4818-8a88-824d05b618fa.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/214884325-862906ff-7d98-47a3-88ea-00d3232a995c.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/215382262-0effafe5-3bd4-4197-8bd5-8b22bcdf9500.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/215382389-f8c5e690-9044-4280-91f3-023d1ddeca17.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/215382392-35254e88-9f2a-4ea6-8af3-2e95071bb662.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/215382394-902c99a9-0c1a-4613-aeae-9d7fe454d005.png">
+<img width="150" height = "327" src="https://user-images.githubusercontent.com/79920930/215384487-2136bc18-23c0-4376-9473-5d644a9be0ca.png">
+<img width="150" src="https://user-images.githubusercontent.com/79920930/215384314-0e4b743e-b57c-4228-be2e-0accc70707e7.png">
+<img width="152" src="https://user-images.githubusercontent.com/79920930/215383493-21f81273-d9eb-4b4b-99ea-98a34cebe003.png">
+<img width="151" src="https://user-images.githubusercontent.com/79920930/215383494-41c04fbf-1d43-47f7-8ccf-c6f901b88a0d.png">
+
+
+
 </p>
 
 <hr>
 
 ### 1주차
 
-> 1. 회원가입 및 로그인 기능
+>  회원가입 및 로그인 기능
 - 요구사항 분석
 - 도메인 모델 및 테이블 설계 고민
 - JWT 구현 및 테스트 코드 작성
 - 이메일 인증하기
 
 <br>
+
+### 2주차
+
+>  초기 도메인 모델 및 테이블 설계 구현
+- 상품 등록, 수정, 삭제 기능
+- 마이페이지(회원 수정 기능)
+
+<br>
+
 <hr>
 
 ## 개발 기록
