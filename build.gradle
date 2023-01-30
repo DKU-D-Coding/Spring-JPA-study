@@ -26,6 +26,7 @@ dependencies {
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.349'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
