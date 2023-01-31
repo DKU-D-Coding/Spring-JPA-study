@@ -2,7 +2,7 @@ package com.dku.springstudy.item.entity;
 
 import com.dku.springstudy.global.BaseEntity;
 import com.dku.springstudy.like.entity.Like;
-import com.dku.springstudy.user.entity.Member;
+import com.dku.springstudy.Member.entity.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

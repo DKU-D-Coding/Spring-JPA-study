@@ -27,6 +27,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
 	runtimeOnly 'org.postgresql:postgresql'
 }
 

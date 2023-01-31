@@ -1,11 +1,9 @@
-package com.dku.springstudy.user.entity;
+package com.dku.springstudy.Member.entity;
 
 import com.dku.springstudy.global.BaseEntity;
 import com.dku.springstudy.item.entity.Item;
 import com.dku.springstudy.like.entity.Like;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +14,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Getter
+@Builder
 public class Member extends BaseEntity {
 
     @Id
@@ -31,6 +31,8 @@ public class Member extends BaseEntity {
     private String name;
 
     private String nickname;
+
+    private MemberROLE memberRole;
 
     @Column(name = "phone_number")
     private String phoneNumber;
