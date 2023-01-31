@@ -15,8 +15,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private MemberService memberService;
-    private MemberRepository memberRepository;
+    private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @PostMapping("/join")
     @ResponseStatus(HttpStatus.OK)
