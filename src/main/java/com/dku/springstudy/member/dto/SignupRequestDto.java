@@ -1,6 +1,6 @@
-package com.dku.springstudy.Member.dto;
+package com.dku.springstudy.member.dto;
 
-import com.dku.springstudy.Member.entity.MemberROLE;
+import com.dku.springstudy.member.entity.MemberROLE;
 import lombok.Data;
 
 @Data
@@ -12,8 +12,6 @@ public class SignupRequestDto {
     private String name;
 
     private String nickname;
-
-    private MemberROLE memberRole;
 
     private String phoneNumber;
 }

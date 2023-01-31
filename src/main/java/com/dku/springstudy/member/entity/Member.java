@@ -1,4 +1,4 @@
-package com.dku.springstudy.Member.entity;
+package com.dku.springstudy.member.entity;
 
 import com.dku.springstudy.global.BaseEntity;
 import com.dku.springstudy.item.entity.Item;

@@ -1,4 +1,4 @@
-package com.dku.springstudy.Member.entity;
+package com.dku.springstudy.member.entity;
 
 public enum MemberROLE {
     USER("USER"),

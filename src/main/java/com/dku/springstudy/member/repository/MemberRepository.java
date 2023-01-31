@@ -1,6 +1,6 @@
-package com.dku.springstudy.Member.repository;
+package com.dku.springstudy.member.repository;
 
-import com.dku.springstudy.Member.entity.Member;
+import com.dku.springstudy.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

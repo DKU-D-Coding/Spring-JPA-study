@@ -1,13 +1,13 @@
-package com.dku.springstudy.Member.service;
+package com.dku.springstudy.member.service;
 
 
-import com.dku.springstudy.Member.dto.LoginRequestDto;
-import com.dku.springstudy.Member.dto.LoginResponseDto;
-import com.dku.springstudy.Member.dto.SignupRequestDto;
-import com.dku.springstudy.Member.dto.TokenResponse;
-import com.dku.springstudy.Member.entity.Member;
-import com.dku.springstudy.Member.entity.MemberROLE;
-import com.dku.springstudy.Member.repository.MemberRepository;
+import com.dku.springstudy.member.dto.LoginRequestDto;
+import com.dku.springstudy.member.dto.LoginResponseDto;
+import com.dku.springstudy.member.dto.SignupRequestDto;
+import com.dku.springstudy.member.dto.TokenResponse;
+import com.dku.springstudy.member.entity.Member;
+import com.dku.springstudy.member.entity.MemberROLE;
+import com.dku.springstudy.member.repository.MemberRepository;
 import com.dku.springstudy.auth.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

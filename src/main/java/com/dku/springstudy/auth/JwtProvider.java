@@ -1,6 +1,6 @@
 package com.dku.springstudy.auth;
 
-import com.dku.springstudy.Member.service.MemberDetailService;
+import com.dku.springstudy.member.service.MemberDetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;

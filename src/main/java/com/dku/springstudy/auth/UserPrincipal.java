@@ -1,6 +1,6 @@
 package com.dku.springstudy.auth;
 
-import com.dku.springstudy.Member.entity.Member;
+import com.dku.springstudy.member.entity.Member;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

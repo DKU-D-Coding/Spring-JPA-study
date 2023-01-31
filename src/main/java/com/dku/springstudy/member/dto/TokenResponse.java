@@ -1,4 +1,4 @@
-package com.dku.springstudy.Member.dto;
+package com.dku.springstudy.member.dto;
 
 import lombok.Data;
 

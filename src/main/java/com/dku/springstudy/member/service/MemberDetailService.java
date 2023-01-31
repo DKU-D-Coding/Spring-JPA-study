@@ -1,7 +1,7 @@
-package com.dku.springstudy.Member.service;
+package com.dku.springstudy.member.service;
 
-import com.dku.springstudy.Member.entity.Member;
-import com.dku.springstudy.Member.repository.MemberRepository;
+import com.dku.springstudy.member.entity.Member;
+import com.dku.springstudy.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
