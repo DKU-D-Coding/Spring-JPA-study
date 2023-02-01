@@ -1,6 +1,7 @@
 package com.dku.springstudy.domain;
 
 import com.dku.springstudy.enums.Category;
+import com.dku.springstudy.enums.Role;
 import com.dku.springstudy.repository.jpa.ItemLikeRepository;
 import com.dku.springstudy.repository.jpa.ItemRepository;
 import com.dku.springstudy.repository.jpa.MemberRepository;
@@ -29,8 +30,7 @@ class EntityTest {
     @Test
     public void createMember(){
         //given
-        Member member = new Member();
-        member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍");
+        Member member = Member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍", Role.USER);
         memberRepository.save(member);
 
         //when
@@ -43,8 +43,7 @@ class EntityTest {
     @Test
     public void createItem(){
         //given
-        Member member = new Member();
-        member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍");
+        Member member = Member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍", Role.USER);
         memberRepository.save(member);
 
         //when
@@ -60,11 +59,9 @@ class EntityTest {
     @Test
     public void createLike(){
         //given
-        Member member1 = new Member();
-        member1.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍");
+        Member member1 = Member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍", Role.USER);
         memberRepository.save(member1);
-        Member member2 = new Member();
-        member2.createMember("qwe123@gmail.com", "qwe123", "dong", "010-1234-5678", "공공공");
+        Member member2 = Member.createMember("qwe123@gmail.com", "qwe123", "dong", "010-1234-5678", "공공공", Role.USER);
         memberRepository.save(member2);
 
         Item item = new Item();

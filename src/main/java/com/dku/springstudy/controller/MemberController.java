@@ -1,6 +1,7 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.domain.Member;
+import com.dku.springstudy.domain.dto.JoinDto;
 import com.dku.springstudy.dto.LoginDto;
 import com.dku.springstudy.dto.TokenDto;
 import com.dku.springstudy.enums.Role;
@@ -23,32 +24,30 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PostMapping("/join")
+    public JoinDto join(@RequestBody JoinDto joinDto){
+        log.info("Join Request={}", joinDto);
+        Member joinMember = Member.createMember(
+                joinDto.getEmail(),
+                joinDto.getPassword(),
+                joinDto.getName(),
+                joinDto.getPhone(),
+                joinDto.getNickname(),
+                Role.USER
+        );
+        memberService.join(joinMember);
+        return joinDto;
+    }
+
     @PostMapping("/login")
     public TokenDto login(@RequestBody LoginDto loginDto){
         log.info("login request={}", loginDto);
         return memberService.login(loginDto.getEmail(), loginDto.getPassword());
     }
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestBody TokenDto tokenDto){
+    public TokenDto reissue(@RequestBody TokenDto tokenDto){
         log.info("Reissue={}", tokenDto);
         return memberService.reissue(tokenDto);
     }
-
-    @GetMapping("/user")
-    public ResponseEntity<?> accessUser(HttpServletRequest request){
-        return ResponseEntity.ok(request);
-    }
-
-    @GetMapping("/admin")
-    public String accessAdmin(){
-        return "ok";
-    }
-
-    @PostConstruct
-    public void init(){
-        Member member = Member.createMember("test@naver.com", "1234", "lee", "01010", "nickname", Role.USER);
-        memberRepository.save(member);
-    }
-
 
 }

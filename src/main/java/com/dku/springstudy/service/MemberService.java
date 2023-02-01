@@ -27,6 +27,7 @@ public class MemberService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    @Transactional
     public Long join(Member member){
         memberRepository.save(member);
         return member.getId();
@@ -47,7 +48,7 @@ public class MemberService {
         return jwtTokenProvider.generateToken(authentication);
     }
 
-    public ResponseEntity<?> reissue(TokenDto token){
+    public TokenDto reissue(TokenDto token){
 //        if(!jwtTokenProvider.validateToken(token.getRefreshToken())){
 //            return ResponseEntity.badRequest().body("유효하지 않은 Refresh Token 입니다.");
 //        }
@@ -59,14 +60,14 @@ public class MemberService {
         RefreshToken refreshToken = refreshTokenRepository.findById(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("Refresh Token이 존재하지 않습니다."));
         if(!token.getRefreshToken().equals(refreshToken.getRefreshToken())){
-            return ResponseEntity.badRequest().body("토큰의 유저 정보가 일치하지 않습니다.");
+            throw new RuntimeException("토큰 정보 유효성 검증 실패");
         }
 
         TokenDto reissuedTokenDto = jwtTokenProvider.generateToken(authentication);
         RefreshToken reissuedRefreshToken = new RefreshToken(authentication.getName(), reissuedTokenDto.getRefreshToken());
         refreshTokenRepository.save(reissuedRefreshToken);
 
-        return ResponseEntity.ok(reissuedTokenDto);
+        return reissuedTokenDto;
     }
 
 }
