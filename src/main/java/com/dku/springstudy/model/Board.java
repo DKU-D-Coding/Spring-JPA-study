@@ -22,7 +22,7 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "board",cascade = CascadeType.ALL)
     private List<Items> item = new ArrayList<>();
     private String title;
     @Lob
