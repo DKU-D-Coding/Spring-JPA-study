@@ -26,3 +26,8 @@ D-Coding 백엔드 스터디
 
 ![dcoding-erd](https://user-images.githubusercontent.com/85729858/215239770-a2ac0b3a-cd5b-443d-b7a3-d026ce9ae5c5.png)
 
+
+### 3주차
+
+- 피드백 반영하여 카테고리를 enum으로 처리하도록 하고, createdDate와 updatedDate추가
+![image](https://user-images.githubusercontent.com/85729858/216071539-42dc3af6-452e-464f-9a68-c52364c5fc3f.png)
