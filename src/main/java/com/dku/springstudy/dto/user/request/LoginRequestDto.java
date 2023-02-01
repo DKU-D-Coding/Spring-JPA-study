@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class LoginRequest {
+public class LoginRequestDto {
 
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotBlank(message = "이메일을 입력해주세요.")

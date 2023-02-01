@@ -1,4 +1,4 @@
-package com.dku.springstudy.jwt.exception;
+package com.dku.springstudy.security.exception;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

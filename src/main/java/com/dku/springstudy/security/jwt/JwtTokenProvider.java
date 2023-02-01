@@ -1,6 +1,6 @@
-package com.dku.springstudy.jwt;
+package com.dku.springstudy.security.jwt;
 
-import com.dku.springstudy.service.CustomUserDetailsService;
+import com.dku.springstudy.security.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -19,7 +19,7 @@ import java.util.Date;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TokenProvider {
+public class JwtTokenProvider {
 
     private final CustomUserDetailsService customUserDetailsService;
 

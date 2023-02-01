@@ -1,4 +1,4 @@
-package com.dku.springstudy.jwt;
+package com.dku.springstudy.security.jwt;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
-    private final TokenProvider tokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
@@ -26,8 +26,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = resolveToken((HttpServletRequest) request);
 
-        if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) { // 토큰이 유효하다면
-            Authentication authentication = tokenProvider.getAuthentication(token);
+        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) { // 토큰이 유효하다면
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication); // 사용자 정보를 SecurityContext에 저장
         } else {
             log.debug("유효한 JWT 토큰이 없습니다, uri: {}", ((HttpServletRequest) request).getRequestURI());

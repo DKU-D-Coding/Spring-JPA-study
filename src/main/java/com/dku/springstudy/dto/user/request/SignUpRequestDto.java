@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class SignUpRequest {
+public class SignUpRequestDto {
 
     @Email(message = "이메일 형식에 맞지 않습니다.")
     @NotBlank(message = "이메일을 입력해주세요.")

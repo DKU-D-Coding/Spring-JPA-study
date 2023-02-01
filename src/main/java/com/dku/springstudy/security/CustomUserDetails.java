@@ -1,4 +1,4 @@
-package com.dku.springstudy.domain.auth;
+package com.dku.springstudy.security;
 
 import com.dku.springstudy.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;

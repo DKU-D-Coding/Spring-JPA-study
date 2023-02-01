@@ -1,7 +1,6 @@
-package com.dku.springstudy.service;
+package com.dku.springstudy.security;
 
 import com.dku.springstudy.domain.User;
-import com.dku.springstudy.domain.auth.CustomUserDetails;
 import com.dku.springstudy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
