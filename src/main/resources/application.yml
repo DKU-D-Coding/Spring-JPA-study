@@ -20,6 +20,10 @@ spring:
         format_sql: true
         show_sql: true
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 logging:
   level:
     com.dku.springstudy: DEBUG
