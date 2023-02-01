@@ -66,7 +66,7 @@ public class BoardService {
             } catch (IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
             }
-            fileNameList.add(fileName);
+            fileNameList.add(amazonS3.getUrl(bucket, fileName).toString());
         });
         return fileNameList;
     }
@@ -85,5 +85,10 @@ public class BoardService {
         } catch (StringIndexOutOfBoundsException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
+    }
+
+    public List<Board> index(){
+        List<Board> boards = boardRepository.findAll();
+        return boards;
     }
 }

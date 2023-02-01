@@ -1,7 +1,9 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.dto.BoardDTO;
+import com.dku.springstudy.dto.BoardResponseDTO;
 import com.dku.springstudy.dto.ResponseDTO;
+import com.dku.springstudy.model.Board;
 import com.dku.springstudy.service.BoardService;
 import com.dku.springstudy.service.S3Service;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,5 +31,14 @@ public class BoardController {
         boardDTO.setImageUrls(imgPaths);
         boardService.write(boardDTO, userId);
         return new ResponseDTO<>(HttpStatus.OK.value(), boardDTO);
+    }
+    @ApiOperation(value = "게시판 보기", notes = "사진,제목,가격,장소, 등을 게시판을 통해 보여준다")
+    @GetMapping("/board")
+    public ResponseDTO<?> index(){
+        List<Board> boardLists = boardService.index();
+        List<BoardResponseDTO> result = boardLists.stream()
+                .map(b -> new BoardResponseDTO(b))
+                .collect(Collectors.toList());
+        return new ResponseDTO<>(HttpStatus.OK.value(), result);
     }
 }
