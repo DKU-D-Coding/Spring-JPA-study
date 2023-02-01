@@ -26,7 +26,7 @@ public class Board extends BaseTimeEntity {
     private List<Items> item = new ArrayList<>();
     private String title;
     @Lob
-    private String introduction;
+    private String intro;
 
     @Enumerated(EnumType.STRING)
     private Category category;
