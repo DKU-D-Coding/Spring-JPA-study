@@ -4,6 +4,7 @@ import com.dku.springstudy.domain.User;
 import com.dku.springstudy.dto.user.request.LoginRequestDto;
 import com.dku.springstudy.dto.user.response.LoginResponseDto;
 import com.dku.springstudy.dto.user.request.SignUpRequestDto;
+import com.dku.springstudy.dto.user.response.SignUpResponseDto;
 import com.dku.springstudy.exception.CustomException;
 import com.dku.springstudy.exception.ErrorCode;
 import com.dku.springstudy.security.jwt.JwtTokenProvider;
@@ -23,7 +24,7 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public Long signUp(SignUpRequestDto signUpRequestDto) {
+    public SignUpResponseDto signUp(SignUpRequestDto signUpRequestDto) {
 
         if (userRepository.existsByEmail(signUpRequestDto.getEmail())) {
             throw new CustomException(ErrorCode.USER_EMAIL_Duplication);
@@ -37,9 +38,9 @@ public class UserService {
                 .nickname(signUpRequestDto.getNickname())
                 .build();
 
-        userRepository.save(user);
+        Long id = userRepository.save(user).getId();
 
-        return user.getId();
+        return SignUpResponseDto.of(id);
     }
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
