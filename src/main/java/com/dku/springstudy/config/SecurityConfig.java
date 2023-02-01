@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/sign-up", "/api/login").permitAll()
+                .antMatchers("/v3/api-docs/**", "/swagger*/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
