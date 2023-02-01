@@ -1,6 +1,6 @@
 package com.cha.carrotApi.repository;
 
-import com.cha.carrotApi.domain.Member;
+import com.cha.carrotApi.domain.User;
 import com.cha.carrotApi.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +15,9 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 @AllArgsConstructor
-public class MemberSignUpRequestDto {
+public class UserSignUpRequestDto {
 
-    protected MemberSignUpRequestDto(){}
+    protected UserSignUpRequestDto(){}
     @NotBlank(message = "아이디를 입력해주세요")
     private String email;
 
@@ -37,8 +37,8 @@ public class MemberSignUpRequestDto {
     private Role role;
 
     @Builder
-    public Member toEntity() {
-        return Member.builder()
+    public User toEntity() {
+        return User.builder()
                 .email(email)
                 .nickname(nickname)
                 .password(password)

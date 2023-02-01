@@ -6,14 +6,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "MEMBERS")
-public class Member extends BaseTimeEntity {
+@Table(name = "USERS")
+public class User extends BaseTimeEntity {
     @Id
-    @Column(name = "MEMBER_ID")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -31,7 +32,7 @@ public class Member extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    private Member(String email, String nickname, String password) {
+    private User(String email, String nickname, String password) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;

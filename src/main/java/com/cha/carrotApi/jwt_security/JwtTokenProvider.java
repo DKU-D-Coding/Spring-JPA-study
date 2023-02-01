@@ -5,10 +5,11 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +20,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class JwtTokenProvider {
-    private String secretKey =
-            "c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK";
+    @Value("${secret-key}")
+    private String secretKey;
 
     // 토큰 유효시간 168 시간(7일)
     private long tokenValidTime = 1440 * 60 * 7 * 1000L;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     // 객체 초기화, secretKey 를 Base64로 인코딩합니다.
     @PostConstruct
@@ -34,8 +36,8 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(String userPk, List<String> roles) {
-        Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
+    public String createToken(String userEmail, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(userEmail); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key/value 쌍으로 저장됩니다.
         Date now = new Date();
         return Jwts.builder()
@@ -49,12 +51,12 @@ public class JwtTokenProvider {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(this.getUserEmail(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출
-    public String getUserPk(String token) {
+    public String getUserEmail(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
