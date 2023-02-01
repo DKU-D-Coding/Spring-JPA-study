@@ -1,6 +1,7 @@
 package com.project.carrot.Service;
 
 import com.project.carrot.domain.Member;
+import com.project.carrot.domain.PostSaveDTO;
 import com.project.carrot.repository.MemberRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +22,13 @@ public class MemberService implements UserDetailsService {
      */
     private final MemberRepository memberRepository;
 
-    public Member join(Member member){
-        memberRepository.findByEmail(member.getUserEmail())
+    public Member join(PostSaveDTO postSaveDTO){
+        memberRepository.findByEmail(postSaveDTO.getEMAIL())
                 .ifPresent(m->{throw new IllegalStateException("이미 존재하는 이메일입니다.");});
 
-        return memberRepository.save(member);
+        Member member=memberRepository.save(Member.builder(postSaveDTO).build());
+
+        return member;
     }
 
     //컨트롤러에서 역할 수행하게 되어 주석처리
