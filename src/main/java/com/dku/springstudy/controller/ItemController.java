@@ -3,6 +3,7 @@ package com.dku.springstudy.controller;
 import com.dku.springstudy.dto.ItemsDTO;
 import com.dku.springstudy.dto.ItemsResponseDTO;
 import com.dku.springstudy.dto.ResponseDTO;
+import com.dku.springstudy.model.Category;
 import com.dku.springstudy.model.Items;
 import com.dku.springstudy.service.ImageService;
 import com.dku.springstudy.service.ItemsService;
@@ -42,5 +43,11 @@ public class ItemController {
                 .map(b -> new ItemsResponseDTO(b))
                 .collect(Collectors.toList());
         return new ResponseDTO<>(HttpStatus.OK.value(), result);
+    }
+
+    @ApiOperation(value = "상품 카데고리 보기", notes = "다양한 상품의 카테고리 정보를 제공한다")
+    @GetMapping("/enum")
+    public ResponseDTO<?> category(){
+        return new ResponseDTO<>(HttpStatus.OK.value(), Category.values());
     }
 }
