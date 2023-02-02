@@ -1,5 +1,6 @@
 package com.dku.springstudy.model;
 
+import com.dku.springstudy.dto.ItemsDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +23,7 @@ public class Items extends BaseTimeEntity {
     @OneToMany(mappedBy = "items",cascade = CascadeType.ALL)
     private List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "items",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "items", cascade = CascadeType.ALL)
     private List<Images> images = new ArrayList<>();
 
     private String title;
@@ -34,5 +35,12 @@ public class Items extends BaseTimeEntity {
 
     private int price;
 
+    @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
+
+    public void addItemWithImage(Images image){
+        images.add(image);
+        image.setItems(this);
+
+    }
 }

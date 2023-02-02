@@ -1,12 +1,13 @@
 package com.dku.springstudy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Getter
+@Getter @Setter
 @Builder
 @Entity
 public class Images extends BaseTimeEntity{
@@ -23,4 +24,5 @@ public class Images extends BaseTimeEntity{
     @JoinColumn(name = "item_id")
     private Items items;
 
+    private String url;
 }

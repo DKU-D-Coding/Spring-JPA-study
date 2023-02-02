@@ -10,5 +10,6 @@ public class ItemsDTO {
     private List<String> imageUrls;
     private String title;
     private int price;
+    private String category;
     private String intro;
 }
