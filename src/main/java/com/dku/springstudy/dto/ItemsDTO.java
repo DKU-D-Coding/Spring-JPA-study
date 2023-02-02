@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class BoardDTO {
+public class ItemsDTO {
 
     private List<String> imageUrls;
     private String title;

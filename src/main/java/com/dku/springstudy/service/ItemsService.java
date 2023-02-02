@@ -5,11 +5,11 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.dku.springstudy.dto.BoardDTO;
-import com.dku.springstudy.model.Board;
+import com.dku.springstudy.dto.ItemsDTO;
+import com.dku.springstudy.model.Items;
 import com.dku.springstudy.model.Category;
 import com.dku.springstudy.model.User;
-import com.dku.springstudy.repository.BoardRepository;
+import com.dku.springstudy.repository.ItemsRepository;
 import com.dku.springstudy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,27 +28,26 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class BoardService {
+public class ItemsService {
 
     @Value("${spring.cloud.aws.s3.bucket}")
     private String bucket;
     private final AmazonS3 amazonS3;
 
-    private final BoardRepository boardRepository;
+    private final ItemsRepository itemsRepository;
     private final UserRepository userRepository;
 
     @Transactional
-    public void write(BoardDTO boardDTO, String userId) {
+    public void write(ItemsDTO itemDTO, String userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("멤버가 없습니다"));
-        Board board = Board.builder()
+        Items items = Items.builder()
                 .user(user)
-                .title(boardDTO.getTitle())
-                .price(boardDTO.getPrice())
-                .intro(boardDTO.getIntro())
+                .title(itemDTO.getTitle())
+                .price(itemDTO.getPrice())
+                .intro(itemDTO.getIntro())
                 .category(Category.BEAUTY)
                 .build();
-        System.out.println(boardDTO.getIntro());
-        boardRepository.save(board);
+        itemsRepository.save(items);
     }
 
     public List<String> multipleUpload(List<MultipartFile> multipartFile) {
@@ -87,8 +86,8 @@ public class BoardService {
         }
     }
 
-    public List<Board> index(){
-        List<Board> boards = boardRepository.findAll();
-        return boards;
+    public List<Items> index(){
+        List<Items> items = itemsRepository.findAll();
+        return items ;
     }
 }

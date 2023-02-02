@@ -8,19 +8,31 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Getter
-@Builder
+@Getter @Builder
 @Entity
 public class Items extends BaseTimeEntity {
-
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "items",cascade = CascadeType.ALL)
+    private List<Likes> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "items",cascade = CascadeType.ALL)
+    private List<Images> images = new ArrayList<>();
+
+    private String title;
+    @Lob
+    private String intro;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    private int price;
 
     private ItemStatus itemStatus;
-
 }
