@@ -75,15 +75,15 @@ public class Member implements UserDetails{
         return true;
     }
 
-    public static MemberBuilder builder(PostSaveDTO postSaveDTO) {
-        return new MemberBuilder()
-                .UserEmail(postSaveDTO.getEMAIL())
-                .UserPass(postSaveDTO.getPASS())
-                .UserTel(postSaveDTO.getTEL())
-                .UserName(postSaveDTO.getUSERNAME())
-                .NickName(postSaveDTO.getNICKNAME())
-                .Address(postSaveDTO.getADDRESS());
-    }
+//    public static MemberBuilder builder(PostSaveDTO postSaveDTO) {
+//        return new MemberBuilder()
+//                .UserEmail(postSaveDTO.getEMAIL())
+//                .UserPass(postSaveDTO.getPASS())
+//                .UserTel(postSaveDTO.getTEL())
+//                .UserName(postSaveDTO.getUSERNAME())
+//                .NickName(postSaveDTO.getNICKNAME())
+//                .Address(postSaveDTO.getADDRESS());
+//    }
 
 }
 

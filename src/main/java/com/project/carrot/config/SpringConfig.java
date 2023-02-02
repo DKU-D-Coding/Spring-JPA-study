@@ -1,4 +1,4 @@
-package com.project.carrot;
+package com.project.carrot.config;
 
 import com.project.carrot.Service.MemberService;
 import com.project.carrot.repository.JPAMemberRepository;

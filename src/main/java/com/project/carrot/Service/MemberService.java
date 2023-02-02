@@ -22,13 +22,11 @@ public class MemberService implements UserDetailsService {
      */
     private final MemberRepository memberRepository;
 
-    public Member join(PostSaveDTO postSaveDTO){
-        memberRepository.findByEmail(postSaveDTO.getEMAIL())
+    public Member join(Member member){
+        memberRepository.findByEmail(member.getUserEmail())
                 .ifPresent(m->{throw new IllegalStateException("이미 존재하는 이메일입니다.");});
 
-        Member member=memberRepository.save(Member.builder(postSaveDTO).build());
-
-        return member;
+        return memberRepository.save(member);
     }
 
     //컨트롤러에서 역할 수행하게 되어 주석처리

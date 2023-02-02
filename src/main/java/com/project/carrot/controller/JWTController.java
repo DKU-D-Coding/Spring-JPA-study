@@ -1,5 +1,6 @@
 package com.project.carrot.controller;
 
+import com.project.carrot.MyInterceptor;
 import com.project.carrot.domain.Member;
 import com.project.carrot.Service.MemberService;
 import com.project.carrot.domain.PostSaveDTO;
@@ -27,22 +28,23 @@ public class JWTController {
 
 
     @PostMapping(value = "/join")
-    public String joinUser(@RequestBody PostSaveDTO postSaveDTO) {
+    public Member joinUser(@RequestBody PostSaveDTO postSaveDTO) {
         log.info("회원가입 시도");
-        memberService.join(postSaveDTO);
-
-        return postSaveDTO.toString();
+        Member member = postSaveDTO.toEntity();
+        return memberService.join(member);
     }
 
-//    @PostMapping(value = "/login")
-//    public String login(@RequestBody Map<String, String> user) {
-//        Member member=memberRepository.findByEmail(user.get("email"))
-//                .orElseThrow(()->new IllegalArgumentException("가입되지 않은 이메일입니다."));
+    @PostMapping(value = "/login")
+    public String login(@RequestBody Map<String, String> user) {
+        Member member=memberRepository.findByEmail(user.get("EMAIL"))
+                .orElseThrow(()->new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-//        Member member1=memberRepository.findByPass(user.get("password"))
-//                .orElseThrow(()->new IllegalArgumentException("비밀번호가 일치하지 않습니다."));
+        log.info(user.get("PASS"));
+        log.info(member.getPassword());
 
-//        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
-// }
-//    }
+        if(!user.get("PASS").equals(member.getPassword()))
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+
+        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+    }
 }

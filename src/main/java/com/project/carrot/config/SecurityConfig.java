@@ -1,4 +1,4 @@
-package com.project.carrot;
+package com.project.carrot.config;
 
 import com.project.carrot.security.JwtAuthenticationFilter;
 import com.project.carrot.security.JwtTokenProvider;
