@@ -2,10 +2,10 @@ package com.dku.springstudy.repository;
 
 import com.dku.springstudy.domain.Member;
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
 public class MemberRepository {
     private final EntityManager em;
 

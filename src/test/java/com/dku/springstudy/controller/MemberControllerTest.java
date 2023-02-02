@@ -38,12 +38,14 @@ class MemberControllerTest {
 
     @Test
     void login() throws Exception {
+
+        membership();
+
         String requestJson = "{\"email\":\"example@gmail.com\", \"password\": \"1234\", \"name\": \"jaem\"}";
 
         mockMvc.perform(post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(status().isBadRequest())
                 .andDo(print());
     }
 

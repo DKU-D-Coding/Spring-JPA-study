@@ -1,5 +1,6 @@
 package com.dku.springstudy.security.jwt;
 
+import com.dku.springstudy.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -18,11 +19,13 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @Component
-public class JwtTokenProvider {
+public class JwtProvider {
 
     private String secretKey = "secret";
 
     private final UserDetailsService userDetailsService;
+
+    private final MemberRepository memberRepository;
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.
     @PostConstruct
@@ -51,6 +54,7 @@ public class JwtTokenProvider {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
+
 
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
