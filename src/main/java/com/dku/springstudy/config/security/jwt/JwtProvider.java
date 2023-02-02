@@ -1,8 +1,8 @@
 package com.dku.springstudy.config.security.jwt;
 
 import com.dku.springstudy.config.security.RedisDao;
-import com.dku.springstudy.dto.TokensResponseDTO;
-import com.dku.springstudy.dto.UserResponseDTO;
+import com.dku.springstudy.dto.user.TokensResponseDTO;
+import com.dku.springstudy.dto.user.UserResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;

@@ -1,7 +1,7 @@
 package com.dku.springstudy.service;
 
 import com.dku.springstudy.config.security.jwt.JwtProvider;
-import com.dku.springstudy.dto.*;
+import com.dku.springstudy.dto.user.*;
 import com.dku.springstudy.model.Role;
 import com.dku.springstudy.model.User;
 import com.dku.springstudy.repository.UserRepository;

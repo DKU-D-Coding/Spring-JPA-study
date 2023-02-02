@@ -1,4 +1,4 @@
-package com.dku.springstudy.dto;
+package com.dku.springstudy.dto.user;
 
 import com.dku.springstudy.model.Role;
 import com.dku.springstudy.model.User;

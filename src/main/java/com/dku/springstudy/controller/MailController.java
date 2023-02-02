@@ -1,7 +1,7 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.service.MailServiceImpl;
-import com.dku.springstudy.dto.MailDTO;
+import com.dku.springstudy.dto.user.MailDTO;
 import com.dku.springstudy.dto.ResponseDTO;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

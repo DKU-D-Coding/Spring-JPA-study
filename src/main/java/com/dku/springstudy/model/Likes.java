@@ -19,6 +19,6 @@ public class Likes extends BaseTimeEntity{
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "item_id")
+    private Items items;
 }
