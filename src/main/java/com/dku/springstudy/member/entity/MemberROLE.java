@@ -1,8 +1,9 @@
 package com.dku.springstudy.member.entity;
 
 public enum MemberROLE {
-    USER("USER"),
-    ADMIN("ADMIN"),
+    //Config에서 검사 시 ROLE + config에 등록한 이름으로 검사함...
+    ROLE_USER("USER"),
+    ROLE_ADMIN("ADMIN"),
     ;
 
     final String role;

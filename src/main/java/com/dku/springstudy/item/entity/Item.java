@@ -34,6 +34,7 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member seller;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Lob

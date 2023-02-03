@@ -32,6 +32,7 @@ public class Member extends BaseEntity {
 
     private String nickname;
 
+    @Enumerated(EnumType.STRING)
     private MemberROLE memberRole;
 
     @Column(name = "phone_number")

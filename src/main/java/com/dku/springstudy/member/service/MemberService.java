@@ -14,9 +14,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author 최재민
+ */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final AuthenticationManager authenticationManager;
@@ -32,7 +37,7 @@ public class MemberService {
                 .password(encodedPassword)
                 .phoneNumber(request.getPhoneNumber())
                 .nickname(request.getNickname())
-                .memberRole(MemberROLE.USER)
+                .memberRole(MemberROLE.ROLE_USER)
                 .build();
 
         memberRepository.save(member);
