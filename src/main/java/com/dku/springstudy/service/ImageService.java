@@ -36,7 +36,7 @@ public class ImageService {
     private final AmazonS3 amazonS3;
     private final UserRepository userRepository;
     @Transactional
-    public List<Images> multipleUpload(List<MultipartFile> multipartFile, String userId, ItemsDTO itemsDTO) {
+    public Long multipleUpload(List<MultipartFile> multipartFile, String userId, ItemsDTO itemsDTO) {
         List<Images> fileNameList = new ArrayList<>();
 
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("멤버가 없습니다"));
@@ -72,8 +72,7 @@ public class ImageService {
             }
         });
         itemsRepository.save(items);
-
-        return fileNameList;
+        return items.getId();
     }
 
     public void deleteFile(String fileName) {

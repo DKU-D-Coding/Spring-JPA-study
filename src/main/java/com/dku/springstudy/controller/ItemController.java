@@ -30,12 +30,12 @@ public class ItemController {
     private final ItemsRepository itemsRepository;
     private final ImageService imageService;
 
-    @ApiOperation(value = "게시판 글쓰기", notes = "여러장의 이미지와 제목,가격,카테고리,게시글 내용 값을 받아서 게시판을 작성한다")
+    @ApiOperation(value = "게시판 글쓰기", notes = "여러장의 이미지와 제목,가격,카테고리,게시글 내용 값을 받아서 게시판을 작성한뒤 게시판 id 반환")
     @PostMapping("/board")
     public ResponseDTO<?> uploadFile(@AuthenticationPrincipal String userId, ItemsDTO itemsDTO,
                                      @RequestPart("file") List<MultipartFile> file) {
-        imageService.multipleUpload(file,userId, itemsDTO);
-        return new ResponseDTO<>(HttpStatus.OK.value(), itemsDTO);
+        Long itemId = imageService.multipleUpload(file, userId, itemsDTO);
+        return new ResponseDTO<>(HttpStatus.OK.value(), itemId);
     }
 
     /**
