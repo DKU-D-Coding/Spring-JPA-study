@@ -13,12 +13,16 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer {
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final Interceptor interceptor;
 
     // 암호화에 필요한 PasswordEncoder 를 Bean 등록합니다.
     @Bean
@@ -40,5 +44,10 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(interceptor)
+                .addPathPatterns("/**");
     }
 }

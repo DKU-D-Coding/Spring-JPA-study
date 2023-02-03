@@ -1,6 +1,6 @@
 package com.cha.carrotApi.controller;
 
-import com.cha.carrotApi.repository.UserSignUpRequestDto;
+import com.cha.carrotApi.DTO.UserSignUpRequestDto;
 import com.cha.carrotApi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

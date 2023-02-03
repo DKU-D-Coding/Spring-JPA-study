@@ -1,4 +1,4 @@
-package com.cha.carrotApi.repository;
+package com.cha.carrotApi.DTO;
 
 import com.cha.carrotApi.domain.User;
 import com.cha.carrotApi.domain.Role;

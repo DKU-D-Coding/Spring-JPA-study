@@ -3,7 +3,7 @@ package com.cha.carrotApi.service;
 import com.cha.carrotApi.domain.User;
 import com.cha.carrotApi.jwt_security.JwtTokenProvider;
 import com.cha.carrotApi.repository.UserRepository;
-import com.cha.carrotApi.repository.UserSignUpRequestDto;
+import com.cha.carrotApi.DTO.UserSignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
