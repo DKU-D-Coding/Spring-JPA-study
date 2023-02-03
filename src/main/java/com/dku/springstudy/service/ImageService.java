@@ -31,6 +31,9 @@ public class ImageService {
     @Value("${spring.cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${spring.cloud.aws.s3.targetURL}")
+    private String target;
+
     private final ItemsRepository itemsRepository;
     private final ImageRepository imageRepository;
     private final AmazonS3 amazonS3;
@@ -75,8 +78,14 @@ public class ImageService {
         return items.getId();
     }
 
-    public void deleteFile(String fileName) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
+    public void deleteFile(List<Images> fileName) {
+        fileName.forEach(file->
+                {
+                    String url = file.getUrl();
+                    url = url.replace(target,"");
+                    amazonS3.deleteObject(new DeleteObjectRequest(bucket, url));
+                });
+
     }
 
     private String createFileName(String fileName) {

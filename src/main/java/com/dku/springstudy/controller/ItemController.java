@@ -4,6 +4,7 @@ import com.dku.springstudy.dto.ItemsDTO;
 import com.dku.springstudy.dto.ItemsResponseDTO;
 import com.dku.springstudy.dto.ResponseDTO;
 import com.dku.springstudy.model.Category;
+import com.dku.springstudy.model.Images;
 import com.dku.springstudy.model.Items;
 import com.dku.springstudy.repository.ItemsRepository;
 import com.dku.springstudy.service.ImageService;
@@ -61,6 +62,9 @@ public class ItemController {
     @ApiOperation(value = "상품 삭제하기", notes = "게시글에 올린 상품을 삭제할 수 있다")
     @DeleteMapping("/board/{itemId}")
     public ResponseDTO<?> delete(@AuthenticationPrincipal String userId, @PathVariable Long itemId){
+        Items items = itemsRepository.findById(itemId).orElseThrow(()->new IllegalStateException("게시글에 올린 상품이 없음"));
+        List<Images> images = items.getImages();
+        imageService.deleteFile(images);
         itemsRepository.deleteById(itemId);
         return new ResponseDTO<>(HttpStatus.OK.value(), "삭제 완료");
     }
