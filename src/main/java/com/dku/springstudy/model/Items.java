@@ -1,7 +1,6 @@
 package com.dku.springstudy.model;
 
 import com.dku.springstudy.dto.ItemsDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,10 +38,16 @@ public class Items extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
 
+    public void modifyItems(ItemsDTO itemsDTO) {
+        this.title = itemsDTO.getTitle();
+        this.price = itemsDTO.getPrice();
+        this.intro = itemsDTO.getIntro();
+        this.category = Category.valueOf(itemsDTO.getCategory());
+    }
+
     public void addItemWithImage(Images image){
         images.add(image);
         image.setItems(this);
-
     }
 
     public void addLike(Likes likes){

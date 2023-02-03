@@ -99,4 +99,30 @@ public class ImageService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 형식의 파일(" + fileName + ") 입니다.");
         }
     }
+
+    @Transactional
+    public void multipleModify(List<MultipartFile> multipartFile, String userId, ItemsDTO itemsDTO, Long itemId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("멤버가 없습니다"));
+        Items items = itemsRepository.findById(itemId).orElseThrow(() -> new IllegalStateException("상품이 없습니다"));
+
+        List<Images> beforeImages = items.getImages();
+        if (multipartFile.size()!=0) {
+            deleteFile(beforeImages);
+            imageRepository.deleteByItemsId(items.getId());
+        }
+
+        multipartFile.forEach(file -> {
+                    String fileNameModify = createFileName(file.getOriginalFilename());
+                    ObjectMetadata objectMetadata = new ObjectMetadata();
+                    objectMetadata.setContentLength(file.getSize());
+                    objectMetadata.setContentType(file.getContentType());
+
+                    Images images = Images.builder()
+                            .user(user)
+                            .url(amazonS3.getUrl(bucket, fileNameModify).toString())
+                            .build();
+                    items.addItemWithImage(images);
+                });
+        items.modifyItems(itemsDTO);
+    }
 }

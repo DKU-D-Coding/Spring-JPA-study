@@ -1,7 +1,6 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.dto.ItemsDTO;
-import com.dku.springstudy.dto.ItemsResponseDTO;
 import com.dku.springstudy.dto.ResponseDTO;
 import com.dku.springstudy.model.Category;
 import com.dku.springstudy.model.Images;
@@ -9,7 +8,6 @@ import com.dku.springstudy.model.Items;
 import com.dku.springstudy.repository.ItemsRepository;
 import com.dku.springstudy.service.ImageService;
 import com.dku.springstudy.service.ItemsService;
-import com.dku.springstudy.service.S3Service;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,16 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class ItemController {
-
-    private final S3Service s3Service;
     private final ItemsService itemsService;
-
     private final ItemsRepository itemsRepository;
     private final ImageService imageService;
 
@@ -67,5 +60,14 @@ public class ItemController {
         imageService.deleteFile(images);
         itemsRepository.deleteById(itemId);
         return new ResponseDTO<>(HttpStatus.OK.value(), "삭제 완료");
+    }
+
+    @ApiOperation(value = "상품정보 수정하기", notes = "상품정보를 수정하며 이미지가 있는 경우 기존의 이미지 파일을 삭제합니다.")
+    @PatchMapping("/board/{itemId}")
+    public ResponseDTO<?> update(@AuthenticationPrincipal String userId, ItemsDTO itemsDTO,
+                                 @RequestPart("file") List<MultipartFile> file, @PathVariable Long itemId) {
+
+        imageService.multipleModify(file, userId, itemsDTO, itemId);
+        return new ResponseDTO<>(HttpStatus.OK.value(), "수정완료");
     }
 }
