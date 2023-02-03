@@ -15,9 +15,9 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 @AllArgsConstructor
-public class UserSignUpRequestDto {
+public class SignUpRequestDto {
 
-    protected UserSignUpRequestDto(){}
+    protected SignUpRequestDto(){}
     @NotBlank(message = "아이디를 입력해주세요")
     private String email;
 

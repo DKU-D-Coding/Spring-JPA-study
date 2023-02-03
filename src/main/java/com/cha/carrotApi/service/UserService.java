@@ -3,7 +3,7 @@ package com.cha.carrotApi.service;
 import com.cha.carrotApi.domain.User;
 import com.cha.carrotApi.jwt_security.JwtTokenProvider;
 import com.cha.carrotApi.repository.UserRepository;
-import com.cha.carrotApi.DTO.UserSignUpRequestDto;
+import com.cha.carrotApi.DTO.SignUpRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public Long signUp(UserSignUpRequestDto requestDto) throws Exception {
+    public Long signUp(SignUpRequestDto requestDto) throws Exception {
 
         if(userRepository.findByEmail(requestDto.getEmail()).isPresent()){
             throw new Exception("이미 존재하는 이메일입니다.");
