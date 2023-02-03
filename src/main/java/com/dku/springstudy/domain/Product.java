@@ -45,13 +45,13 @@ public class Product extends BaseTimeEntity {
     private Status status;
 
     @Builder
-    private Product(User user, String title, String content, Integer price, Category category, Integer likeAndComment) {
+    private Product(User user, String title, String content, Integer price, Category category) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.price = price;
         this.category = category;
-        this.likeAndComment = likeAndComment;
+        this.likeAndComment = 0;
         this.status = status.PROGRESS;
     }
 }

@@ -4,8 +4,11 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.dku.springstudy.domain.Product;
 import com.dku.springstudy.exception.CustomException;
 import com.dku.springstudy.exception.ErrorCode;
+import com.dku.springstudy.s3.domain.File;
+import com.dku.springstudy.s3.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,10 +31,11 @@ public class S3Service {
     private String bucket;
 
     private final AmazonS3 amazonS3;
+    private final FileRepository fileRepository;
 
     @Transactional
-    public List<String> uploadFiles(List<MultipartFile> multipartFile) {
-        List<String> fileNameList = new ArrayList<>();
+    public List<String> uploadFiles(List<MultipartFile> multipartFile, Product product) {
+        List<String> fileUrlList = new ArrayList<>();
 
         multipartFile.forEach(file -> {
             String fileName = createFileName(file.getOriginalFilename());
@@ -45,9 +49,17 @@ public class S3Service {
             } catch (IOException e) {
                 throw new CustomException(ErrorCode.FILE_UPLOAD_FAIL);
             }
-            fileNameList.add(fileName);
+
+            File saveFile = File.builder()
+                    .product(product)
+                    .url(getUrl(fileName))
+                    .fileName(fileName)
+                    .build();
+
+            fileRepository.save(saveFile);
+            fileUrlList.add(getUrl(fileName));
         });
-        return fileNameList;
+        return fileUrlList;
     }
 
     private String createFileName(String fileName) {
@@ -63,5 +75,9 @@ public class S3Service {
         }
 
         return fileName.substring(fileName.lastIndexOf("."));
+    }
+
+    private String getUrl(String fileName) {
+        return amazonS3.getUrl(bucket, fileName).toString();
     }
 }

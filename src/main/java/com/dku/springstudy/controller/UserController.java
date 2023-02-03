@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Tag(name = "UserController", description = "회원 API")
+@Tag(name = "사용자 API")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
