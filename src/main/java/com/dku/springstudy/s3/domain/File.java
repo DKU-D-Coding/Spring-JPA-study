@@ -1,6 +1,6 @@
-package com.dku.springstudy.domain;
+package com.dku.springstudy.s3.domain;
 
-import com.dku.springstudy.domain.common.BaseTimeEntity;
+import com.dku.springstudy.domain.Product;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Image extends BaseTimeEntity {
+public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +20,19 @@ public class Image extends BaseTimeEntity {
 
     @JoinColumn(name = "product_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
 
     @Column(nullable = false)
     private String url;
 
+    @Column(nullable = false)
+    private String fileName;
+
     @Builder
-    private Image(Product product, String url) {
+    private File(Product product, String url, String fileName) {
         this.product = product;
         this.url = url;
+        this.fileName = fileName;
     }
 }
