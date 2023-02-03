@@ -21,4 +21,12 @@ public class Likes extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Items items;
+
+    public void addLike(){
+        this.items.addLike(this);
+    }
+
+    public void deleteLike(){
+        this.items.deleteLike(this);
+    }
 }
