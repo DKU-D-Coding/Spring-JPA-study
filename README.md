@@ -40,8 +40,17 @@
 
 <hr>
 
+### 3주차
+
+>  여러개의 테이블이 얽힌 화면에 맞는 DTO설정 및 API구현
+
+<hr>
+
 ## 개발 기록
 
 - 회원가입 & 로그인 API 구현 ```commit``` : [2d556a0](https://github.com/ji-hyeon97/Spring-JPA-study/commit/2d556a0b00a58f70c7d10b7e15a1170d2d8b27a8)
 - SMPT 이메일 인증 API 구현 ```commit``` : [3fd9d89](https://github.com/ji-hyeon97/Spring-JPA-study/commit/3fd9d898213aa011d04684e3c5fa40c10f0d1ca9)
 - access 토큰 재발급 API 구현 ```commit``` : [6851e06](https://github.com/ji-hyeon97/Spring-JPA-study/commit/6851e06e80ce4e7688d169878cca5806d32592fd)
+- AWS S3 연동 및 다중 이미지 업로드 API 구현 ```commit``` : [930beb3](https://github.com/ji-hyeon97/Spring-JPA-study/commit/930beb3b92a0449e94f22ce436d5174a7d4c6d46)
+- 좋아요 API 구현 ```commit``` : [a2b1cd6](https://github.com/ji-hyeon97/Spring-JPA-study/commit/a2b1cd6f38c901c66067dff0e09e7fc55ac2c572)
+- 상품 수정 및 삭제 API 구현 ```commit``` : [2925870](https://github.com/ji-hyeon97/Spring-JPA-study/commit/29258702188606488dc7aabc1c665a78b34096a4) , [a2fb7d0](https://github.com/ji-hyeon97/Spring-JPA-study/commit/a2fb7d08234ea39b7c3d08f1a4b474ed20188984)
