@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,21 +23,32 @@ public class User extends BaseTimeEntity {
     @Column(name = "EMAIL", length = 45, unique = true)
     private String email;
 
+    @Column(name = "PASSWORD", length = 100)
+    private String password;
+
     @Column(name = "NICKNAME", length = 45)
     private String nickname;
 
-    @Column(name = "PASSWORD", length = 100)
-    private String password;
+    @Column(name = "PHONE_NUMBER", length = 20)
+    private String phone_number;
 
     @Column(name = "ROLE")
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "interest_posts")
+    @Column(name = "INTEREST_POST")
+    private List<Post> interests = new ArrayList<>();
+
     @Builder
-    private User(String email, String nickname, String password) {
+    private User(String email, String nickname, String password, String phone_number) {
         this.email = email;
-        this.nickname = nickname;
         this.password = password;
+        this.nickname = nickname;
+        this.phone_number = phone_number;
         this.role = Role.USER;
     }
     public void encodePassword(PasswordEncoder passwordEncoder) {
