@@ -34,6 +34,8 @@ public class Member implements UserDetails{
     @Builder.Default
     private String ProfilePhotoURL=null;
 
+
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -44,6 +46,10 @@ public class Member implements UserDetails{
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="UserEmail")
+    private Collection<MemberItem> memberItem;
 
     @Override
     public String getPassword() {
@@ -73,6 +79,11 @@ public class Member implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    public void addMemberItem(MemberItem m){
+        if(memberItem == null)
+            memberItem=new ArrayList<MemberItem>();
+        memberItem.add(m);
     }
 
 //    public static MemberBuilder builder(PostSaveDTO postSaveDTO) {
