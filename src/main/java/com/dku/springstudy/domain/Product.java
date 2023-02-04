@@ -38,7 +38,7 @@ public class Product extends BaseTimeEntity {
     private Category category;
 
     @Column(nullable = false)
-    private Integer likeAndComment; // 좋아요 및 댓글 숫자
+    private Integer like;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -51,7 +51,7 @@ public class Product extends BaseTimeEntity {
         this.content = content;
         this.price = price;
         this.category = category;
-        this.likeAndComment = 0;
+        this.like = 0;
         this.status = status.PROGRESS;
     }
 }
