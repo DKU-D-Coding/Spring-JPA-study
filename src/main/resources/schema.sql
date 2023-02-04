@@ -1,0 +1,17 @@
+insert into category(category_id, name) values(0l, '디지털기기');
+insert into category(category_id, name) values(1l, '생활가전');
+insert into category(category_id, name) values(2l, '가구/인테리어');
+insert into category(category_id, name) values(3l, '유아동');
+insert into category(category_id, name) values(4l, '생활/가공식품');
+insert into category(category_id, name) values(5l, '유아도서');
+insert into category(category_id, name) values(6l, '스포츠/레저');
+insert into category(category_id, name) values(7l, '여성잡화');
+insert into category(category_id, name) values(8l, '여성의류');
+insert into category(category_id, name) values(9l, '남성패션/잡화');
+insert into category(category_id, name) values(10l, '게임/취미');
+insert into category(category_id, name) values(11l, '뷰티/미용');
+insert into category(category_id, name) values(12l, '반려동물용품');
+insert into category(category_id, name) values(13l, '도서/티켓/음반');
+insert into category(category_id, name) values(14l, '식물');
+insert into category(category_id, name) values(15l, '기타 중고물품');
+insert into category(category_id, name) values(16l, '중고차');
