@@ -30,7 +30,7 @@ public class User extends BaseTimeEntity {
     private String nickname;
 
     @Column(name = "PHONE_NUMBER", length = 20)
-    private String phone_number;
+    private String phonenumber;
 
     @Column(name = "ROLE")
     @Enumerated(EnumType.STRING)
@@ -48,7 +48,7 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.phone_number = phone_number;
+        this.phonenumber = phonenumber;
         this.role = Role.USER;
     }
     public void encodePassword(PasswordEncoder passwordEncoder) {

@@ -1,6 +1,6 @@
 package com.cha.carrotApi.jwt_security;
 
-import com.cha.carrotApi.DTO.SuccessResponseDto;
+import com.cha.carrotApi.DTO.response.SuccessResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class Interceptor implements HandlerInterceptor {
 
             Object data = objectMapper.readValue(body, Object.class);
 
-            SuccessResponseDto<Object> objectResponseDto = new SuccessResponseDto<>(data);
+            SuccessResponse<Object> objectResponseDto = new SuccessResponse<>(data);
 
             String wrappedBody = objectMapper.writeValueAsString(objectResponseDto);
 
