@@ -45,6 +45,6 @@ public class JWTController {
         if(!user.get("PASS").equals(member.getPassword()))
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
 
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+        return jwtTokenProvider.createToken(member.getUserEmail(), member.getRoles());
     }
 }

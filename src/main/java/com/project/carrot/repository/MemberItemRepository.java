@@ -9,9 +9,11 @@ import java.util.Optional;
 public interface MemberItemRepository {
     MemberItem save(MemberItem memberItem);
     List<MemberItem> findAll();
-    List<MemberItem> findByCategory(String category);
-    Optional<MemberItem> findByTitle(String title);
-    Optional<MemberItem> findByContent(String content);
+    List<MemberItem> findByCategory(String ItemCategory);
+    List<MemberItem> findByTitle(String ItemTitle);
+    List<MemberItem> findByContent(String ItemContent);
+
+    Optional<Member> findByUserId(Long UserId);
 
 
 }

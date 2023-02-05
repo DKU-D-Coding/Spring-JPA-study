@@ -17,7 +17,7 @@ public class MemberItem {
     @Id
     @GeneratedValue
     private int ItemId;
-    private String UserEmail;//외래키
+    private Long UserId; //외래키
     private String ItemTitle;
     private String ItemContent;
     private int ItemPrice;

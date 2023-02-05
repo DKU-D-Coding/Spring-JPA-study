@@ -3,6 +3,7 @@ package com.project.carrot.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.catalina.User;
+import org.springframework.context.annotation.Primary;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -48,7 +49,7 @@ public class Member implements UserDetails{
     }
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="UserEmail")
+    @JoinColumn(name="UserId")
     private Collection<MemberItem> memberItem;
 
     @Override

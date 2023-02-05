@@ -30,7 +30,7 @@ public class MyInterceptor implements HandlerInterceptor {
         if (!String.valueOf(response.getStatus()).startsWith("2")) {
             return;
         }
-        //Json형식의 응답값만 수정 - @ResponseBody를 통해 Object반환은 JSON으로 넘어옴.
+        //Json 형식의 응답값만 수정 - @ResponseBody를 통해 Object 반환은 JSON으로 넘어옴.
         if (cachingResponse.getContentType() != null && (cachingResponse.getContentType().contains("application/json"))) {
             if (cachingResponse.getContentAsByteArray().length != 0) {
                 //String 변환 ex){"key":"value"}
@@ -45,7 +45,7 @@ public class MyInterceptor implements HandlerInterceptor {
                 //String 변환 -> Byte로 쓰기 위함.
                 String wrappedBody = objectMapper.writeValueAsString(objectResponseDTO);
 
-                //flush
+                //flush 버퍼에 있는 데이터를 처리함.
                 cachingResponse.resetBuffer();
 
                 //덮어쓰기

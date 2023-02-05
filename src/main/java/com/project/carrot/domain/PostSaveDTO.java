@@ -2,6 +2,8 @@ package com.project.carrot.domain;
 
 import lombok.*;
 
+import java.util.Collections;
+
 @Data
 public class PostSaveDTO {
     private String EMAIL;
@@ -10,6 +12,7 @@ public class PostSaveDTO {
     private String USERNAME;
     private String NICKNAME;
     private String ADDRESS;
+    //private String
 
     //final KafkaProperties.Admin ADMIN = Admin.일반회원; 권한설정 필요할 경우 설정
 
@@ -32,6 +35,7 @@ public class PostSaveDTO {
                 .UserName(USERNAME)
                 .NickName(NICKNAME)
                 .Address(ADDRESS)
+                .roles(Collections.singletonList("ROLE_USER"))
                 .build();
     }
 }
