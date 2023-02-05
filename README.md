@@ -23,6 +23,8 @@ D-Coding 백엔드 스터디
 
 - 요구사항대로 당근마켓 ERD 그려보기
 - 요구사항 API 구현 (가능한 만큼)
+- jwt, security 이용하여 로그인, 회원가입 기능 구현
+
 
 ![dcoding-erd](https://user-images.githubusercontent.com/85729858/215239770-a2ac0b3a-cd5b-443d-b7a3-d026ce9ae5c5.png)
 
@@ -30,4 +32,9 @@ D-Coding 백엔드 스터디
 ### 3주차
 
 - 피드백 반영하여 카테고리를 enum으로 처리하도록 하고, createdDate와 updatedDate추가
+- 로그인 기능 리펙토링
+- 회원가입 기능 추가
+- 상품 관련 엔티티, 레포지토리, 서비스 추가
+- 상태, 카테고리 enum추가
+
 ![image](https://user-images.githubusercontent.com/85729858/216071539-42dc3af6-452e-464f-9a68-c52364c5fc3f.png)
