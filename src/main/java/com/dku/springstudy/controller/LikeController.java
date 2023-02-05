@@ -1,6 +1,5 @@
 package com.dku.springstudy.controller;
 
-import com.dku.springstudy.dto.common.SuccessResponse;
 import com.dku.springstudy.dto.like.LikeClickResponseDto;
 import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.LikeService;
@@ -9,8 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,15 +31,13 @@ public class LikeController {
             @ApiResponse(responseCode = "404", description = "회원 또는 상품 아이디(PK)가 존재하지 않는 경우"),
     })
     @PostMapping("/like/{productId}")
-    public ResponseEntity<SuccessResponse<LikeClickResponseDto>> clickLikeBtn(
+    public LikeClickResponseDto clickLikeBtn(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable Long productId
     ) {
 
         LikeClickResponseDto response = likeService.clickLikeBtn(customUserDetails.getId(), productId);
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new SuccessResponse<>(response));
+        return response;
     }
 }
