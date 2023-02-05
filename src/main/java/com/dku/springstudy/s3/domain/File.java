@@ -1,6 +1,7 @@
 package com.dku.springstudy.s3.domain;
 
 import com.dku.springstudy.domain.Product;
+import com.dku.springstudy.domain.common.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,11 +12,11 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class File {
+public class File extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
+    @Column(name = "file_id")
     private Long id;
 
     @JoinColumn(name = "product_id", nullable = false)
