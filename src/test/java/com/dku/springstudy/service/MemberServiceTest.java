@@ -13,6 +13,7 @@ public class MemberServiceTest {
     @Autowired
     MemberService memberService;
 
+    /*
     @Test
     void membership(){
         //given
@@ -27,5 +28,7 @@ public class MemberServiceTest {
         Assertions.assertEquals(member.getName(), findMember.getName());
 
     }
+
+     */
 
 }

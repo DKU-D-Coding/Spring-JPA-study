@@ -4,11 +4,11 @@
 -- 테이블 생성 SQL - category
 CREATE TABLE category
 (
-    `categoryId`  INT            NOT NULL    AUTO_INCREMENT, 
-    `category`    VARCHAR(45)    NULL, 
-    `created`     TIMESTAMP      NULL, 
-    `updated`     TIMESTAMP      NULL, 
-    `status`      VARCHAR(20)    NULL, 
+    `categoryId`  INT            NOT NULL    AUTO_INCREMENT,
+    `category`    VARCHAR(45)    NULL,
+    `created`     TIMESTAMP      NULL,
+    `updated`     TIMESTAMP      NULL,
+    `status`      VARCHAR(20)    NULL,
      PRIMARY KEY (categoryId)
 );
 
@@ -17,16 +17,16 @@ CREATE TABLE category
 -- 테이블 생성 SQL - users
 CREATE TABLE users
 (
-    `userId`    INT            NOT NULL    AUTO_INCREMENT, 
-    `name`      VARCHAR(45)    NULL, 
-    `email`     VARCHAR(45)    NULL, 
-    `password`  VARCHAR(45)    NULL, 
-    `phone`     VARCHAR(45)    NULL, 
-    `address`   VARCHAR(45)    NULL, 
-    `imageURL`  TEXT           NULL, 
-    `created`   TIMESTAMP      NULL, 
-    `updated`   TIMESTAMP      NULL, 
-    `status`    VARCHAR(20)    NULL, 
+    `userId`    INT            NOT NULL    AUTO_INCREMENT,
+    `name`      VARCHAR(45)    NULL,
+    `email`     VARCHAR(45)    NULL,
+    `password`  VARCHAR(100)    NULL,
+    `phone`     VARCHAR(45)    NULL,
+    `address`   VARCHAR(45)    NULL,
+    `imageURL`  TEXT           NULL,
+    `created`   TIMESTAMP      NULL,
+    `updated`   TIMESTAMP      NULL,
+    `status`    VARCHAR(20)    NULL,
      PRIMARY KEY (userId)
 );
 
@@ -35,16 +35,16 @@ CREATE TABLE users
 -- 테이블 생성 SQL - post
 CREATE TABLE post
 (
-    `postId`      INT            NOT NULL    AUTO_INCREMENT, 
-    `userId`      INT            NULL, 
-    `likeCount`   TINYINT        NULL, 
-    `title`       VARCHAR(45)    NULL, 
-    `content`     TEXT           NULL, 
-    `created`     TIMESTAMP      NULL, 
-    `updated`     TIMESTAMP      NULL, 
-    `price`       INT            NULL, 
-    `status`      VARCHAR(20)    NULL, 
-    `categoryId`  INT            NULL, 
+    `postId`      INT            NOT NULL    AUTO_INCREMENT,
+    `userId`      INT            NULL,
+    `likeCount`   TINYINT        NULL,
+    `title`       VARCHAR(45)    NULL,
+    `content`     TEXT           NULL,
+    `created`     TIMESTAMP      NULL,
+    `updated`     TIMESTAMP      NULL,
+    `price`       INT            NULL,
+    `status`      VARCHAR(20)    NULL,
+    `categoryId`  INT            NULL,
      PRIMARY KEY (postId)
 );
 
@@ -71,12 +71,12 @@ ALTER TABLE post
 -- 테이블 생성 SQL - wishList
 CREATE TABLE wishList
 (
-    `wishListId`  INT            NOT NULL    AUTO_INCREMENT, 
-    `userId`      INT            NULL, 
-    `postId`      INT            NULL, 
-    `created`     TIMESTAMP      NULL, 
-    `updated`     TIMESTAMP      NULL, 
-    `status`      VARCHAR(20)    NULL, 
+    `wishListId`  INT            NOT NULL    AUTO_INCREMENT,
+    `userId`      INT            NULL,
+    `postId`      INT            NULL,
+    `created`     TIMESTAMP      NULL,
+    `updated`     TIMESTAMP      NULL,
+    `status`      VARCHAR(20)    NULL,
      PRIMARY KEY (wishListId)
 );
 
@@ -94,12 +94,12 @@ ALTER TABLE wishList
 -- 테이블 생성 SQL - postImage
 CREATE TABLE postImage
 (
-    `ImageId`   INT            NOT NULL    AUTO_INCREMENT, 
-    `postId`    INT            NULL, 
-    `imageURL`  TEXT           NULL, 
-    `created`   TIMESTAMP      NULL, 
-    `updated`   TIMESTAMP      NULL, 
-    `status`    VARCHAR(20)    NULL, 
+    `ImageId`   INT            NOT NULL    AUTO_INCREMENT,
+    `postId`    INT            NULL,
+    `imageURL`  TEXT           NULL,
+    `created`   TIMESTAMP      NULL,
+    `updated`   TIMESTAMP      NULL,
+    `status`    VARCHAR(20)    NULL,
      PRIMARY KEY (ImageId)
 );
 

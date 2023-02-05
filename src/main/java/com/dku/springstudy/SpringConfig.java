@@ -2,6 +2,7 @@ package com.dku.springstudy;
 
 import com.dku.springstudy.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

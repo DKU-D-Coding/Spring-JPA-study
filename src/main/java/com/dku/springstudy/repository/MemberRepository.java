@@ -2,19 +2,22 @@ package com.dku.springstudy.repository;
 
 import com.dku.springstudy.domain.Member;
 import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityTransaction;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
+
+@RequiredArgsConstructor
 public class MemberRepository {
     private final EntityManager em;
 
-    public MemberRepository(EntityManager em) {
-        this.em = em;
-    }
-
     public void save(Member member){
         em.persist(member);
+    }
+
+    public void remove(Member member){
+        em.remove(member);
     }
 
     public Optional<Member> findById(Long id){

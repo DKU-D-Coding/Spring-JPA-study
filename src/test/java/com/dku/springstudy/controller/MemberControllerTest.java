@@ -1,6 +1,7 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.service.MemberService;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,12 +29,24 @@ class MemberControllerTest {
     void membership() throws Exception {
         //given
         String requestJson = "{\"email\":\"example@gmail.com\", \"password\": \"1234\", \"name\": \"jaem\"}";
-
-        mockMvc.perform(post("/membership")
+        String result =  mockMvc.perform(post("/membership")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(status().isOk())
-                .andDo(print());
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse().getContentAsString();
+        System.out.println("result = " + result);
+    }
+
+    @Test
+    void withDraw() throws Exception {
+        //given
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYWVtIiwiaWF0IjoxNjc1NTg1NDEzLCJleHAiOjE2NzU1ODcyMTN9.lF8ROm63BVQkxI0mrYEl2Ajr-JB8vvPIJgOvsf_Sq_s";
+        String requestJson = "{\"loginAccessToken\":\""+token+"\"}";
+        String result = mockMvc.perform(post("/withdraw")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                        .andReturn().getResponse().getContentAsString();
+        System.out.println("result = " + result);
     }
 
     @Test
@@ -41,12 +54,15 @@ class MemberControllerTest {
 
         membership();
 
-        String requestJson = "{\"email\":\"example@gmail.com\", \"password\": \"1234\", \"name\": \"jaem\"}";
+        String requestJson = "{\"email\":\"example@gmail.com\", \"password\": \"1\", \"name\": \"jaem\"}";
 
-        mockMvc.perform(post("/login")
+        String result = mockMvc.perform(post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andDo(print());
+                        .andReturn().getResponse().getContentAsString();
+
+        System.out.println("result = " + result);
+
     }
 
 
