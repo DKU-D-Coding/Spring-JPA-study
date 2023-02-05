@@ -1,8 +1,11 @@
 package com.dku.springstudy.security;
 
+import com.dku.springstudy.exception.KarrotException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -43,6 +46,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (ExpiredJwtException e){
             log.info("Expired JWT token", e);
+        } catch (KarrotException e){
+            response.setStatus(e.getHttpStatus().value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+            ResponseEntity<KarrotException> exception = ResponseEntity.status(e.getHttpStatus()).body(new KarrotException(e.getHttpStatus(), e.getCode(), e.getMessage()));
+            ObjectMapper objectMapper = new ObjectMapper();
+            String exceptionMessage = objectMapper.writeValueAsString(exception);
+            response.getWriter().write(exceptionMessage);
         }
     }
 
