@@ -1,5 +1,6 @@
 package com.dku.springstudy.domain.user;
 
+import com.dku.springstudy.domain.BaseTimeEntity;
 import com.dku.springstudy.domain.product.Product;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
@@ -30,8 +31,13 @@ public class User {
     private Role role;
 
     @Builder
-    public User(String email, String password) {
+    public User(String email, String password, String username, String phoneNumber, String nickname, String profileImgUrl) {
         this.email = email;
         this.password = password;
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.nickname = nickname;
+        this.profileImgUrl = profileImgUrl;
+        this.role = Role.USER;
     }
 }
