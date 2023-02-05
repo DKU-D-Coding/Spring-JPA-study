@@ -1,25 +1,18 @@
 package com.dku.springstudy.controller;
 
-import com.dku.springstudy.domain.Member;
-import com.dku.springstudy.dto.common.SuccessResponseDto;
 import com.dku.springstudy.dto.member.request.LoginRequestDto;
 import com.dku.springstudy.dto.member.request.MembershipRequestDto;
-import com.dku.springstudy.dto.member.request.WithdrawRequestDto;
 import com.dku.springstudy.dto.member.response.LoginResponseDto;
 import com.dku.springstudy.dto.member.response.WithdrawResponseDto;
-import com.dku.springstudy.repository.MemberRepository;
-import com.dku.springstudy.security.jwt.JwtProvider;
+import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,32 +21,21 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/membership")
-    public ResponseEntity<SuccessResponseDto<LoginResponseDto>> membership(@Valid @RequestBody MembershipRequestDto membershipRequestDto) {
-        LoginResponseDto loginResponseDto = memberService.membership(membershipRequestDto);
+    public LoginResponseDto membership(@Valid @RequestBody MembershipRequestDto membershipRequestDto) {
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new SuccessResponseDto<>(loginResponseDto));
+        return memberService.membership(membershipRequestDto);
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<SuccessResponseDto<LoginResponseDto>> login(@Valid @RequestBody LoginRequestDto loginRequest) {
-        LoginResponseDto loginResponseDto = memberService.login(loginRequest);
+    public LoginResponseDto login(@Valid @RequestBody LoginRequestDto loginRequest) {
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new SuccessResponseDto<>(loginResponseDto));
-
+        return memberService.login(loginRequest);
     }
 
-    @PostMapping("/withdraw")
-    public ResponseEntity<SuccessResponseDto<WithdrawResponseDto>> withdraw(@Valid @RequestBody WithdrawRequestDto withdrawRequestDto) {
-        Boolean success = memberService.withdraw(withdrawRequestDto);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new SuccessResponseDto<>(new WithdrawResponseDto(success)));
+    @DeleteMapping("/withdraw")
+    public WithdrawResponseDto withdraw(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return memberService.withdraw(customUserDetails.getId());
 
     }
 

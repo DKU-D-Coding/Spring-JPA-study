@@ -1,4 +1,4 @@
-package com.dku.springstudy.security.jwt;
+package com.dku.springstudy.security;
 
 import com.dku.springstudy.domain.Member;
 import com.dku.springstudy.exception.CustomException;

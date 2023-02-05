@@ -26,4 +26,11 @@ public class ErrorResponseDto extends ResponseDto {
         this.message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
     }
 
+    public ErrorResponseDto(HttpStatus status, String code, String message) {
+        super(false);
+        this.status = status;
+        this.code = code;
+        this.message = message;
+    }
+
 }

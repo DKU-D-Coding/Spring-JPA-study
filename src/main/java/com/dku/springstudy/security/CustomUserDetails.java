@@ -1,7 +1,8 @@
-package com.dku.springstudy.security.jwt;
+package com.dku.springstudy.security;
 
 import com.dku.springstudy.domain.Member;
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,8 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private final Member member;
+
+    public Long getId(){return  member.getId();}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
