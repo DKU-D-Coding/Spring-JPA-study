@@ -37,13 +37,16 @@ public class Item {
     private Category category;
 
 
-    public void createItem(Member member, String title, String content, int price, Category category){
-        this.member = member;
-        this.title = title;
-        this.content = content;
-        this.price = price;
-        this.category = category;
-        this.status = ItemStatus.SELLING; // 상품 처음 등록시에는 SELLING(판매중) 상태
+    public static Item createItem(Member member, String title, String content, int price, Category category){
+        Item item = new Item();
+        item.member = member;
+        item.title = title;
+        item.content = content;
+        item.price = price;
+        item.category = category;
+        item.status = ItemStatus.SELLING; // 상품 처음 등록시에는 SELLING(판매중) 상태
+
+        return item;
     }
 
     public void addImage(ImageFile image){

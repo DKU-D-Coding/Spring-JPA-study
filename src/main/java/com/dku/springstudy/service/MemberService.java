@@ -2,12 +2,14 @@ package com.dku.springstudy.service;
 
 import com.dku.springstudy.domain.Member;
 import com.dku.springstudy.domain.token.RefreshToken;
+import com.dku.springstudy.exception.KarrotException;
 import com.dku.springstudy.repository.jpa.MemberRepository;
 import com.dku.springstudy.repository.redis.RefreshTokenRepository;
 import com.dku.springstudy.security.JwtTokenProvider;
 import com.dku.springstudy.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -68,6 +70,11 @@ public class MemberService {
         refreshTokenRepository.save(reissuedRefreshToken);
 
         return reissuedTokenDto;
+    }
+
+    public Member getCurrentLoginMember(String email){
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new KarrotException(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "존재하지 않은 사용자 입니다."));
     }
 
 }
