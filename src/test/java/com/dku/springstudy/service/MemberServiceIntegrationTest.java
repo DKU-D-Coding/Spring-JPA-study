@@ -69,4 +69,45 @@ class MemberServiceIntegrationTest {
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
+
+    @Nested
+    class LoginTest {
+        @DisplayName("로그인 테스트")
+        @Test
+        void login() {
+            String email = "tt@naver.com";
+            String rawPassword = "123123";
+            Member member = new Member();
+            member.setEmail(email);
+            member.setPassword(passwordEncoder.encode(rawPassword));
+            member.setName("김김김");
+            member.setPhone("01000121234");
+            member.setNickname("testestrqe");
+            member.setRole(Role.USER);
+            memberService.join(member);
+
+            String result = memberService.login(email, passwordEncoder.encode(rawPassword));
+
+            assertThat(result).isEqualTo("Login Success");
+        }
+
+        @DisplayName("비밀번호를 틀려서 로그인하면 실패한다")
+        @Test
+        void loginByNotExistingEmail() {
+            String email = "tt@naver.com";
+            String rawPassword = "123123";
+            Member member = new Member();
+            member.setEmail(email);
+            member.setPassword(passwordEncoder.encode(rawPassword));
+            member.setName("김김김");
+            member.setPhone("01000121234");
+            member.setNickname("testestrqe");
+            member.setRole(Role.USER);
+            memberService.join(member);
+
+            String result = memberService.login(email, passwordEncoder.encode("12312asdasd"));
+
+            assertThat(result).isEqualTo("Login Fail");
+        }
+    }
 }
