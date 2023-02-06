@@ -1,7 +1,7 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.model.Member;
-import com.dku.springstudy.model.MemberForm;
+import com.dku.springstudy.dto.SignupDTO;
 import com.dku.springstudy.model.Role;
 import com.dku.springstudy.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class AccountController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public String signup(MemberForm memberForm) {
+    public String signup(SignupDTO memberForm) {
         String rawPassword = memberForm.getPassword();
         String encodedPassword = passwordEncoder.encode(rawPassword);
 
