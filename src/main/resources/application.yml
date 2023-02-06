@@ -28,3 +28,17 @@ server:
     include-binding-errors: always
     include-stacktrace: always
     include-exception: false
+
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAXW4DDD5LZRII4EWE       # AWS IAM AccessKey 적기
+      secretKey: fKI02S0pNFwTq/e0rLRNTXy0z+GVElu9ujlUiDyJ   # AWS IAM SecretKey 적기
+    s3:
+      bucket: karrotbucket    # ex) marryting-gyunny
+      #dir: /karrotbucket # ex) /gyunny
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

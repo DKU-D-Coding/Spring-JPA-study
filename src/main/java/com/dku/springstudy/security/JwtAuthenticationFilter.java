@@ -38,16 +38,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
         try{
-            String token = getTokenFromHeader(request);
-            String path = request.getServletPath();
+            String token = getTokenFromHeader(requestWrapper);
+            String path = requestWrapper.getServletPath();
             if(path.startsWith("/member/reissue")){
-                filterChain.doFilter(request,response);
+                filterChain.doFilter(requestWrapper,responseWrapper);
             } else {
                 if(token != null && jwtTokenProvider.validateToken(token)){
                     Authentication authentication = jwtTokenProvider.getAuthentication(token);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-                filterChain.doFilter(request, response);
                 filterChain.doFilter(requestWrapper, responseWrapper);
                 responseWrapper.copyBodyToResponse();
             }
@@ -64,9 +63,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    private String getTokenFromHeader(HttpServletRequest request) {
-        HttpServletRequest req = request;
-        String bearerToken = req.getHeader("Authorization");
+    private String getTokenFromHeader(ContentCachingRequestWrapper request) {
+//        HttpServletRequest req = request;
+        String bearerToken = request.getHeader("Authorization");
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")){
             return bearerToken.substring(7);
         }

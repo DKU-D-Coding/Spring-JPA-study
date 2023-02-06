@@ -1,4 +1,4 @@
-package com.dku.springstudy.domain.dto;
+package com.dku.springstudy.dto;
 
 import lombok.*;
 

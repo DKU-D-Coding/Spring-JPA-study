@@ -1,7 +1,7 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.domain.Member;
-import com.dku.springstudy.domain.dto.JoinDto;
+import com.dku.springstudy.dto.JoinDto;
 import com.dku.springstudy.dto.LoginDto;
 import com.dku.springstudy.dto.TokenDto;
 import com.dku.springstudy.enums.Role;
@@ -9,11 +9,7 @@ import com.dku.springstudy.repository.jpa.MemberRepository;
 import com.dku.springstudy.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController

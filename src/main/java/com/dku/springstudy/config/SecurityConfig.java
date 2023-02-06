@@ -1,4 +1,4 @@
-package com.dku.springstudy.security.config;
+package com.dku.springstudy.config;
 
 import com.dku.springstudy.security.JwtAuthenticationFilter;
 import com.dku.springstudy.security.JwtTokenProvider;

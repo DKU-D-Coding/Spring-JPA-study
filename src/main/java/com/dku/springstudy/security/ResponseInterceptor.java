@@ -1,8 +1,6 @@
 package com.dku.springstudy.security;
 
-import com.dku.springstudy.domain.Member;
-import com.dku.springstudy.domain.dto.ResponseEntity;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.dku.springstudy.dto.ResponseEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +11,6 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Component
