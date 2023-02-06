@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .requestMatchers("/account/signup", "/account/login", "/").permitAll() // 요 세 놈에 대한 요청은 인증없이 접근 허용
                 .anyRequest().authenticated() // 나머지에 대해선 인증을 받아야 한다.
                 .and()
+                // 여러 필터들 중 UsernamePassword필터 앞에 내가 만든 필터를 둔다. 이렇게 하면 커스텀 필터로 인가인증을 다룰 수 있음
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider),
                         UsernamePasswordAuthenticationFilter.class)
                 .build();

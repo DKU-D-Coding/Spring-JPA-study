@@ -9,24 +9,19 @@ import com.dku.springstudy.model.Role;
 import com.dku.springstudy.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.nio.charset.Charset;
 
 @RestController
 @RequestMapping(value = "/account")
 @RequiredArgsConstructor
 public class AccountController {
     private final JwtTokenProvider tokenProvider;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final MemberService memberService;
 
     @Value("${jwt.secret}")
@@ -49,7 +44,7 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginDTO loginInfo) {
+    public LoginResponseDTO login(@RequestBody LoginDTO loginInfo) {
         String loginEmail = loginInfo.getEmail();
         String loginRawPassword = loginInfo.getPassword();
         if (!memberService.login(loginEmail, loginRawPassword)) {
@@ -59,9 +54,6 @@ public class AccountController {
         String accessToken = tokenProvider.createToken(loginEmail, jwtSecretKey, EXPIRED_MS);
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO(accessToken);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(new MediaType("application", "json", Charset.forName("utf-8")));
-
-        return new ResponseEntity<>(loginResponseDTO, httpHeaders, HttpStatus.OK);
+        return loginResponseDTO;
     }
 }
