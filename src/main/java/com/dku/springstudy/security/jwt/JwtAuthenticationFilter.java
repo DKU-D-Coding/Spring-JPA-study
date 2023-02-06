@@ -1,6 +1,6 @@
 package com.dku.springstudy.security.jwt;
 
-import com.dku.springstudy.dto.common.ErrorResponseDto;
+import com.dku.springstudy.dto.common.ExceptionDto;
 import com.dku.springstudy.exception.CustomException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -41,16 +40,17 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 // SecurityContext 에 Authentication 객체를 저장합니다.
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+
             chain.doFilter(wrappingRequest, wrappingResponse);
             wrappingResponse.copyBodyToResponse(); //캐싱된 응답값을 덮어씀
 
         } catch (CustomException e) {
             HttpServletResponse errorResponse = (HttpServletResponse) response;
             //header 작성
-            errorResponse.setStatus(e.getErrorCode().getStatus().value());
+            errorResponse.setStatus(e.getErrorCode().getStatus());
             errorResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
             //exception 응답값 생성
-            ErrorResponseDto exceptionDto = new ErrorResponseDto(e);
+            ExceptionDto exceptionDto = new ExceptionDto(e);
 
             ObjectMapper objectMapper = new ObjectMapper();
             String exceptionMessage = objectMapper.writeValueAsString(exceptionDto);

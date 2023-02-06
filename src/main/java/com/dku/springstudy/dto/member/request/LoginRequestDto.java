@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Getter
 public class LoginRequestDto {
 
-    @Email(message = "이메일 형식에 맞지 않습니다.")
-    @NotBlank(message = "이메일을 입력해주세요.")
+    @Email(message = "Email format does not match")
+    @NotBlank(message = "Please input email")
     private String email;
 
-    @NotBlank(message = "비밀번호를 입력해주세요.")
+    @NotBlank(message = "Please input password")
     private String password;
 }

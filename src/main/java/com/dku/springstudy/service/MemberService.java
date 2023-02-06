@@ -34,10 +34,10 @@ public class MemberService {
         memberRepository.save(member);
 
         String loginAccessToken  = jwtProvider.createLoginAccessToken(member.getName());
-        //String loginRefreshToken = jwtProvider.createLoginRefreshToken(member.getName());
+        String loginRefreshToken = jwtProvider.createLoginRefreshToken(member.getName());
 
-        //return new LoginResponseDto(loginAccessToken, loginRefreshToken);
-        return new LoginResponseDto(loginAccessToken);
+        return new LoginResponseDto(loginAccessToken, loginRefreshToken);
+        //return new LoginResponseDto(loginAccessToken);
     }
 
     public WithdrawResponseDto withdraw(Long memberId){
@@ -58,13 +58,14 @@ public class MemberService {
 
         if(passwordEncoder.matches(loginRequestDto.getPassword(), member.getPassword())) {
             String loginAccessToken  = jwtProvider.createLoginAccessToken(member.getName());
-            //String loginRefreshToken = jwtProvider.createLoginRefreshToken(member.getName());
-            //return new LoginResponseDto(loginAccessToken, loginRefreshToken);
-            return new LoginResponseDto(loginAccessToken);
+            String loginRefreshToken = jwtProvider.createLoginRefreshToken(member.getName());
+            return new LoginResponseDto(loginAccessToken, loginRefreshToken);
+            //return new LoginResponseDto(loginAccessToken);
         } else {
             throw new CustomException(ErrorCode.USER_PASSWORD_INCORRECT_ERROR); //custom exception 만들기
         }
 
     }
+
 
 }

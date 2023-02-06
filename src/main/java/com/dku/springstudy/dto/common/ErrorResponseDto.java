@@ -1,36 +1,13 @@
 package com.dku.springstudy.dto.common;
 
-import com.dku.springstudy.exception.CustomException;
-import lombok.Builder;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Getter
-public class ErrorResponseDto extends ResponseDto {
-    private final HttpStatus status;
-    private final String code;
-    private final String message;
+public class ErrorResponseDto<T> extends ResponseDto{
+    private final T data;
 
-    public ErrorResponseDto(CustomException e) {
+    public ErrorResponseDto(T data) {
         super(false);
-        this.status = e.getErrorCode().getStatus();
-        this.code = e.getErrorCode().name();
-        this.message = e.getErrorCode().getMessage();
+        this.data = data;
     }
-
-    public ErrorResponseDto(MethodArgumentNotValidException e){ // @Vaild exception
-        super(false);
-        this.code = e.getBindingResult().getAllErrors().get(0).getCode();
-        this.status = (HttpStatus) e.getStatusCode();
-        this.message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-    }
-
-    public ErrorResponseDto(HttpStatus status, String code, String message) {
-        super(false);
-        this.status = status;
-        this.code = code;
-        this.message = message;
-    }
-
 }
