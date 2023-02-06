@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class WithdrawResponseDto {
-    private boolean successful;
+    private boolean removed;
 }

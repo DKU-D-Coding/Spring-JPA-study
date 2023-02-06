@@ -55,7 +55,7 @@ public class JwtProvider {
         long accessTokenValidMilliSecond = 60 * 60 * 1000L;
         return createToken(claims, accessTokenValidMilliSecond);
     }
-
+    /*
     // 로그인 성공 시 refresh token 발급
     public String createLoginRefreshToken(String userPK) {
         Claims claims = Jwts.claims();
@@ -65,6 +65,7 @@ public class JwtProvider {
         long refreshTokenValidMilliSecond = 24 * 60 * 60 * 1000L;
         return createToken(claims, refreshTokenValidMilliSecond);
     }
+     */
 
     // 토큰에서 Email 추출
 
@@ -95,4 +96,6 @@ public class JwtProvider {
             return false;
         }
     }
+
+
 }
