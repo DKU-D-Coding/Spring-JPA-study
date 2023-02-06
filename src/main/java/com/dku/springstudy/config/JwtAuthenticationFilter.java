@@ -1,7 +1,6 @@
 package com.dku.springstudy.config;
 
 import com.dku.springstudy.jwt.JwtTokenProvider;
-import dokky.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
