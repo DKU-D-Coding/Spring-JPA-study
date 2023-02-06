@@ -26,6 +26,20 @@ public class MemberService {
         }
     }
 
+    public String login(String email, String password) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("이메일을 다시 확인해주세요"));
+
+        if (isMatchedPassword(member, password)) {
+            return "Login Success";
+        }
+        return "Login Fail";
+    }
+
+    private boolean isMatchedPassword(Member member, String password) {
+        return member.getPassword().equals(password);
+    }
+
     public Optional<Member> findOne(String email) {
         return memberRepository.findByEmail(email);
     }
