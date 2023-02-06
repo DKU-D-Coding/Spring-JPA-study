@@ -86,7 +86,7 @@ class MemberServiceIntegrationTest {
             member.setRole(Role.USER);
             memberService.join(member);
 
-            String result = memberService.login(email, passwordEncoder.encode(rawPassword));
+            String result = memberService.login(email, rawPassword);
 
             assertThat(result).isEqualTo("Login Success");
         }
@@ -105,7 +105,7 @@ class MemberServiceIntegrationTest {
             member.setRole(Role.USER);
             memberService.join(member);
 
-            String result = memberService.login(email, passwordEncoder.encode("12312asdasd"));
+            String result = memberService.login(email, "12312asdasd");
 
             assertThat(result).isEqualTo("Login Fail");
         }

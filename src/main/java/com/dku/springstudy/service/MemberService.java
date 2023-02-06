@@ -3,15 +3,19 @@ package com.dku.springstudy.service;
 import com.dku.springstudy.model.Member;
 import com.dku.springstudy.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 // jpa를 통한 모든 데이터 변경은 트랜잭션 안에서 실행!
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public String join(Member newMember) {
         validate(newMember);
@@ -26,18 +30,19 @@ public class MemberService {
         }
     }
 
-    public String login(String email, String password) {
+    public String login(String email, String rawPassword) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("이메일을 다시 확인해주세요"));
 
-        if (isMatchedPassword(member, password)) {
+        if (isMatchedPassword(member, rawPassword)) {
             return "Login Success";
         }
         return "Login Fail";
     }
 
-    private boolean isMatchedPassword(Member member, String password) {
-        return member.getPassword().equals(password);
+    private boolean isMatchedPassword(Member member, String rawPassword) {
+        // 스트링의 equals메서드로 하면 안됨. encode결과값이 그때그때 달라서리..
+        return passwordEncoder.matches(rawPassword, member.getPassword());
     }
 
     public Optional<Member> findOne(String email) {

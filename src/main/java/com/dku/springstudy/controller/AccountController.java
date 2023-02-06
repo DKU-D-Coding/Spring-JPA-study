@@ -37,7 +37,7 @@ public class AccountController {
     @PostMapping("/login")
     public String login(@RequestBody LoginDTO loginInfo) {
         String loginEmail = loginInfo.getEmail();
-        String loginEncodedPassword = passwordEncoder.encode(loginInfo.getPassword());
-        return memberService.login(loginEmail, loginEncodedPassword);
+        String loginRawPassword = loginInfo.getPassword();
+        return memberService.login(loginEmail, loginRawPassword);
     }
 }
