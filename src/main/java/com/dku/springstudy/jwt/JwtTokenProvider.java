@@ -2,12 +2,20 @@ package com.dku.springstudy.jwt;
 
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenProvider {
+    private final UserDetailsService userDetailsService;
+
     public String createToken(String userEmail, String jwtSecretKey, long expiredMs) {
         // claims : jwt에서 내가 원하는 걸 담는 공간. payload라고 보면 됨. 일종의 map
         Claims claims = Jwts.claims();
@@ -49,5 +57,11 @@ public class JwtTokenProvider {
                 .getBody();
         String userEmail = (String)claims.get("email"); // object형태로 저장돼있어서..문자열로 변환해야 함
         return userEmail;
+    }
+
+    public Authentication getAuthentication(String token, String jwtSecretKey) {
+        String email = getUserEmailFromToken(token, jwtSecretKey);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 }

@@ -16,6 +16,8 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final boolean LOGIN_SUCCESS = true;
+    private final boolean LOGIN_FAIL = false;
 
     public String join(Member newMember) {
         validate(newMember);
@@ -30,14 +32,14 @@ public class MemberService {
         }
     }
 
-    public String login(String email, String rawPassword) {
+    public boolean login(String email, String rawPassword) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("이메일을 다시 확인해주세요"));
 
         if (isMatchedPassword(member, rawPassword)) {
-            return "Login Success";
+            return LOGIN_SUCCESS;
         }
-        return "Login Fail";
+        return LOGIN_FAIL;
     }
 
     private boolean isMatchedPassword(Member member, String rawPassword) {

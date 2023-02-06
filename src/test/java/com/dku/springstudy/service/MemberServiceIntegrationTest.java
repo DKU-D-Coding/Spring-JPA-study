@@ -86,9 +86,9 @@ class MemberServiceIntegrationTest {
             member.setRole(Role.USER);
             memberService.join(member);
 
-            String result = memberService.login(email, rawPassword);
+            boolean result = memberService.login(email, rawPassword);
 
-            assertThat(result).isEqualTo("Login Success");
+            assertThat(result).isTrue();
         }
 
         @DisplayName("비밀번호를 틀려서 로그인하면 실패한다")
@@ -105,9 +105,9 @@ class MemberServiceIntegrationTest {
             member.setRole(Role.USER);
             memberService.join(member);
 
-            String result = memberService.login(email, "12312asdasd");
+            boolean result = memberService.login(email, "12312asdasd");
 
-            assertThat(result).isEqualTo("Login Fail");
+            assertThat(result).isFalse();
         }
     }
 }

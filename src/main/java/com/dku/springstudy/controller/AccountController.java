@@ -1,11 +1,13 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.dto.LoginDTO;
+import com.dku.springstudy.jwt.JwtTokenProvider;
 import com.dku.springstudy.model.Member;
 import com.dku.springstudy.dto.SignupDTO;
 import com.dku.springstudy.model.Role;
 import com.dku.springstudy.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/account")
 @RequiredArgsConstructor
 public class AccountController {
+    private final JwtTokenProvider tokenProvider;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MemberService memberService;
+
+    @Value("${jwt.secret}")
+    private String jwtSecretKey;
+    private final long EXPIRED_MS = 30 * 60 * 1000L;
 
     @PostMapping("/signup")
     public String signup(SignupDTO memberForm) {
@@ -38,6 +45,9 @@ public class AccountController {
     public String login(@RequestBody LoginDTO loginInfo) {
         String loginEmail = loginInfo.getEmail();
         String loginRawPassword = loginInfo.getPassword();
-        return memberService.login(loginEmail, loginRawPassword);
+        if (!memberService.login(loginEmail, loginRawPassword)) {
+            throw new IllegalStateException("로그인에 실패했습니다.");
+        }
+        return tokenProvider.createToken(loginEmail, jwtSecretKey, EXPIRED_MS);
     }
 }
