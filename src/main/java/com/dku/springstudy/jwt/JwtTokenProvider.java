@@ -1,8 +1,7 @@
 package com.dku.springstudy.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -20,5 +19,35 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + expiredMs)) // 종료시간 넣기
                 .signWith(SignatureAlgorithm.HS256, jwtSecretKey) // 서명하기
                 .compact();
+    }
+
+    public boolean validateToken(String token, String jwtSecretKey) {
+        try {
+            // 토큰 복호화
+            Claims claims = Jwts.parser() // parser 생성
+                    .setSigningKey(jwtSecretKey) //  JWS 디지털 서명을 확인하는 데 쓰일 키를 세팅
+                    .parseClaimsJws(token)
+                    .getBody();
+            return true;
+        } catch (SignatureException e) {
+            // throw new IllegalArgumentException("토큰을 만들 때 쓰인 키가 아닙니다");
+            return false;
+        } catch (ExpiredJwtException e) {
+            return false;
+        }
+    }
+
+    public String getTokenFromHeader(HttpServletRequest request) {
+        return request.getHeader("X-AUTH-TOKEN");
+    }
+
+    public String getUserEmailFromToken(String token, String jwtSecretKey) {
+        // 토큰 복호화
+        Claims claims = Jwts.parser() // parser 생성
+                .setSigningKey(jwtSecretKey) //  JWS 디지털 서명을 확인하는 데 쓰일 키를 세팅
+                .parseClaimsJws(token)
+                .getBody();
+        String userEmail = (String)claims.get("email"); // object형태로 저장돼있어서..문자열로 변환해야 함
+        return userEmail;
     }
 }
