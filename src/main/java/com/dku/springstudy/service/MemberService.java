@@ -14,8 +14,16 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public String join(Member newMember) {
+        validate(newMember);
         memberRepository.save(newMember);
         return newMember.getEmail();
+    }
+
+    private void validate(Member newMember) {
+        String newMemberEmail = newMember.getEmail();
+        if (findOne(newMemberEmail).isPresent()) {
+            throw new IllegalArgumentException("이미 존재하는 이메일입니다");
+        }
     }
 
     public Optional<Member> findOne(String email) {
