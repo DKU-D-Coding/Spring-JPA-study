@@ -20,9 +20,15 @@ public class Post extends BaseTimeEntity{
     @Column(name = "POST_ID")
     private Long id;
 
+    @Column(name = "BOARD_NUMBER")
+    private int bno;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "TITLE")
     private String title;

@@ -1,4 +1,4 @@
-package com.cha.carrotApi.DTO.response;
+package com.cha.carrotApi.DTO.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

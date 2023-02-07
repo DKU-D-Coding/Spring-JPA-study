@@ -1,6 +1,6 @@
 package com.cha.carrotApi.exception;
 
-import com.cha.carrotApi.DTO.response.ErrorResponse;
+import com.cha.carrotApi.DTO.exception.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;

@@ -5,7 +5,7 @@ import com.cha.carrotApi.exception.CustomException;
 import com.cha.carrotApi.exception.ErrorCode;
 import com.cha.carrotApi.jwt_security.JwtTokenProvider;
 import com.cha.carrotApi.repository.UserRepository;
-import com.cha.carrotApi.DTO.request.SignUpRequest;
+import com.cha.carrotApi.DTO.user.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor

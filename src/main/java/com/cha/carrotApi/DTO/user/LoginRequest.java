@@ -1,4 +1,4 @@
-package com.cha.carrotApi.DTO.request;
+package com.cha.carrotApi.DTO.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

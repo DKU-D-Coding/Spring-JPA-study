@@ -1,6 +1,6 @@
 package com.cha.carrotApi.jwt_security;
 
-import com.cha.carrotApi.DTO.response.SuccessResponse;
+import com.cha.carrotApi.DTO.exception.SuccessResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
