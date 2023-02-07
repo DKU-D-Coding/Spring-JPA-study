@@ -1,9 +1,9 @@
 package com.dku.springstudy.config;
 
-import com.dku.springstudy.jwt.JwtAuthenticationFilter;
-import com.dku.springstudy.jwt.TokenProvider;
-import com.dku.springstudy.jwt.exception.JwtAccessDeniedHandler;
-import com.dku.springstudy.jwt.exception.JwtAuthenticationEntryPoint;
+import com.dku.springstudy.security.jwt.JwtAuthenticationFilter;
+import com.dku.springstudy.security.jwt.JwtTokenProvider;
+import com.dku.springstudy.security.exception.JwtAccessDeniedHandler;
+import com.dku.springstudy.security.exception.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final TokenProvider tokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/sign-up", "/api/login").permitAll()
+                .antMatchers("/v3/api-docs/**", "/swagger*/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -49,7 +50,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
