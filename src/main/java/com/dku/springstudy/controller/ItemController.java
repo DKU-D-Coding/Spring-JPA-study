@@ -1,6 +1,7 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.dto.ItemsDTO;
+import com.dku.springstudy.dto.ItemsResponseDTO;
 import com.dku.springstudy.dto.ResponseDTO;
 import com.dku.springstudy.model.Category;
 import com.dku.springstudy.model.Images;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,11 +41,8 @@ public class ItemController {
     @ApiOperation(value = "게시판 보기", notes = "사진,제목,가격,장소, 등을 게시판을 통해 보여준다")
     @GetMapping("/board")
     public ResponseDTO<?> index(){
-        Items itemLists = itemsService.index();
-        //List<ItemsResponseDTO> result = itemLists.stream()
-        //        .map(b -> new ItemsResponseDTO(b))
-        //        .collect(Collectors.toList());
-        return new ResponseDTO<>(HttpStatus.OK.value(), itemLists);
+        List<ItemsResponseDTO> result = itemsService.index();
+        return new ResponseDTO<>(HttpStatus.OK.value(), result);
     }
 
     @ApiOperation(value = "상품 카데고리 보기", notes = "다양한 상품의 카테고리 정보를 제공한다")
