@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ImageFile {
+public class ImageFile extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,8 +20,14 @@ public class ImageFile {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public void createImageFile(String imageUrl, Item item){
-        this.imageUrl = imageUrl;
+    public static ImageFile createImageFile(String imageUrl){
+        ImageFile imageFile = new ImageFile();
+        imageFile.imageUrl = imageUrl;
+        return imageFile;
+    }
+
+    public void updateItem(Item item){
         this.item = item;
+        item.getImages().add(this);
     }
 }

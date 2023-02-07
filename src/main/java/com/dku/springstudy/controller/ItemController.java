@@ -4,44 +4,106 @@ import com.dku.springstudy.domain.ImageFile;
 import com.dku.springstudy.domain.Item;
 import com.dku.springstudy.domain.Member;
 import com.dku.springstudy.dto.AddItemDto;
+import com.dku.springstudy.dto.ItemDetailsDto;
+import com.dku.springstudy.dto.ItemDto;
 import com.dku.springstudy.enums.Category;
 import com.dku.springstudy.repository.jpa.MemberRepository;
+import com.dku.springstudy.service.ImageFileService;
 import com.dku.springstudy.service.ItemService;
 import com.dku.springstudy.service.MemberService;
+import com.dku.springstudy.service.S3Upload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/item")
 public class ItemController {
     private final ItemService itemService;
     private final MemberService memberService;
+    private final ImageFileService imageFileService;
+    private final S3Upload s3Upload;
 
     @PostMapping("/add")
-    private AddItemDto addItem(@RequestBody AddItemDto itemDto){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String loginEmail = authentication.getName();
-        Member currentLoginMember = memberService.getCurrentLoginMember(loginEmail);
-
+    private AddItemDto addItem(@RequestPart("data") AddItemDto itemDto, @RequestPart("images")MultipartFile[] multipartFiles) throws IOException {
+        Member currentLoginMember = getCurrentLoginMember();
 
         Item item = Item.createItem(currentLoginMember, itemDto.getTitle(), itemDto.getContent(), itemDto.getPrice(), Category.valueOf(itemDto.getCategory()));
+        itemService.addItem(item);
 
-        if(itemDto.getImages()!= null){
-            for (ImageFile image:itemDto.getImages()) {
-                item.addImage(image);
+        if(multipartFiles.length != 0){
+            for(MultipartFile multipartFile : multipartFiles){
+                String imagePath = s3Upload.upload(multipartFile);
+                ImageFile imageFile = ImageFile.createImageFile(imagePath);
+                imageFile.updateItem(item);
+                imageFileService.save(imageFile);
             }
         }
 
-        itemService.addItem(item);
         return itemDto;
+    }
+
+    @GetMapping("/details/{itemId}")
+    public ItemDetailsDto details(@PathVariable("itemId") Long itemId){
+        Item findItem = itemService.findById(itemId);
+        Member seller = findItem.getMember();
+        List<Item> sellerItems = itemService.findByMember(seller);
+
+        List<ItemDto> result = sellerItems.stream()
+                .map(i -> new ItemDto(
+                        i.getId(),
+                        i.getImages().stream().map(ImageFile::getImageUrl).collect(Collectors.toList()),
+                        i.getTitle(),
+                        i.getContent(),
+                        i.getPrice(),
+                        i.getLikes().size())
+                )
+                .collect(Collectors.toList());
+
+
+        return new ItemDetailsDto(
+                findItem.getMember().getNickname(),
+                findItem.getCategory().getCategory(),
+                findItem.getLastModifiedDate(),
+                findItem.getImages().stream().map(ImageFile::getImageUrl).collect(Collectors.toList()),
+                findItem.getTitle(),
+                findItem.getContent(),
+                findItem.getPrice(),
+                result
+                );
+    }
+
+    @GetMapping("/details/all/{sellerId}")
+    public List<ItemDto> sellerItems(@PathVariable("sellerId") Long sellerId){
+        Member seller = memberService.findById(sellerId);
+        List<Item> sellerItems = itemService.findByMember(seller);
+        return sellerItems.stream()
+                .map(i -> new ItemDto(
+                        i.getId(),
+                        i.getImages().stream().map(ImageFile::getImageUrl).collect(Collectors.toList()),
+                        i.getTitle(),
+                        i.getContent(),
+                        i.getPrice(),
+                        i.getLikes().size())
+                )
+                .collect(Collectors.toList());
+    }
+
+    private Member getCurrentLoginMember() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loginEmail = authentication.getName();
+        return memberService.getCurrentLoginMember(loginEmail);
     }
 
 

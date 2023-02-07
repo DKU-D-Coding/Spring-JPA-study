@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item {
+public class Item extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
@@ -36,6 +36,9 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @OneToMany(mappedBy = "item")
+    private List<ItemLike> likes = new ArrayList<>();
+
 
     public static Item createItem(Member member, String title, String content, int price, Category category){
         Item item = new Item();
@@ -47,10 +50,6 @@ public class Item {
         item.status = ItemStatus.SELLING; // 상품 처음 등록시에는 SELLING(판매중) 상태
 
         return item;
-    }
-
-    public void addImage(ImageFile image){
-        images.add(image);
     }
 
 }

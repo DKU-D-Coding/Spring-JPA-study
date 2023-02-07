@@ -74,7 +74,12 @@ public class MemberService {
 
     public Member getCurrentLoginMember(String email){
         return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new KarrotException(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "존재하지 않은 사용자 입니다."));
+                .orElseThrow(() -> new KarrotException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "존재하지 않은 사용자 입니다."));
+    }
+
+    public Member findById(Long id){
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new KarrotException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "존재하지 않은 사용자 입니다."));
     }
 
 }

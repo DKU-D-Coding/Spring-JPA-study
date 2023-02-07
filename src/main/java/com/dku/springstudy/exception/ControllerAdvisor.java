@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+
 public class ControllerAdvisor {
     @ExceptionHandler(value = KarrotException.class)
     protected ResponseEntity exceptionHandler(KarrotException e){

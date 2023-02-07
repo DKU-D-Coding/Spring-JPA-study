@@ -1,19 +1,19 @@
 package com.dku.springstudy.dto;
 
-import com.dku.springstudy.domain.ImageFile;
-import com.dku.springstudy.enums.Category;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddItemDto {
+public class ItemDto {
+    private Long id;
+    private List<String> imagePath;
     private String title;
-    private String category;
-    private int price;
     private String content;
+    private int price;
+    private int likeCount;
 }
