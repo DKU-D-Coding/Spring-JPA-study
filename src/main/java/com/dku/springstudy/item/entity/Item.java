@@ -3,9 +3,7 @@ package com.dku.springstudy.item.entity;
 import com.dku.springstudy.global.BaseEntity;
 import com.dku.springstudy.like.entity.Like;
 import com.dku.springstudy.member.entity.Member;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +14,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
+@Getter
 public class Item extends BaseEntity {
 
     @Id
