@@ -8,6 +8,7 @@ import com.dku.springstudy.member.service.MemberDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -37,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/signup","/").permitAll()
+                .antMatchers("/login", "/signup", "/").permitAll()
+                .antMatchers(HttpMethod.POST, "/item").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
