@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.validation.Errors;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -28,14 +30,20 @@ public class UserController {
 
     @PostMapping("/account/sign-up")
     @ApiOperation(value = "회원가입", notes = "SignUpRequest 객체로 받아 유저를 등록합니다.")
-    public ResponseDTO<?> signUp(@RequestBody SignUpRequestDTO signUpRequest){
+    public ResponseDTO<?> signUp(@RequestBody @Valid SignUpRequestDTO signUpRequest, Errors errors){
+        if (errors.hasErrors()){
+            throw new IllegalStateException("회원가입 검증 오류");
+        }
         userService.signUp(signUpRequest);
         return new ResponseDTO<>(HttpStatus.OK.value(), signUpRequest);
     }
 
     @PostMapping("/account/login")
     @ApiOperation(value = "로그인", notes = "LoginRequest 객체로 email과 password를 받아 로그인을 진행하고, access token과 refresh token을 리턴합니다.")
-    public ResponseDTO<?> login(@RequestBody LoginRequestDTO loginRequest) throws JsonProcessingException {
+    public ResponseDTO<?> login(@RequestBody @Valid  LoginRequestDTO loginRequest, Errors errors) throws JsonProcessingException {
+        if (errors.hasErrors()){
+            throw new IllegalStateException("로그인 검증 오류");
+        }
         UserResponseDTO userResponse = userService.login(loginRequest);
         TokensResponseDTO tokens = jwtProvider.createTokensByLogin(userResponse);
         return new ResponseDTO<>(HttpStatus.OK.value(), tokens);
