@@ -1,8 +1,7 @@
 package com.cha.carrotApi.repository;
 
-import org.springframework.stereotype.Repository;
+import com.cha.carrotApi.domain.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class PostRepository {
-
+public interface PostRepository extends JpaRepository<Post, Long> {
 }
