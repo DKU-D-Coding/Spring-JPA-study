@@ -61,4 +61,7 @@ public class Items extends BaseTimeEntity {
     public int getTotalLikes(){
         return likes.size();
     }
+
+    @Version
+    private Long version;
 }
