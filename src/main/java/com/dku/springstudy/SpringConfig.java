@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@RequiredArgsConstructor // 생성자 생략 가능하게 해주는 듯?
+@RequiredArgsConstructor
 public class SpringConfig {
 
     private final EntityManager em;

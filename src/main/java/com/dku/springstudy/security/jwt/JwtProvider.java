@@ -46,7 +46,7 @@ public class JwtProvider {
     }
 
     // 로그인 성공 시 access token 발급
-    public String createLoginAccessToken(String userPK) {
+    public String createAccessToken(String userPK) {
         Claims claims = Jwts.claims();
         claims.setSubject(userPK);
         //claims.put("role", role);
@@ -57,7 +57,7 @@ public class JwtProvider {
     }
 
     // 로그인 성공 시 refresh token 발급
-    public String createLoginRefreshToken(String userPK) {
+    public String createRefreshToken(String userPK) {
         Claims claims = Jwts.claims();
         claims.setSubject(userPK);
 

@@ -5,8 +5,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.util.Objects;
-
 @Getter
 public class ExceptionDto {
     private final HttpStatus error;

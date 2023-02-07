@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class LoginResponseDto {
+public class MembershipResponseDto {
     private String accessToken;
     private String refreshToken;
 
-    public LoginResponseDto LoginResponse(String accessToken, String refreshToken) {
-        return new LoginResponseDto(accessToken,refreshToken);
+    public MembershipResponseDto LoginResponse(String accessToken, String refreshToken) {
+        return new MembershipResponseDto(accessToken,refreshToken);
     }
 
 }

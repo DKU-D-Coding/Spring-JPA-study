@@ -5,19 +5,24 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Transactional
 public class MemberRepository {
     private final EntityManager em;
 
     public void save(Member member){
         em.persist(member);
     }
-
     public void remove(Member member){
-        em.remove(member);
+        Session session = em.unwrap(Session.class);
+        session.remove(em.contains(member) ? member : em.merge(member));
+        session.flush();
+        em.close();
     }
 
     public Optional<Member> findById(Long id){
