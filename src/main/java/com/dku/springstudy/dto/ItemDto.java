@@ -1,5 +1,6 @@
 package com.dku.springstudy.dto;
 
+import com.dku.springstudy.enums.ItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,5 @@ public class ItemDto {
     private String content;
     private int price;
     private int likeCount;
+    private ItemStatus itemStatus;
 }

@@ -23,8 +23,11 @@ public class ItemLike extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public void createItemLike(Item item, Member member){
-        this.item = item;
-        this.member = member;
+    public static ItemLike createItemLike(Item item, Member member){
+        ItemLike itemLike = new ItemLike();
+        itemLike.item = item;
+        item.getLikes().add(itemLike);
+        itemLike.member = member;
+        return itemLike;
     }
 }

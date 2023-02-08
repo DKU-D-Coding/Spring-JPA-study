@@ -1,4 +1,4 @@
-package com.dku.springstudy.service;
+package com.dku.springstudy.security;
 
 import com.dku.springstudy.domain.Member;
 import com.dku.springstudy.repository.jpa.MemberRepository;
@@ -15,21 +15,12 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberRepository.findByEmail(username) // username = email
-                .map(this::createUserDetails)
+                .map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 회원이 존재하지 않습니다."));
-    }
-
-    private UserDetails createUserDetails(Member member){
-        return User.builder()
-                .username(member.getEmail())
-                .password(passwordEncoder.encode(member.getPassword()))
-                .roles(member.getRole().toString())
-                .build();
     }
 }

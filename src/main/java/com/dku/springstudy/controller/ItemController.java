@@ -39,7 +39,7 @@ public class ItemController {
     private AddItemDto addItem(@RequestPart("data") AddItemDto itemDto, @RequestPart("images")MultipartFile[] multipartFiles) throws IOException {
         Member currentLoginMember = getCurrentLoginMember();
 
-        Item item = Item.createItem(currentLoginMember, itemDto.getTitle(), itemDto.getContent(), itemDto.getPrice(), Category.valueOf(itemDto.getCategory()));
+        Item item = Item.createItem(currentLoginMember, itemDto.getTitle(), itemDto.getContent(), itemDto.getPrice(), itemDto.getCategory());
         itemService.addItem(item);
 
         if(multipartFiles.length != 0){
@@ -58,19 +58,7 @@ public class ItemController {
     public ItemDetailsDto details(@PathVariable("itemId") Long itemId){
         Item findItem = itemService.findById(itemId);
         Member seller = findItem.getMember();
-        List<Item> sellerItems = itemService.findByMember(seller);
-
-        List<ItemDto> result = sellerItems.stream()
-                .map(i -> new ItemDto(
-                        i.getId(),
-                        i.getImages().stream().map(ImageFile::getImageUrl).collect(Collectors.toList()),
-                        i.getTitle(),
-                        i.getContent(),
-                        i.getPrice(),
-                        i.getLikes().size())
-                )
-                .collect(Collectors.toList());
-
+        List<ItemDto> result = itemService.findByMember(seller);
 
         return new ItemDetailsDto(
                 findItem.getMember().getNickname(),
@@ -87,17 +75,32 @@ public class ItemController {
     @GetMapping("/details/all/{sellerId}")
     public List<ItemDto> sellerItems(@PathVariable("sellerId") Long sellerId){
         Member seller = memberService.findById(sellerId);
-        List<Item> sellerItems = itemService.findByMember(seller);
-        return sellerItems.stream()
-                .map(i -> new ItemDto(
-                        i.getId(),
-                        i.getImages().stream().map(ImageFile::getImageUrl).collect(Collectors.toList()),
-                        i.getTitle(),
-                        i.getContent(),
-                        i.getPrice(),
-                        i.getLikes().size())
-                )
-                .collect(Collectors.toList());
+        return itemService.findByMember(seller);
+    }
+
+    @GetMapping("/update/{itemId}")
+    public ItemDto transferPreviousItemInfo(@PathVariable Long itemId){
+        return itemService.transferPreviousItemInfo(itemId);
+    }
+
+    @PostMapping("/update/{itemId}")
+    public void updateItem( @PathVariable("itemId") Long itemId,
+                            @RequestPart("data") AddItemDto updateItemDto,
+                            @RequestPart("images")MultipartFile[] updateMultipartFiles) throws IOException {
+
+        itemService.updateItem(
+                itemId,
+                updateItemDto.getTitle(),
+                updateItemDto.getContent(),
+                updateItemDto.getCategory(),
+                updateItemDto.getPrice(),
+                updateMultipartFiles
+        );
+    }
+
+    @PostMapping("/delete/{itemId}")
+    public void deleteItem(@PathVariable Long itemId){
+        itemService.deleteItem(itemId);
     }
 
     private Member getCurrentLoginMember() {

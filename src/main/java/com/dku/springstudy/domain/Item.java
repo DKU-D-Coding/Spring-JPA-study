@@ -5,6 +5,7 @@ import com.dku.springstudy.enums.ItemStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -50,6 +51,19 @@ public class Item extends BaseEntity{
         item.status = ItemStatus.SELLING; // 상품 처음 등록시에는 SELLING(판매중) 상태
 
         return item;
+    }
+
+    public void updateItem(String title, String content, Category category, int price, List<ImageFile> updateMultipartFiles){
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.price = price;
+        this.images.clear();
+        this.images.addAll(updateMultipartFiles);
+    }
+
+    public void changeStatus(ItemStatus itemStatus){
+        this.status = itemStatus;
     }
 
 }

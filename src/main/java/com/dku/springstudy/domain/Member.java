@@ -29,6 +29,9 @@ public class Member extends BaseEntity implements UserDetails{
     private String phone;
     private String nickname;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private ImageFile profileImage;
+
     // 권한 정보(Role)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -42,6 +45,10 @@ public class Member extends BaseEntity implements UserDetails{
         member.nickname = nickname;
         member.role = role;
         return member;
+    }
+
+    public void updateMemberProfiles(String nickname, ImageFile profileImage){
+        this.nickname = nickname;
     }
 
     @Override

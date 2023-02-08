@@ -1,10 +1,13 @@
 package com.dku.springstudy.service;
 
+import com.dku.springstudy.domain.ImageFile;
 import com.dku.springstudy.domain.Member;
 import com.dku.springstudy.domain.token.RefreshToken;
+import com.dku.springstudy.dto.MyPageDto;
 import com.dku.springstudy.exception.KarrotException;
 import com.dku.springstudy.repository.jpa.MemberRepository;
 import com.dku.springstudy.repository.redis.RefreshTokenRepository;
+import com.dku.springstudy.security.AuthenticationProvider;
 import com.dku.springstudy.security.JwtTokenProvider;
 import com.dku.springstudy.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,4 +86,17 @@ public class MemberService {
                 .orElseThrow(() -> new KarrotException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "존재하지 않은 사용자 입니다."));
     }
 
+    public MyPageDto myPageHome() {
+        Member currentMember = AuthenticationProvider.getCurrentMember();
+        return new MyPageDto(currentMember.getProfileImage().getImageUrl(), currentMember.getNickname());
+    }
+
+    @Transactional
+    public void updateProfiles(String nickname, ImageFile profileImage) {
+        Long currentMemberId = AuthenticationProvider.getCurrentMemberId();
+        Member updateMember = memberRepository.findById(currentMemberId)
+                .orElseThrow(() -> new KarrotException(HttpStatus.NOT_FOUND, HttpStatus.NO_CONTENT.value(), "존재하지 않은 사용자 입니다."));
+
+        updateMember.updateMemberProfiles(nickname, profileImage);
+    }
 }

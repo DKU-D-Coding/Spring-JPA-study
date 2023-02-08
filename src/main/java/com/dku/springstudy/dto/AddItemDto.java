@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AddItemDto {
     private String title;
-    private String category;
+    private Category category;
     private int price;
     private String content;
 }
