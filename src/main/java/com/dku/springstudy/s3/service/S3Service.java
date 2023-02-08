@@ -33,6 +33,7 @@ public class S3Service {
     private final AmazonS3 amazonS3;
     private final FileRepository fileRepository;
 
+    // 파일 업로드 (여러 개)
     @Transactional
     public List<String> uploadFiles(List<MultipartFile> multipartFile, Product product) {
         List<String> fileUrlList = new ArrayList<>();
@@ -60,6 +61,25 @@ public class S3Service {
             fileUrlList.add(getUrl(fileName));
         });
         return fileUrlList;
+    }
+
+    // 파일 업로드 (1개)
+    @Transactional
+    public String uploadFile(MultipartFile file) {
+
+        String fileName = createFileName(file.getOriginalFilename());
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
+
+        try (InputStream inputStream = file.getInputStream()) {
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.FILE_UPLOAD_FAIL);
+        }
+
+        return getUrl(fileName);
     }
 
     private String createFileName(String fileName) {
