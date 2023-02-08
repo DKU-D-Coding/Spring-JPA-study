@@ -1,12 +1,13 @@
 package com.dku.springstudy.auth;
 
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.SignatureException;
+import com.dku.springstudy.auth.exception.TokenException;
+import com.dku.springstudy.error.ErrorResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -35,18 +36,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Authentication authentication = jwtProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (ExpiredJwtException err) {
-            logger.error("token is expired and not valid anymore", err);
-            throw new JwtException("토큰 기한이 만료되었습니다.");
-        } catch (IllegalArgumentException err) {
-            logger.error("an error occurred during getting email from token", err);
-            throw new JwtException("유효하지 않은 토큰정보 입니다.");
-        } catch (SignatureException err) {
-            logger.error("Authentication Failed. Username or Password not valid", err);
-            throw new JwtException("사용자 인증에 실패하였습니다.");
-        } catch (BadCredentialsException err) {
-            logger.error("Incorrect email or password.");
-            throw new BadCredentialsException("이메일 또는 비밀번호를 다시 확인해주세요.");
+        } catch (TokenException e) {
+            HttpServletResponse errorResponse = (HttpServletResponse) response;
+            errorResponse.setStatus(e.getErrorCode().getHttpStatus());
+            errorResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            ResponseEntity<ErrorResponse> exceptionDto = ResponseEntity.status(e.getErrorCode().getHttpStatus()).body(ErrorResponse.from(e.getErrorCode()));
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String exceptionMessage = objectMapper.writeValueAsString(exceptionDto);
+
+            errorResponse.getWriter().write(exceptionMessage);
         }
         chain.doFilter(request, response);
     }
