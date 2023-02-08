@@ -7,10 +7,7 @@ import com.project.carrot.repository.MemberRepository;
 import com.project.carrot.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,8 +29,8 @@ public class MemberItemController {
         return memberItemRepository.findAll();
     }
 
-    @PostMapping(value = "/itemAppend")
-    public MemberItem appendItem(@RequestBody ItemDTO itemDTO) {
+    @PostMapping(value = "/item/sellItem")
+    public MemberItem sellItem(@RequestBody ItemDTO itemDTO) {
         MemberItem memberItem = itemDTO.toEntity();
         Optional<Member> member = memberItemRepository.findByUserId(itemDTO.getUSERID());
         log.info(member.get().getUserEmail());
@@ -42,7 +39,17 @@ public class MemberItemController {
 
         //mypage 구현을 위해 member에 addMemberItem 추가해야함
         log.info("상품 추가");
-        return memberItemRepository.save(memberItem);
+
+        return memberItem;
+    }
+
+    @RequestMapping(value="/item/buyItem") //URL을 통해 memberItem 반환
+    public MemberItem buyItem(@RequestParam("itemId") Long id){
+        log.info("인자의 값",id);
+        MemberItem memberItem= memberItemRepository.findByItemId(id)
+                .orElseThrow(() -> new IllegalArgumentException("없는 ItemID"));
+
+        return memberItem;
     }
 
 }

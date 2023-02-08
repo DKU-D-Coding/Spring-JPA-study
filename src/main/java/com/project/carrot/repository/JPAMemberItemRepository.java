@@ -51,6 +51,12 @@ public class JPAMemberItemRepository implements MemberItemRepository{
     }
 
     @Override
+    public Optional<MemberItem> findByItemId(Long ItemId){
+        MemberItem memberItem=em.find(MemberItem.class,ItemId);
+        return Optional.ofNullable(memberItem);
+    }
+
+    @Override
     public Optional<Member> findByUserId(Long UserId){
         Member member=em.find(Member.class,UserId);
         return Optional.ofNullable(member);

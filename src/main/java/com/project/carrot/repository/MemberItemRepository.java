@@ -13,6 +13,8 @@ public interface MemberItemRepository {
     List<MemberItem> findByTitle(String ItemTitle);
     List<MemberItem> findByContent(String ItemContent);
 
+    Optional<MemberItem> findByItemId(Long ItemId);
+
     Optional<Member> findByUserId(Long UserId);
 
 

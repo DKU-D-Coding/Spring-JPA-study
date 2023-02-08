@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class MemberItem {
     @Id
     @GeneratedValue
-    private int ItemId;
+    private Long ItemId;
     private Long UserId; //외래키
     private String ItemTitle;
     private String ItemContent;
