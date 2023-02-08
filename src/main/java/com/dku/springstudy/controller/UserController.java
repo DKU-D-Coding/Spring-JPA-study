@@ -1,5 +1,6 @@
 package com.dku.springstudy.controller;
 
+import com.dku.springstudy.dto.common.SuccessResponse;
 import com.dku.springstudy.dto.user.request.LoginRequestDto;
 import com.dku.springstudy.dto.user.response.LoginResponseDto;
 import com.dku.springstudy.dto.user.request.SignUpRequestDto;
@@ -10,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,10 +34,12 @@ public class UserController {
             @ApiResponse(responseCode = "409", description = "이미 가입된 이메일로 회원가입을 시도하는 경우")
     })
     @PostMapping("/sign-up")
-    public SignUpResponseDto signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto) {
+    public ResponseEntity<SuccessResponse<SignUpResponseDto>> signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto) {
         SignUpResponseDto userId = userService.signUp(signUpRequestDto);
 
-        return userId;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse<>(userId));
     }
 
     @Operation(
@@ -47,9 +52,11 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "비밀번호가 일치하지 않는 경우")
     })
     @PostMapping("/login")
-    public LoginResponseDto login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<SuccessResponse<LoginResponseDto>> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         LoginResponseDto tokens = userService.login(loginRequestDto);
 
-        return tokens;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse<>(tokens));
     }
 }

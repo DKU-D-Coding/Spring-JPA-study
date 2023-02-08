@@ -33,41 +33,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        try {
-            // SecurityFilter에서 넘어오는 Request와 Response 캐싱
-            ContentCachingRequestWrapper wrappingRequest = new ContentCachingRequestWrapper((HttpServletRequest) request);
-            ContentCachingResponseWrapper wrappingResponse = new ContentCachingResponseWrapper((HttpServletResponse) response);
+        String token = resolveToken((HttpServletRequest) request);
 
-            String token = resolveToken((HttpServletRequest) request);
-
-            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) { // 토큰이 유효하다면
-                Authentication authentication = jwtTokenProvider.getAuthentication(token);
-                SecurityContextHolder.getContext().setAuthentication(authentication); // 사용자 정보를 SecurityContext에 저장
-            } else {
-                log.debug("유효한 JWT 토큰이 없습니다, uri: {}", ((HttpServletRequest) request).getRequestURI());
-            }
-
-            chain.doFilter(wrappingRequest , wrappingResponse);
-            wrappingResponse.copyBodyToResponse(); // 캐싱된 응답값을 덮어쓴다.
-        } catch (CustomException e) {
-            HttpServletResponse errorResponse = (HttpServletResponse) response;
-
-            // header 작성
-            errorResponse.setStatus(e.getErrorCode().getHttpstatus().value());
-            errorResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-            // exception 응답값 생성
-            HttpStatus status = e.getErrorCode().getHttpstatus();
-            ResponseEntity<ErrorResponse> errorEntity = ResponseEntity
-                                                                .status(status)
-                                                                .body(new ErrorResponse(status.value(), e.getErrorCode().getMessage()));
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            String exceptionMessage = objectMapper.writeValueAsString(errorEntity);
-
-            errorResponse.getWriter().write(exceptionMessage);
-            log.info("ErrorResponse Body : ", errorResponse);
+        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) { // 토큰이 유효하다면
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication); // 사용자 정보를 SecurityContext에 저장
+        } else {
+            log.debug("유효한 JWT 토큰이 없습니다, uri: {}", ((HttpServletRequest) request).getRequestURI());
         }
+
+        chain.doFilter(request, response);
     }
 
     private String resolveToken(HttpServletRequest request) {
