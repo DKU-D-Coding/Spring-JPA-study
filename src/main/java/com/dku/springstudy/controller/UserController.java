@@ -6,10 +6,10 @@ import com.dku.springstudy.dto.user.response.LoginResponseDto;
 import com.dku.springstudy.dto.user.request.SignUpRequestDto;
 import com.dku.springstudy.dto.user.response.SignUpResponseDto;
 import com.dku.springstudy.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Tag(name = "사용자 API")
+@Api(tags = "사용자 API")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

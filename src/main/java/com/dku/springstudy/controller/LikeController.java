@@ -4,10 +4,10 @@ import com.dku.springstudy.dto.common.SuccessResponse;
 import com.dku.springstudy.dto.like.LikeClickResponseDto;
 import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.LikeService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "좋아요 API")
+@Api(tags = "좋아요 API")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

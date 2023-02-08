@@ -5,11 +5,11 @@ import com.dku.springstudy.dto.product.request.CreateRequestDto;
 import com.dku.springstudy.dto.product.response.CreateResponseDto;
 import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Tag(name = "상품 API")
+@Api(tags = "상품 API")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
