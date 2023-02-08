@@ -6,6 +6,7 @@ import com.dku.springstudy.like.entity.Like;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,9 +42,12 @@ public class Member extends BaseEntity {
     private String profileImageUrl;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item> products;
+    private List<Item> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likes;
+    private List<Like> likes = new ArrayList<>();
 
+    public void addLike(Like like) {
+        this.likes.add(like);
+    }
 }

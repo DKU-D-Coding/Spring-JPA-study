@@ -6,6 +6,7 @@ import com.dku.springstudy.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class Item extends BaseEntity {
     private Long price;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> image;
+    private List<Image> image = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -43,5 +44,9 @@ public class Item extends BaseEntity {
     private Status status;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likes;
+    private List<Like> likes = new ArrayList<>();
+
+    public void addLike(Like like) {
+        this.likes.add(like);
+    }
 }
