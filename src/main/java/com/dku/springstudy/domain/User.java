@@ -58,4 +58,9 @@ public class User extends BaseTimeEntity {
         this.nickname = nickname;
         this.ImgUrl = ImgUrl;
     }
+
+    // 프로필 사진 삭제
+    public void deleteImg() {
+        this.ImgUrl = null;
+    }
 }

@@ -84,4 +84,22 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(new SuccessResponse<>(response));
     }
+
+    @Operation(
+            summary = "회원 프로필 사진 삭제",
+            description = "로그인된 사용자의 프로필 사진을 삭제한다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "404", description = "아이디(PK)가 존재하지 않는 경우"),
+    })
+    @DeleteMapping("/user/profile")
+    public ResponseEntity<SuccessResponse<UserUpdateResponseDto>> deleteImg(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        UserUpdateResponseDto response = userService.deleteImg(customUserDetails.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse<>(response));
+    }
 }

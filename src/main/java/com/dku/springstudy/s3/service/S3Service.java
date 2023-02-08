@@ -1,6 +1,8 @@
 package com.dku.springstudy.s3.service;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -29,6 +31,9 @@ public class S3Service {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    @Value("${cloud.aws.region.static}")
+    private String region;
 
     private final AmazonS3 amazonS3;
     private final FileRepository fileRepository;
@@ -99,5 +104,19 @@ public class S3Service {
 
     private String getUrl(String fileName) {
         return amazonS3.getUrl(bucket, fileName).toString();
+    }
+
+    // 파일 삭제 (1개)
+    public void deleteFile(String fileUrl) {
+
+        String fileKey = fileUrl.substring(49);
+        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(region).build();
+
+        try {
+            s3.deleteObject(bucket, fileKey);
+        } catch (AmazonServiceException e) {
+            System.err.println(e.getErrorMessage());
+            System.exit(1);
+        }
     }
 }

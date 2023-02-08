@@ -74,4 +74,14 @@ public class UserService {
 
         return UserUpdateResponseDto.of(nickname, imgUrl);
     }
+
+    @Transactional
+    public UserUpdateResponseDto deleteImg(Long loginMemberId) {
+
+        User user = userRepository.findById(loginMemberId).orElseThrow(() -> new CustomException(ErrorCode.USER_ID_NOT_FOUND));
+        s3Service.deleteFile(user.getImgUrl());
+        user.deleteImg();
+
+        return UserUpdateResponseDto.of(user.getNickname(), null);
+    }
 }
