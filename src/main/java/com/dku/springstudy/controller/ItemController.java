@@ -77,4 +77,11 @@ public class ItemController {
         itemsService.changeItemStatus(itemId,itemsStatusDTO);
         return new ResponseDTO<>(HttpStatus.OK.value(), "상품상태 변경 완료");
     }
+
+    @ApiOperation(value = "나의 판매상품 보기", notes = "내가 한 모든상품을 화면에 나타냅니다")
+    @GetMapping("/board/myItem")
+    public ResponseDTO<?> myItems(@AuthenticationPrincipal String userID){
+        List<ItemsResponseDTO> myItems = itemsService.findMyItems(userID);
+        return new ResponseDTO<>(HttpStatus.OK.value(), myItems);
+    }
 }

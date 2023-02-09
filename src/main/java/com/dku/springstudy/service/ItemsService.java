@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 @Service
 public class ItemsService {
     private final ItemsRepository itemsRepository;
+    private final UserRepository userRepository;
+
     public List<ItemsResponseDTO> index(){
         List<Items> items = itemsRepository.findItemsWithImages();
         List<ItemsResponseDTO> result = items.stream()
@@ -33,5 +35,14 @@ public class ItemsService {
     public void changeItemStatus(Long itemId, ItemsStatusDTO itemsStatusDTO) {
         Items item = itemsRepository.findById(itemId).orElseThrow(()->new IllegalStateException("상품없음 오류"));
         item.changeStatus(itemsStatusDTO);
+    }
+
+    public List<ItemsResponseDTO> findMyItems(String userID) {
+        User user = userRepository.findById(userID).orElseThrow(()-> new IllegalStateException("사용자 없음 오류"));
+        List<Items> myItems = itemsRepository.findByUser(user);
+        List<ItemsResponseDTO> result = myItems.stream()
+                .map(b->new ItemsResponseDTO(b))
+                .collect(Collectors.toList());
+        return result;
     }
 }
