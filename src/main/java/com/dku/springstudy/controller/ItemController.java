@@ -2,6 +2,7 @@ package com.dku.springstudy.controller;
 
 import com.dku.springstudy.dto.ItemsDTO;
 import com.dku.springstudy.dto.ItemsResponseDTO;
+import com.dku.springstudy.dto.ItemsStatusDTO;
 import com.dku.springstudy.dto.ResponseDTO;
 import com.dku.springstudy.model.Category;
 import com.dku.springstudy.model.Images;
@@ -68,5 +69,12 @@ public class ItemController {
 
         imageService.multipleModify(file, userId, itemsDTO, itemId);
         return new ResponseDTO<>(HttpStatus.OK.value(), "수정완료");
+    }
+
+    @ApiOperation(value = "상품상태 변경하기", notes = "상품 상태를 판매중,판매완료,예약중 으로 설정할 수 있다")
+    @PatchMapping("/board/{itemId}/status")
+    public ResponseDTO<?> changeStatus(@PathVariable Long itemId, @RequestBody ItemsStatusDTO itemsStatusDTO){
+        itemsService.changeItemStatus(itemId,itemsStatusDTO);
+        return new ResponseDTO<>(HttpStatus.OK.value(), "상품상태 변경 완료");
     }
 }

@@ -2,6 +2,7 @@ package com.dku.springstudy.service;
 
 import com.dku.springstudy.dto.ItemsDTO;
 import com.dku.springstudy.dto.ItemsResponseDTO;
+import com.dku.springstudy.dto.ItemsStatusDTO;
 import com.dku.springstudy.dto.user.ImageResponseDTO;
 import com.dku.springstudy.model.*;
 import com.dku.springstudy.repository.ItemsRepository;
@@ -26,5 +27,11 @@ public class ItemsService {
                 .map(b -> new ItemsResponseDTO(b))
                 .collect(Collectors.toList());
         return result;
+    }
+
+    @Transactional
+    public void changeItemStatus(Long itemId, ItemsStatusDTO itemsStatusDTO) {
+        Items item = itemsRepository.findById(itemId).orElseThrow(()->new IllegalStateException("상품없음 오류"));
+        item.changeStatus(itemsStatusDTO);
     }
 }

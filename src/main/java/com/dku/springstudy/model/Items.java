@@ -1,6 +1,7 @@
 package com.dku.springstudy.model;
 
 import com.dku.springstudy.dto.ItemsDTO;
+import com.dku.springstudy.dto.ItemsStatusDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -43,6 +44,10 @@ public class Items extends BaseTimeEntity {
         this.price = itemsDTO.getPrice();
         this.intro = itemsDTO.getIntro();
         this.category = Category.valueOf(itemsDTO.getCategory());
+    }
+
+    public void changeStatus(ItemsStatusDTO itemsStatusDTO){
+        this.itemStatus = itemsStatusDTO.getItemStatus();
     }
 
     public void addItemWithImage(Images image){
