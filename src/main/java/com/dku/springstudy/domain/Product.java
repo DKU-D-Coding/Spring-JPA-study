@@ -3,12 +3,15 @@ package com.dku.springstudy.domain;
 import com.dku.springstudy.domain.common.BaseTimeEntity;
 import com.dku.springstudy.domain.constant.Category;
 import com.dku.springstudy.domain.constant.Status;
+import com.dku.springstudy.s3.domain.File;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -43,6 +46,9 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<File> imageUrls = new ArrayList<>();
 
     @Builder
     private Product(User user, String title, String content, Integer price, Category category) {

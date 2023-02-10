@@ -3,6 +3,7 @@ package com.dku.springstudy.controller;
 import com.dku.springstudy.dto.common.SuccessResponse;
 import com.dku.springstudy.dto.product.request.ProductCreateRequestDto;
 import com.dku.springstudy.dto.product.response.ProductCreateResponseDto;
+import com.dku.springstudy.dto.product.response.ProductInfoResponseDto;
 import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.ProductService;
 import io.swagger.annotations.Api;
@@ -47,6 +48,26 @@ public class ProductController {
     ) {
 
         ProductCreateResponseDto response = productService.createPost(dto, file, customUserDetails.getId());
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse<>(response));
+    }
+
+    @Operation(
+            summary = "상품 상세 조회",
+            description = "상품 아이디를 입력받아 상세 정보를 조회한다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "404", description = "회원 또는 상품의 아이디(PK)가 존재하지 않는 경우"),
+    })
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<SuccessResponse<ProductInfoResponseDto>> getProductInfo(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @PathVariable("productId") Long productId
+    ) {
+        ProductInfoResponseDto response = productService.getProductInfo(customUserDetails.getId(), productId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
