@@ -5,8 +5,10 @@ import com.project.carrot.domain.*;
 import com.project.carrot.repository.MemberItemRepository;
 import com.project.carrot.repository.MemberRepository;
 import com.project.carrot.security.JwtTokenProvider;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,28 +44,30 @@ public class MemberItemController {
     }
 
     @RequestMapping(value="/item/buyItem") //URL을 통해 memberItem 반환
-    public class ItemPage {
-        @GetMapping
-        public MemberItem buyItemPage(@RequestParam("itemId") Long id) {
-            log.info("인자의 값", id);
-            MemberItem memberItem = memberItemRepository.findByItemId(id)
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
+    public MemberItem buyItemPage(@RequestParam("itemId") Long id) {
+        log.info("인자의 값", id);
+        MemberItem memberItem = memberItemRepository.findByItemId(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
 
-            return memberItem;
-        }
-       /* @PostMapping
-        public MemberItem buyItem(@RequestParam("itemId") Long id){
-            MemberItem memberItem = memberItemRepository.findByItemId(id)
-                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
-
-            if(memberItem.getItemForSale()==false)
-                throw new RuntimeException();
-
-
-        }
-*/
-
+        return memberItem;
     }
+
+    @PostMapping(value = "/item/buyItem")
+    public MemberItem buyItem(@RequestParam("itemId") Long id){
+        MemberItem memberItem = memberItemRepository.findByItemId(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
+        System.out.println(memberItem.getItemForSale());
+        try {
+            if (memberItem.getItemForSale() == false) {
+                throw new Exception();
+            }
+        }
+        catch (Exception e){
+            e.getMessage();
+        }
+        return memberItemService.saled(memberItem.getItemId());
+    }
+
     @GetMapping(value="/mypage/sellItem")
     public List<MemberItem> mySellList(@RequestParam("userId") Long id){
         Member member=memberRepository.findById(id)

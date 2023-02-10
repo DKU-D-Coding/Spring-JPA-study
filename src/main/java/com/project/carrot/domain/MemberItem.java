@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @NoArgsConstructor //필요할 듯
 @Entity //객체라는 것을 알림
 @ToString
-@Builder
+@Builder(toBuilder = true)
 public class MemberItem {
     @Id
     @GeneratedValue

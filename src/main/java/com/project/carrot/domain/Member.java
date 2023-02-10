@@ -35,9 +35,6 @@ public class Member implements UserDetails{
     @Builder.Default
     private String ProfilePhotoURL=null;
 
-
-
-
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
@@ -50,7 +47,6 @@ public class Member implements UserDetails{
     }
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="UserId")
     private Collection<MemberItem> memberItem;
 
     @Override
