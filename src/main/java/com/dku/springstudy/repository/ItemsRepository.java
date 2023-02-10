@@ -23,4 +23,7 @@ public interface ItemsRepository extends JpaRepository<Items, Long> {
     Optional<Items> findById(final Long id);
 
     List<Items> findByLikesIn(List<Likes> likes);
+
+    @Query("select distinct i from Items i join fetch i.user u join i.images im where i.id = :id")
+    List<Items> findItemsWithImageAndUsers(final Long id);
 }

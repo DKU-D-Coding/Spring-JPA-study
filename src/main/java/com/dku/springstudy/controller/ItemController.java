@@ -1,9 +1,6 @@
 package com.dku.springstudy.controller;
 
-import com.dku.springstudy.dto.ItemsDTO;
-import com.dku.springstudy.dto.ItemsResponseDTO;
-import com.dku.springstudy.dto.ItemsStatusDTO;
-import com.dku.springstudy.dto.ResponseDTO;
+import com.dku.springstudy.dto.*;
 import com.dku.springstudy.model.Category;
 import com.dku.springstudy.model.Images;
 import com.dku.springstudy.model.Items;
@@ -83,5 +80,12 @@ public class ItemController {
     public ResponseDTO<?> myItems(@AuthenticationPrincipal String userID){
         List<ItemsResponseDTO> myItems = itemsService.findMyItems(userID);
         return new ResponseDTO<>(HttpStatus.OK.value(), myItems);
+    }
+
+    @ApiOperation(value = "상품 상세보기", notes = "상품의 정보, 글쓴, 등 상품상세보기 화면 페이지를 구상합니다.")
+    @GetMapping("/board/items/{itemId}")
+    public ResponseDTO<?> productDetail(@PathVariable Long itemId){
+        List<ItemDetailsResponseDTO> itemDetailsResponseDTOS = itemsService.productDetails(itemId);
+        return new ResponseDTO<>(HttpStatus.OK.value(), itemDetailsResponseDTOS);
     }
 }

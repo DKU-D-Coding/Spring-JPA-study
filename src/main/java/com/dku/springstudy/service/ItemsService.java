@@ -1,5 +1,6 @@
 package com.dku.springstudy.service;
 
+import com.dku.springstudy.dto.ItemDetailsResponseDTO;
 import com.dku.springstudy.dto.ItemsDTO;
 import com.dku.springstudy.dto.ItemsResponseDTO;
 import com.dku.springstudy.dto.ItemsStatusDTO;
@@ -42,6 +43,15 @@ public class ItemsService {
         List<Items> myItems = itemsRepository.findByUser(user);
         List<ItemsResponseDTO> result = myItems.stream()
                 .map(b->new ItemsResponseDTO(b))
+                .collect(Collectors.toList());
+        return result;
+    }
+
+    public List<ItemDetailsResponseDTO> productDetails(Long itemId) {
+        Items item = itemsRepository.findById(itemId).orElseThrow(()->new IllegalStateException("상품없음 오류"));
+        List<Items> items = itemsRepository.findItemsWithImageAndUsers(item.getId());
+        List<ItemDetailsResponseDTO> result = items.stream()
+                .map(b->new ItemDetailsResponseDTO(b))
                 .collect(Collectors.toList());
         return result;
     }
