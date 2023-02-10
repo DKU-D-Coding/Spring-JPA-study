@@ -1,8 +1,8 @@
 package com.dku.springstudy.controller;
 
 import com.dku.springstudy.dto.common.SuccessResponse;
-import com.dku.springstudy.dto.product.request.CreateRequestDto;
-import com.dku.springstudy.dto.product.response.CreateResponseDto;
+import com.dku.springstudy.dto.product.request.ProductCreateRequestDto;
+import com.dku.springstudy.dto.product.response.ProductCreateResponseDto;
 import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.ProductService;
 import io.swagger.annotations.Api;
@@ -38,15 +38,15 @@ public class ProductController {
             @ApiResponse(responseCode = "500", description = "파일의 업로드가 실패했거나 파일 확장자가 올바르지 않는 경우")
     })
     @PostMapping("/product")
-    public ResponseEntity<SuccessResponse<CreateResponseDto>> createPost(
+    public ResponseEntity<SuccessResponse<ProductCreateResponseDto>> createPost(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Parameter(description = "<code>data</code> 키 값으로 CreateRequestDto의 필드들을 입력한다.")
-            @Valid @RequestPart("data") CreateRequestDto dto,
+            @Valid @RequestPart("data") ProductCreateRequestDto dto,
             @Parameter(description = "<code>file</code> 키 값으로 이미지들을 입력한다.")
             @RequestPart(value = "file", required = false) List<MultipartFile> file
     ) {
 
-        CreateResponseDto response = productService.createPost(dto, file, customUserDetails.getId());
+        ProductCreateResponseDto response = productService.createPost(dto, file, customUserDetails.getId());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

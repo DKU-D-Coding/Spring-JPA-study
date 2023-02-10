@@ -3,8 +3,8 @@ package com.dku.springstudy.service;
 import com.dku.springstudy.domain.Product;
 import com.dku.springstudy.domain.User;
 import com.dku.springstudy.domain.constant.Category;
-import com.dku.springstudy.dto.product.request.CreateRequestDto;
-import com.dku.springstudy.dto.product.response.CreateResponseDto;
+import com.dku.springstudy.dto.product.request.ProductCreateRequestDto;
+import com.dku.springstudy.dto.product.response.ProductCreateResponseDto;
 import com.dku.springstudy.exception.CustomException;
 import com.dku.springstudy.exception.ErrorCode;
 import com.dku.springstudy.repository.ProductRepository;
@@ -35,7 +35,7 @@ public class ProductService {
      * @return CreateResponseDto
      */
     @Transactional
-    public CreateResponseDto createPost(CreateRequestDto dto, List<MultipartFile> file, Long loginMemberId) {
+    public ProductCreateResponseDto createPost(ProductCreateRequestDto dto, List<MultipartFile> file, Long loginMemberId) {
         User user = userRepository.findById(loginMemberId)
                                         .orElseThrow(() -> new CustomException(ErrorCode.USER_ID_NOT_FOUND));
 
@@ -51,6 +51,6 @@ public class ProductService {
 
         List<String> fileUrls = s3Service.uploadFiles(file, product); // S3에 이미지 업로드
 
-        return CreateResponseDto.of(fileUrls, product.getTitle(), product.getCategory(), product.getPrice(), product.getContent());
+        return ProductCreateResponseDto.of(fileUrls, product.getTitle(), product.getCategory(), product.getPrice(), product.getContent());
     }
 }

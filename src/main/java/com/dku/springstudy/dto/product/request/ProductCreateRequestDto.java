@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class CreateRequestDto {
+public class ProductCreateRequestDto {
 
     @Schema(example = "옷 판매", description = "상품 글 제목")
     @NotBlank
