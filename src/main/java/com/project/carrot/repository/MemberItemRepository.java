@@ -14,8 +14,9 @@ public interface MemberItemRepository {
     List<MemberItem> findByContent(String ItemContent);
 
     Optional<MemberItem> findByItemId(Long ItemId);
-
     Optional<Member> findByUserId(Long UserId);
+    List<MemberItem> findAllByUserId(Long UserId);
+
 
 
 }

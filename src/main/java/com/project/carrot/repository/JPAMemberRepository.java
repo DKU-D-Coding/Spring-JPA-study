@@ -18,7 +18,11 @@ public class JPAMemberRepository implements MemberRepository{
         em.persist(member);
         return member;
     }
-
+    @Override
+    public Optional<Member> findById(Long Userid){
+        Member member=em.find(Member.class,Userid);
+        return Optional.ofNullable(member);
+    }
     @Override
     public Optional<Member> findByEmail(String UserEmail) {
         List<Member> result = em.createQuery("select m from Member m where UserEmail= :UserEmail"

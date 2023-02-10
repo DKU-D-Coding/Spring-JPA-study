@@ -61,4 +61,10 @@ public class JPAMemberItemRepository implements MemberItemRepository{
         Member member=em.find(Member.class,UserId);
         return Optional.ofNullable(member);
     }
+
+    @Override
+    public List<MemberItem> findAllByUserId(Long UserId){
+        return em.createQuery("select m from MemberItem m where UserId= :UserId"
+                ,MemberItem.class).setParameter("UserId",UserId).getResultList();
+    }
 }

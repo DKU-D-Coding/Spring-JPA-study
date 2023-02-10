@@ -32,24 +32,47 @@ public class MemberItemController {
     @PostMapping(value = "/item/sellItem")
     public MemberItem sellItem(@RequestBody ItemDTO itemDTO) {
         MemberItem memberItem = itemDTO.toEntity();
-        Optional<Member> member = memberItemRepository.findByUserId(itemDTO.getUSERID());
-        log.info(member.get().getUserEmail());
-        memberRepository.findByEmail(member.get().getUserEmail())
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 없습니다."));
+        Member member = memberItemRepository.findByUserId(itemDTO.getUSERID())
+                        .orElseThrow(()-> new IllegalArgumentException("유저 정보가 없습니다."));
 
-        //mypage 구현을 위해 member에 addMemberItem 추가해야함
+        log.info(member.getUserEmail());
         log.info("상품 추가");
 
         return memberItem;
     }
 
     @RequestMapping(value="/item/buyItem") //URL을 통해 memberItem 반환
-    public MemberItem buyItem(@RequestParam("itemId") Long id){
-        log.info("인자의 값",id);
-        MemberItem memberItem= memberItemRepository.findByItemId(id)
-                .orElseThrow(() -> new IllegalArgumentException("없는 ItemID"));
+    public class ItemPage {
+        @GetMapping
+        public MemberItem buyItemPage(@RequestParam("itemId") Long id) {
+            log.info("인자의 값", id);
+            MemberItem memberItem = memberItemRepository.findByItemId(id)
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
 
-        return memberItem;
+            return memberItem;
+        }
+       /* @PostMapping
+        public MemberItem buyItem(@RequestParam("itemId") Long id){
+            MemberItem memberItem = memberItemRepository.findByItemId(id)
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
+
+            if(memberItem.getItemForSale()==false)
+                throw new RuntimeException();
+
+
+        }
+*/
+
+    }
+    @GetMapping(value="/mypage/sellItem")
+    public List<MemberItem> mySellList(@RequestParam("userId") Long id){
+        Member member=memberRepository.findById(id)
+                        .orElseThrow(()->new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+        log.info("member",member.getUserId());
+        List<MemberItem> memberItemList = memberItemRepository.findAllByUserId(member.getUserId());
+        log.info("memberItem", memberItemRepository.findByUserId(member.getUserId()));
+
+        return memberItemList;
     }
 
 }
