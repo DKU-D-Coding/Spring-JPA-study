@@ -1,12 +1,11 @@
 package com.cha.carrotApi.DTO.user;
 
-import com.cha.carrotApi.domain.User;
-import com.cha.carrotApi.domain.Role;
+import com.cha.carrotApi.domain.User.User;
+import com.cha.carrotApi.domain.User.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.*;
 

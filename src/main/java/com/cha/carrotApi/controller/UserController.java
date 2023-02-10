@@ -1,7 +1,7 @@
 package com.cha.carrotApi.controller;
 
 import com.cha.carrotApi.DTO.user.SignUpRequest;
-import com.cha.carrotApi.service.UserService;
+import com.cha.carrotApi.service.User.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

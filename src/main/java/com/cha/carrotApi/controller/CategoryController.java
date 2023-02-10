@@ -2,7 +2,7 @@ package com.cha.carrotApi.controller;
 
 import com.cha.carrotApi.DTO.category.CategoryCreateRequest;
 import com.cha.carrotApi.response.Response;
-import com.cha.carrotApi.service.CategoryService;
+import com.cha.carrotApi.service.Category.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

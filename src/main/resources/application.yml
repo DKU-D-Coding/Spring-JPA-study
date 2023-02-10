@@ -1,3 +1,4 @@
+
 spring:
     datasource:
         url: jdbc:h2:tcp://localhost/~/carrotapi
@@ -35,3 +36,4 @@ server:
         include-message: always
         include-stacktrace: on_param
         whitelabel.enabled: true
+itemImgLocation: C:/Users/cha_hammin/Desktop/image

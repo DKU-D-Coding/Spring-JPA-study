@@ -1,11 +1,10 @@
-package com.cha.carrotApi.service;
+package com.cha.carrotApi.service.Category;
 
 import com.cha.carrotApi.DTO.category.CategoryCreateRequest;
 import com.cha.carrotApi.DTO.category.CategoryDto;
-import com.cha.carrotApi.domain.Category;
+import com.cha.carrotApi.domain.Category.Category;
 import com.cha.carrotApi.exception.CategoryNotFoundException;
-import com.cha.carrotApi.repository.CategoryRepository;
-import com.cha.carrotApi.repository.UserRepository;
+import com.cha.carrotApi.repository.Category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

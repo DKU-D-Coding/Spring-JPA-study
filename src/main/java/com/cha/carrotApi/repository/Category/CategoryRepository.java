@@ -1,6 +1,6 @@
-package com.cha.carrotApi.repository;
+package com.cha.carrotApi.repository.Category;
 
-import com.cha.carrotApi.domain.Category;
+import com.cha.carrotApi.domain.Category.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

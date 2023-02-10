@@ -1,6 +1,6 @@
 package com.cha.carrotApi.jwt_security;
 
-import com.cha.carrotApi.repository.UserRepository;
+import com.cha.carrotApi.repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

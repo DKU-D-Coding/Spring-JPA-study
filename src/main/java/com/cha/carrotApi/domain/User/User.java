@@ -1,5 +1,7 @@
-package com.cha.carrotApi.domain;
+package com.cha.carrotApi.domain.User;
 
+import com.cha.carrotApi.domain.BaseTimeEntity;
+import com.cha.carrotApi.domain.Post.Post;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -39,9 +41,9 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "interest_posts")
-    @Column(name = "INTEREST_POST")
-    private List<Post> interests = new ArrayList<>();
+//    @ManyToMany(mappedBy = "interest_posts")
+//    @Column(name = "INTEREST_POST")
+//    private List<Post> interests = new ArrayList<>();
 
     @Builder
     private User(String email, String nickname, String password, String phone_number) {

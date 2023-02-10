@@ -1,10 +1,10 @@
-package com.cha.carrotApi.service;
+package com.cha.carrotApi.service.User;
 
-import com.cha.carrotApi.domain.User;
+import com.cha.carrotApi.domain.User.User;
 import com.cha.carrotApi.exception.CustomException;
 import com.cha.carrotApi.exception.ErrorCode;
 import com.cha.carrotApi.jwt_security.JwtTokenProvider;
-import com.cha.carrotApi.repository.UserRepository;
+import com.cha.carrotApi.repository.User.UserRepository;
 import com.cha.carrotApi.DTO.user.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

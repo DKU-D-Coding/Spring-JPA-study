@@ -1,6 +1,6 @@
-package com.cha.carrotApi.repository;
+package com.cha.carrotApi.repository.User;
 
-import com.cha.carrotApi.domain.User;
+import com.cha.carrotApi.domain.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
