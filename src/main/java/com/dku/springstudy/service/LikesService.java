@@ -1,5 +1,6 @@
 package com.dku.springstudy.service;
 
+import com.dku.springstudy.dto.ItemsResponseDTO;
 import com.dku.springstudy.model.Items;
 import com.dku.springstudy.model.Likes;
 import com.dku.springstudy.model.User;
@@ -10,7 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -41,5 +43,16 @@ public class LikesService {
             like.addLike();
             return "좋아요 완료";
         }
+    }
+
+    public List<ItemsResponseDTO> likeItems(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new IllegalStateException("유저 없음 오류"));
+        List<Likes> likes = likesRepository.findByUser(user);
+        List<Items> items = itemsRepository.findByLikesIn(likes);
+        List<ItemsResponseDTO> result = items.stream()
+                .map(b->new ItemsResponseDTO(b))
+                .collect(Collectors.toList());
+        return result;
+
     }
 }

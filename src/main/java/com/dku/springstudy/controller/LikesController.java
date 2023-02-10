@@ -21,4 +21,10 @@ public class LikesController {
     public ResponseDTO<?> clickLikes(@AuthenticationPrincipal String userId, @PathVariable Long itemId) {
         return new ResponseDTO<>(HttpStatus.OK.value(), likesService.clickLikes(userId, itemId));
     }
+
+    @ApiOperation(value = "나의 관심 목록", notes = "내가 좋아요 한 물품들의 목록을 보여줍니다.")
+    @GetMapping("/likes/love")
+    public ResponseDTO<?> myLikeItems(@AuthenticationPrincipal String userId){
+        return new ResponseDTO<>(HttpStatus.OK.value(), likesService.likeItems(userId));
+    }
 }

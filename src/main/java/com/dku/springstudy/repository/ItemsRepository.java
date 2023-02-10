@@ -21,4 +21,6 @@ public interface ItemsRepository extends JpaRepository<Items, Long> {
     @Lock(value = LockModeType.OPTIMISTIC)
     @Query("select i from Items i where i.id = :id")
     Optional<Items> findById(final Long id);
+
+    List<Items> findByLikesIn(List<Likes> likes);
 }
