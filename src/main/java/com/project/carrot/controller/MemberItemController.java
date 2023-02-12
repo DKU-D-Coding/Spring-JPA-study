@@ -33,7 +33,7 @@ public class MemberItemController {
         MemberItem memberItem = itemDTO.toEntity();
         Member member = memberItemRepository.findByUserId(memberItem.getUserId())
                 .orElseThrow(()-> new IllegalArgumentException("유저 정보가 없습니다."));
-        
+
         log.info(member.getUserEmail());
         log.info("상품 추가");
 
@@ -50,7 +50,7 @@ public class MemberItemController {
     }
 
     @PostMapping(value = "/item/buyItem")
-    public MemberItem buyItem(@RequestParam("itemId") Long id) {
+    public MemberItem buyItem(@RequestParam("itemId") Long id,@RequestBody PostSaveDTO postSaveDTO) {
         MemberItem memberItem = memberItemRepository.findByItemId(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
         try {
@@ -61,7 +61,10 @@ public class MemberItemController {
         catch (Exception e){
             e.getMessage();
         }
-        return memberItemService.saled(id);
+        Member member=memberRepository.findByEmail(postSaveDTO.getEMAIL())
+                .orElseThrow(()->new RuntimeException("유저 정보가 존재하지 않습니다."));
+
+        return memberItemService.saled(id, memberItem.getUserId());
     }
 
     //mypage
@@ -71,7 +74,16 @@ public class MemberItemController {
                 .orElseThrow(()->new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
         log.info("member",member.getUserId());
         List<MemberItem> memberItemList = memberItemRepository.findAllByUserId(member.getUserId());
-        log.info("memberItem", memberItemRepository.findByUserId(member.getUserId()));
+
+        return memberItemList;
+    }
+
+    @GetMapping(value="/mypage/buyItem")
+    public List<MemberItem> myBuyList(@RequestParam("userId") Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("유저 정보가 존재하지 않습니다."));
+        log.info("member",member.getUserId());
+        List<MemberItem> memberItemList = memberItemRepository.findAllByBuyUserId(member.getUserId());
 
         return memberItemList;
     }

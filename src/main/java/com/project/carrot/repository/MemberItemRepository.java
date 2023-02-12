@@ -16,6 +16,7 @@ public interface MemberItemRepository {
     Optional<MemberItem> findByItemId(Long ItemId);
     Optional<Member> findByUserId(Long UserId);
     List<MemberItem> findAllByUserId(Long UserId);
+    List<MemberItem> findAllByBuyUserId(Long BuyUserId);
 
 
 

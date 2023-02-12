@@ -67,4 +67,9 @@ public class JPAMemberItemRepository implements MemberItemRepository{
         return em.createQuery("select m from MemberItem m where UserId= :UserId"
                 ,MemberItem.class).setParameter("UserId",UserId).getResultList();
     }
+    @Override
+    public List<MemberItem> findAllByBuyUserId(Long BuyUserId){
+        return em.createQuery("select m from MemberItem m where BuyUserId= :BuyUserId"
+                ,MemberItem.class).setParameter("BuyUserId",BuyUserId).getResultList();
+    }
 }

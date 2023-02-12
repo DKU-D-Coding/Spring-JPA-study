@@ -37,12 +37,12 @@ public class MemberItem {
     private String ItemDeleted=null;
     //@Column(name="UserId",insertable = false,updatable = false)
     private Long UserId;
-    //@ManyToOne
-    //@JoinColumn(name="UserId",referencedColumnName = "UserId") //외래키
-    //private Member member; //외래키
+    @Builder.Default
+    private Long BuyUserId=null;
 
-    public void update(boolean ItemForSale){
+    public void update(boolean ItemForSale, Long BuyUserId){
         this.ItemForSale=ItemForSale;
+        this.BuyUserId=BuyUserId;
     }
 
 }

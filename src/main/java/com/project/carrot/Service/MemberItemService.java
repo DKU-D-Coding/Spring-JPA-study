@@ -20,11 +20,11 @@ public class MemberItemService {
     }
 
     @Transactional
-    public MemberItem saled(Long id){
-        MemberItem memberItem=memberItemRepository.findByItemId(id)
+    public MemberItem saled(Long itemId, Long userId){
+        MemberItem memberItem=memberItemRepository.findByItemId(itemId)
                 .orElseThrow(()->new RuntimeException("존재하지 않는 유저입니다."));
         //memberItem=memberItem.toBuilder().ItemForSale(false).build();
-        memberItem.update(false);
+        memberItem.update(false,userId);
 
         System.out.println(memberItem.toString());
         return memberItem;
