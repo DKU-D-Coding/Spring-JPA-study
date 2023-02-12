@@ -3,21 +3,18 @@ package com.project.carrot.domain;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor //필요할 듯
 @Entity //객체라는 것을 알림
 @ToString
-@Builder(toBuilder = true)
+@Builder
 public class MemberItem {
     @Id
     @GeneratedValue
     private Long ItemId;
-    private Long UserId; //외래키
     private String ItemTitle;
     private String ItemContent;
     private int ItemPrice;
@@ -38,5 +35,14 @@ public class MemberItem {
     private String ItemUpdated=null;
     @Builder.Default
     private String ItemDeleted=null;
+    //@Column(name="UserId",insertable = false,updatable = false)
+    private Long UserId;
+    //@ManyToOne
+    //@JoinColumn(name="UserId",referencedColumnName = "UserId") //외래키
+    //private Member member; //외래키
+
+    public void update(boolean ItemForSale){
+        this.ItemForSale=ItemForSale;
+    }
 
 }

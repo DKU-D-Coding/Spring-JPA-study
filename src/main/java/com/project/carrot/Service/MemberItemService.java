@@ -1,6 +1,6 @@
 package com.project.carrot.Service;
 
-import com.project.carrot.domain.Member;
+import com.project.carrot.domain.ItemDTO;
 import com.project.carrot.domain.MemberItem;
 import com.project.carrot.repository.MemberItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,10 @@ public class MemberItemService {
     public MemberItem saled(Long id){
         MemberItem memberItem=memberItemRepository.findByItemId(id)
                 .orElseThrow(()->new RuntimeException("존재하지 않는 유저입니다."));
-        memberItem=memberItem.toBuilder().ItemForSale(false).build();
+        //memberItem=memberItem.toBuilder().ItemForSale(false).build();
+        memberItem.update(false);
+
         System.out.println(memberItem.toString());
-        return memberItemRepository.save(memberItem);
+        return memberItem;
     }
 }

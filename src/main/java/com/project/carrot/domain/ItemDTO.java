@@ -1,9 +1,9 @@
 package com.project.carrot.domain;
 
+import com.project.carrot.repository.MemberItemRepository;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Collections;
 
 @Data
 public class ItemDTO {
@@ -12,6 +12,11 @@ public class ItemDTO {
     private String CONTENT;
     private int PRICE;
     private String CATEGORY;
+    private Member member;
+    @Builder.Default
+    private boolean ITEMFORSALE=true;
+
+    private MemberItemRepository memberItemRepository;
 
 
     @Builder
@@ -30,6 +35,8 @@ public class ItemDTO {
                 .ItemContent(CONTENT)
                 .ItemPrice(PRICE)
                 .ItemCategory(CATEGORY)
+                //.member(memberItemRepository.findByUserId(USERID).orElseThrow(()->new RuntimeException("존재하지 않는 member")))
                 .build();
     }
+
 }

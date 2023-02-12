@@ -1,20 +1,16 @@
 package com.project.carrot.controller;
 
+import com.project.carrot.MyInterceptor;
 import com.project.carrot.Service.MemberItemService;
 import com.project.carrot.domain.*;
 import com.project.carrot.repository.MemberItemRepository;
 import com.project.carrot.repository.MemberRepository;
 import com.project.carrot.security.JwtTokenProvider;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -31,16 +27,17 @@ public class MemberItemController {
         return memberItemRepository.findAll();
     }
 
+
     @PostMapping(value = "/item/sellItem")
     public MemberItem sellItem(@RequestBody ItemDTO itemDTO) {
         MemberItem memberItem = itemDTO.toEntity();
-        Member member = memberItemRepository.findByUserId(itemDTO.getUSERID())
-                        .orElseThrow(()-> new IllegalArgumentException("유저 정보가 없습니다."));
-
+        Member member = memberItemRepository.findByUserId(memberItem.getUserId())
+                .orElseThrow(()-> new IllegalArgumentException("유저 정보가 없습니다."));
+        
         log.info(member.getUserEmail());
         log.info("상품 추가");
 
-        return memberItem;
+        return memberItemRepository.save(memberItem);
     }
 
     @RequestMapping(value="/item/buyItem") //URL을 통해 memberItem 반환
@@ -53,30 +50,29 @@ public class MemberItemController {
     }
 
     @PostMapping(value = "/item/buyItem")
-    public MemberItem buyItem(@RequestParam("itemId") Long id){
+    public MemberItem buyItem(@RequestParam("itemId") Long id) {
         MemberItem memberItem = memberItemRepository.findByItemId(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 ItemID"));
-        System.out.println(memberItem.getItemForSale());
         try {
-            if (memberItem.getItemForSale() == false) {
-                throw new Exception();
+            if (!memberItem.getItemForSale()) {
+                log.info("이미 판매된 상품입니다.");
             }
         }
         catch (Exception e){
             e.getMessage();
         }
-        return memberItemService.saled(memberItem.getItemId());
+        return memberItemService.saled(id);
     }
 
+    //mypage
     @GetMapping(value="/mypage/sellItem")
     public List<MemberItem> mySellList(@RequestParam("userId") Long id){
         Member member=memberRepository.findById(id)
-                        .orElseThrow(()->new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+                .orElseThrow(()->new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
         log.info("member",member.getUserId());
         List<MemberItem> memberItemList = memberItemRepository.findAllByUserId(member.getUserId());
         log.info("memberItem", memberItemRepository.findByUserId(member.getUserId()));
 
         return memberItemList;
     }
-
 }
