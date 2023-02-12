@@ -1,6 +1,7 @@
 package com.dku.springstudy.domain.product;
 
 import com.dku.springstudy.domain.BaseTimeEntity;
+import com.dku.springstudy.domain.like.Like;
 import com.dku.springstudy.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +34,9 @@ public class Product extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @OneToMany(mappedBy = "product")
+    private List<Like> likes = new ArrayList<>();
 
     @Builder
     public Product(String productName, Category category, Integer cost, String contents,
