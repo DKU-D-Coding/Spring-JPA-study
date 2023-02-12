@@ -10,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class CreateResponseDto {
+public class ProductCreateResponseDto {
 
     @Schema(example = "https://d-coding.s3.ap-northeast-2.amazonaws.com/67a29351-9339-42b0-ba46-da6584ab93cc.jpg", description = "업로드한 사진들의 url")
     private List<String> fileUrls;
@@ -27,7 +27,7 @@ public class CreateResponseDto {
     @Schema(example = "1년 사용했습니다.", description = "상품 글 내용")
     private String content;
 
-    public static CreateResponseDto of(List<String> fileUrls, String title, Category category, Integer price, String content) {
-        return new CreateResponseDto(fileUrls, title, category, price, content);
+    public static ProductCreateResponseDto of(List<String> fileUrls, String title, Category category, Integer price, String content) {
+        return new ProductCreateResponseDto(fileUrls, title, category, price, content);
     }
 }

@@ -1,22 +1,27 @@
 package com.dku.springstudy.controller;
 
-import com.dku.springstudy.dto.product.request.CreateRequestDto;
-import com.dku.springstudy.dto.product.response.CreateResponseDto;
+import com.dku.springstudy.dto.common.SuccessResponse;
+import com.dku.springstudy.dto.product.request.ProductCreateRequestDto;
+import com.dku.springstudy.dto.product.response.ProductCreateResponseDto;
+import com.dku.springstudy.dto.product.response.ProductInfoResponseDto;
 import com.dku.springstudy.security.CustomUserDetails;
 import com.dku.springstudy.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@Tag(name = "상품 API")
+@Api(tags = "상품 API")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -34,16 +39,38 @@ public class ProductController {
             @ApiResponse(responseCode = "500", description = "파일의 업로드가 실패했거나 파일 확장자가 올바르지 않는 경우")
     })
     @PostMapping("/product")
-    public CreateResponseDto createPost(
+    public ResponseEntity<SuccessResponse<ProductCreateResponseDto>> createPost(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Parameter(description = "<code>data</code> 키 값으로 CreateRequestDto의 필드들을 입력한다.")
-            @RequestPart("data") CreateRequestDto dto,
+            @Valid @RequestPart("data") ProductCreateRequestDto dto,
             @Parameter(description = "<code>file</code> 키 값으로 이미지들을 입력한다.")
             @RequestPart(value = "file", required = false) List<MultipartFile> file
-            ) {
+    ) {
 
-        CreateResponseDto response = productService.createPost(dto, file, customUserDetails.getId());
+        ProductCreateResponseDto response = productService.createPost(dto, file, customUserDetails.getId());
 
-        return response;
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse<>(response));
+    }
+
+    @Operation(
+            summary = "상품 상세 조회",
+            description = "상품 아이디를 입력받아 상세 정보를 조회한다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success"),
+            @ApiResponse(responseCode = "404", description = "회원 또는 상품의 아이디(PK)가 존재하지 않는 경우"),
+    })
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<SuccessResponse<ProductInfoResponseDto>> getProductInfo(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @PathVariable("productId") Long productId
+    ) {
+        ProductInfoResponseDto response = productService.getProductInfo(customUserDetails.getId(), productId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse<>(response));
     }
 }

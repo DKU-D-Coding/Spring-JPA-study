@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -40,6 +42,11 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String ImgUrl;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> productList = new ArrayList<>();
+
     @Builder
     private User(String email, String password, String name, String phoneNumber, String nickname) {
         this.email = email;
@@ -49,5 +56,16 @@ public class User extends BaseTimeEntity {
         this.nickname = nickname;
         this.status = 1;
         this.role = role.USER;
+    }
+
+    // 회원 정보 수정
+    public void update(String nickname, String ImgUrl) {
+        this.nickname = nickname;
+        this.ImgUrl = ImgUrl;
+    }
+
+    // 프로필 사진 삭제
+    public void deleteImg() {
+        this.ImgUrl = null;
     }
 }
