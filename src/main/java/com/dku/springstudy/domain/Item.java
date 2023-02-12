@@ -28,7 +28,7 @@ public class Item extends BaseEntity{
     private String content;
     private int price;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
     private List<ImageFile> images = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
@@ -37,7 +37,7 @@ public class Item extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
     private List<ItemLike> likes = new ArrayList<>();
 
 

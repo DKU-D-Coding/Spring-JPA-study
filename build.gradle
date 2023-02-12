@@ -32,6 +32,9 @@ dependencies {
 	// s3 storage
 	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.281'
 
+	// swagger
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -52,6 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (ExpiredJwtException e){
             log.info("Expired JWT token", e);
+            throw new KarrotException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "토큰 유효기간 만료");
         } catch (KarrotException e){
             response.setStatus(e.getHttpStatus().value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);

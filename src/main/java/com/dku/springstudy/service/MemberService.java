@@ -4,6 +4,7 @@ import com.dku.springstudy.domain.ImageFile;
 import com.dku.springstudy.domain.Member;
 import com.dku.springstudy.domain.token.RefreshToken;
 import com.dku.springstudy.dto.MyPageDto;
+import com.dku.springstudy.enums.Role;
 import com.dku.springstudy.exception.KarrotException;
 import com.dku.springstudy.repository.jpa.MemberRepository;
 import com.dku.springstudy.repository.redis.RefreshTokenRepository;
@@ -13,15 +14,12 @@ import com.dku.springstudy.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,10 +31,22 @@ public class MemberService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Transactional
-    public Long join(Member member){
-        memberRepository.save(member);
-        return member.getId();
+    public Long join(String email, String password, String name, String phone, String nickname, Role role){
+        String encodedPassword = passwordEncoder.encode(password);
+
+        Member joinMember = Member.createMember(
+                email,
+                encodedPassword,
+                name,
+                phone,
+                nickname,
+                role
+        );
+        memberRepository.save(joinMember);
+        return joinMember.getId();
     }
 
     @Transactional
@@ -64,9 +74,9 @@ public class MemberService {
 
         // redis에서 refresh Token 가져오기
         RefreshToken refreshToken = refreshTokenRepository.findById(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("Refresh Token이 존재하지 않습니다."));
+                .orElseThrow(() -> new KarrotException(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "Refresh Token이 존재하지 않습니다."));
         if(!token.getRefreshToken().equals(refreshToken.getRefreshToken())){
-            throw new RuntimeException("토큰 정보 유효성 검증 실패");
+            throw new KarrotException(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.value(), "토큰 정보 유효성 검증 실패");
         }
 
         TokenDto reissuedTokenDto = jwtTokenProvider.generateToken(authentication);

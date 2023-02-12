@@ -2,6 +2,8 @@ package com.dku.springstudy.security;
 
 import com.dku.springstudy.domain.token.RefreshToken;
 import com.dku.springstudy.dto.TokenDto;
+import com.dku.springstudy.exception.KarrotException;
+import com.dku.springstudy.repository.jpa.MemberRepository;
 import com.dku.springstudy.repository.redis.RefreshTokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -9,12 +11,14 @@ import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -29,12 +33,14 @@ public class JwtTokenProvider {
     private final Key key;
 
     private final RefreshTokenRepository refreshTokenRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository){
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository, MemberRepository memberRepository){
         byte[] bytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(bytes);
         this.refreshTokenRepository = refreshTokenRepository;
+        this.memberRepository = memberRepository;
     }
 
     // authentication 객체를 기반으로 access token, refresh token 생성
@@ -89,7 +95,9 @@ public class JwtTokenProvider {
                 .collect(Collectors.toList());
 
         // UserDetails 객체 만들어서 Authentication return
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        UserDetailsImpl principal = memberRepository.findByEmail(claims.getSubject())
+                .map(UserDetailsImpl::new)
+                .orElseThrow(() -> new UsernameNotFoundException("Can't find User"));
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
@@ -100,12 +108,14 @@ public class JwtTokenProvider {
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token", e);
+            throw new KarrotException(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.value(),"토큰 인증 오류 발생");
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token", e);
+            throw new KarrotException(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.value(),"토큰 인증 오류 발생");
         } catch (IllegalArgumentException e) {
             log.info("JWT claims string is empty.", e);
+            throw new KarrotException(HttpStatus.UNAUTHORIZED, HttpStatus.UNAUTHORIZED.value(),"토큰 인증 오류 발생");
         }
-        return false;
     }
 
     private Claims getClaims(String accessToken) {

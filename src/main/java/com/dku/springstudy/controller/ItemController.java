@@ -12,6 +12,9 @@ import com.dku.springstudy.service.ImageFileService;
 import com.dku.springstudy.service.ItemService;
 import com.dku.springstudy.service.MemberService;
 import com.dku.springstudy.service.S3Upload;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -35,10 +38,16 @@ public class ItemController {
     private final ImageFileService imageFileService;
     private final S3Upload s3Upload;
 
+
+    @ApiOperation(value = "상품 추가 API", notes = "상품 title, 상품 content, 상품 category, 상품 price, 상품 이미지들을 form-data형식으로 받아서 상품 추가")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동")
+    }
+    )
     @PostMapping("/add")
     private AddItemDto addItem(@RequestPart("data") AddItemDto itemDto, @RequestPart("images")MultipartFile[] multipartFiles) throws IOException {
         Member currentLoginMember = getCurrentLoginMember();
-
+        log.info("currentLoginMember={}", currentLoginMember);
         Item item = Item.createItem(currentLoginMember, itemDto.getTitle(), itemDto.getContent(), itemDto.getPrice(), itemDto.getCategory());
         itemService.addItem(item);
 
@@ -53,6 +62,13 @@ public class ItemController {
 
         return itemDto;
     }
+
+
+    @ApiOperation(value = "상품 상세 페이지 API", notes = "상품 판매자 닉네임, 상품 카테고리, 상품 등록일(최근 수정날짜), 상품 이미지 링크들, 상품 제목, 상품 내용, 상품 가격을 반환")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동")
+    }
+    )
 
     @GetMapping("/details/{itemId}")
     public ItemDetailsDto details(@PathVariable("itemId") Long itemId){
@@ -72,17 +88,36 @@ public class ItemController {
                 );
     }
 
+
+    @ApiOperation(value = "해당 판매자의 모든 판매중인 상품 조회", notes = "판매자의 모든 판매상품들 조회. PathVariable로 판매자 id 필요")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동")
+    }
+    )
+
     @GetMapping("/details/all/{sellerId}")
     public List<ItemDto> sellerItems(@PathVariable("sellerId") Long sellerId){
         Member seller = memberService.findById(sellerId);
         return itemService.findByMember(seller);
     }
 
+
+    @ApiOperation(value = "상품 수정 페이지 조회", notes = "상품 수정 페이지 이동. PathVariable로 상품 id 필요. 기존의 상품 정보가 입력되어있어야 하기에 기존의 상품 정보 반환")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동")
+    }
+    )
     @GetMapping("/update/{itemId}")
     public ItemDto transferPreviousItemInfo(@PathVariable Long itemId){
         return itemService.transferPreviousItemInfo(itemId);
     }
 
+
+    @ApiOperation(value = "상품 수정 API", notes = "실제 상품 수정 API. PathVariable로 상품 id, form-data로 수정한 상품 정보들, 상품 이미지들 받음")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동")
+    }
+    )
     @PostMapping("/update/{itemId}")
     public void updateItem( @PathVariable("itemId") Long itemId,
                             @RequestPart("data") AddItemDto updateItemDto,
@@ -98,6 +133,12 @@ public class ItemController {
         );
     }
 
+
+    @ApiOperation(value = "상품 삭제 API", notes = "상품 삭제 API. PathVariable로 상품 id 필요")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "API 정상 작동")
+    }
+    )
     @PostMapping("/delete/{itemId}")
     public void deleteItem(@PathVariable Long itemId){
         itemService.deleteItem(itemId);
