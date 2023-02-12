@@ -1,0 +1,18 @@
+insert into category(category_id, name, parent_id) values(1,'DEFAULT_CATEGORY', null);
+insert into category(category_id, name, parent_id) values(2,'디지털기기',1);
+insert into category(category_id, name, parent_id) values(3,'생활가전',1);
+insert into category(category_id, name, parent_id) values(4,'가구/인테리어',1);
+insert into category(category_id, name, parent_id) values(5,'유아동',1);
+insert into category(category_id, name, parent_id) values(6,'생활/가공식품',1);
+insert into category(category_id, name, parent_id) values(7,'유아도서',1);
+insert into category(category_id, name, parent_id) values(8,'스포츠/레저',1);
+insert into category(category_id, name, parent_id) values(9,'여성잡화',1);
+insert into category(category_id, name, parent_id) values(10,'여성의류',1);
+insert into category(category_id, name, parent_id) values(11,'남성패션/잡화',1);
+insert into category(category_id, name, parent_id) values(12,'게임/취미',1);
+insert into category(category_id, name, parent_id) values(13,'뷰티/미용',1);
+insert into category(category_id, name, parent_id) values(14,'반려동물용품',1);
+insert into category(category_id, name, parent_id) values(15,'도서/티켓/음반',1);
+insert into category(category_id, name, parent_id) values(16,'식물',1);
+insert into category(category_id, name, parent_id) values(17,'기타 중고물품',1);
+insert into category(category_id, name, parent_id) values(18,'중고차',1);

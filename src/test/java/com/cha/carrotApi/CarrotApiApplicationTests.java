@@ -1,10 +1,10 @@
-package com.dku.springstudy;
+package com.cha.carrotApi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringStudyApplicationTests {
+class CarrotApiApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,0 +1,39 @@
+
+spring:
+    datasource:
+        url: jdbc:h2:tcp://localhost/~/carrotapi
+        username: sa
+        password:
+        driver-class-name: org.h2.Driver
+        initialization-mode: always
+    profiles:
+        include: API-KEY
+    security:
+        jwt:
+            header: Authorization
+            secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+            token-validity-in-seconds: 86400
+    jpa:
+        hibernate:
+            ddl-auto: create
+        properties:
+            hibernate:
+                # show_sql: true
+                format_sql: true
+        defer-datasource-initialization: true
+    sql:
+        init:
+            mode: always
+            schema-locations: classpath:schema.sql
+
+logging.level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+server:
+    error:
+        include-exception: false
+        include-message: always
+        include-stacktrace: on_param
+        whitelabel.enabled: true
+itemImgLocation: C:/Users/cha_hammin/Desktop/image
