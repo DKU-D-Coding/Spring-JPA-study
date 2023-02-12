@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/karrot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: password!23
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
+
+  redis:
+    host: localhost
+    port: 6379
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+jwt:
+  secret: caf4bd8949582e4f85f8750c5e44bfba217e4a346c79c204cd2fb2a37071694bde9e55edab2f81b4fa6d2cd7a7d54e7e313c1a869f43cd30f5f37f462ce051b3
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: false
+
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAXW4DDD5LZRII4EWE       # AWS IAM AccessKey 적기
+      secretKey: fKI02S0pNFwTq/e0rLRNTXy0z+GVElu9ujlUiDyJ   # AWS IAM SecretKey 적기
+    s3:
+      bucket: karrotbucket    # ex) marryting-gyunny
+      #dir: /karrotbucket # ex) /gyunny
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

@@ -1,0 +1,86 @@
+package com.dku.springstudy.domain;
+
+import com.dku.springstudy.enums.Category;
+import com.dku.springstudy.enums.Role;
+import com.dku.springstudy.repository.jpa.ItemLikeRepository;
+import com.dku.springstudy.repository.jpa.ItemRepository;
+import com.dku.springstudy.repository.jpa.MemberRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import static org.assertj.core.api.Assertions.*;
+
+@SpringBootTest
+@Transactional
+class EntityTest {
+    @PersistenceContext
+    EntityManager em;
+    @Autowired MemberRepository memberRepository;
+    @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    ItemLikeRepository itemLikeRepository;
+
+    @Test
+    public void createMember(){
+        //given
+        Member member = Member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍", Role.USER);
+        memberRepository.save(member);
+
+        //when
+        Member findMember = memberRepository.findByName("동현").get();
+
+        //then
+        assertThat(findMember).isEqualTo(member);
+    }
+
+    @Test
+    public void createItem(){
+        //given
+        Member member = Member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍", Role.USER);
+        memberRepository.save(member);
+
+        //when
+        Item item = new Item();
+        item.createItem(member, "title", "content", 10000, Category.ELECTRONIC);
+        itemRepository.save(item);
+
+        //then
+        assertThat(item.getMember()).isEqualTo(member);
+
+    }
+
+    @Test
+    public void createLike(){
+        //given
+        Member member1 = Member.createMember("test@naver.com", "1234", "동현", "010-9358-4027", "홍홍홍", Role.USER);
+        memberRepository.save(member1);
+        Member member2 = Member.createMember("qwe123@gmail.com", "qwe123", "dong", "010-1234-5678", "공공공", Role.USER);
+        memberRepository.save(member2);
+
+        Item item = new Item();
+        item.createItem(member1, "title", "content", 10000, Category.ELECTRONIC);
+        itemRepository.save(item);
+
+        //when
+        ItemLike itemLike1 = new ItemLike();
+        itemLike1.createItemLike(item, member1);
+        ItemLike itemLike2 = new ItemLike();
+        itemLike2.createItemLike(item, member2);
+        itemLikeRepository.save(itemLike1);
+        itemLikeRepository.save(itemLike2);
+
+        //then
+        assertThat(itemLike1.getMember().getUsername()).isEqualTo("동현");
+        assertThat(itemLike2.getMember().getUsername()).isEqualTo("dong");
+        assertThat(itemLike1.getItem().getTitle()).isEqualTo("title");
+        assertThat(itemLike2.getItem().getContent()).isEqualTo("content");
+    }
+
+}
