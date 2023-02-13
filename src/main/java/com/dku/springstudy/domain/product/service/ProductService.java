@@ -2,12 +2,16 @@ package com.dku.springstudy.domain.product.service;
 
 import com.dku.springstudy.domain.product.Product;
 import com.dku.springstudy.domain.product.dto.ProductRegisterRequestDTO;
+import com.dku.springstudy.domain.product.dto.ProductResponseDTO;
 import com.dku.springstudy.domain.product.repository.ProductRepository;
 import com.dku.springstudy.domain.user.User;
-import com.dku.springstudy.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,5 +26,20 @@ public class ProductService {
 
         return product.getId();
     }
+
+    public ProductResponseDTO findByProductId(Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow();
+
+        return new ProductResponseDTO(product);
+    }
+
+    public List<ProductResponseDTO> findByUserId(Long userId){
+        List<Product> products = productRepository.findProductByUserId(userId).orElseGet(ArrayList::new);
+
+        return products.stream()
+                .map(ProductResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
 
 }
