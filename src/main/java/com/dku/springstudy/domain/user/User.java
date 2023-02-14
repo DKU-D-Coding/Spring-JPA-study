@@ -1,7 +1,7 @@
 package com.dku.springstudy.domain.user;
 
 import com.dku.springstudy.domain.BaseTimeEntity;
-import com.dku.springstudy.domain.like.Like;
+import com.dku.springstudy.domain.like.Likes;
 import com.dku.springstudy.domain.product.Product;
 import lombok.*;
 
@@ -22,7 +22,7 @@ public class User extends BaseTimeEntity {
     private List<Product> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Like> likes = new ArrayList<>();
+    private List<Likes> likes = new ArrayList<>();
 
     private String email;
     private String password;
