@@ -15,6 +15,7 @@ public class ProductResponseDTO {
     private String contents;
     private Long userId;
     //like추가
+    private Integer likeCount;
 
     public ProductResponseDTO(Product product) {
         this.productId = product.getId();
@@ -22,5 +23,6 @@ public class ProductResponseDTO {
         this.cost = product.getCost();
         this.contents = product.getContents();
         this.userId = product.getUser().getId();
+        this.likeCount = product.getLikeCount();
     }
 }

@@ -3,18 +3,20 @@ package com.dku.springstudy.domain.like;
 import com.dku.springstudy.domain.BaseTimeEntity;
 import com.dku.springstudy.domain.product.Product;
 import com.dku.springstudy.domain.user.User;
-import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
-public class Like extends BaseTimeEntity {
-    @Id @GeneratedValue
+public class Likes extends BaseTimeEntity {
+    @Id
+    @GeneratedValue
     private Long id;
+    private Long productInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -23,5 +25,12 @@ public class Like extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Builder
+    public Likes(Long productInfo, User user, Product product) {
+        this.productInfo = productInfo;
+        this.user = user;
+        this.product = product;
+    }
 
 }
