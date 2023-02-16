@@ -38,3 +38,10 @@ D-Coding 백엔드 스터디
 - 상태, 카테고리 enum추가
 
 ![image](https://user-images.githubusercontent.com/85729858/216071539-42dc3af6-452e-464f-9a68-c52364c5fc3f.png)
+
+
+### 4주차
+
+- 상품등록 기능 구현
+- 상품조회 기능 구현
+- 좋아요 등록, 삭제 기능 구현
