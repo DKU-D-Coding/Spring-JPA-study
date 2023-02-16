@@ -2,6 +2,7 @@ package com.dku.springstudy.domain.user.service;
 
 import com.dku.springstudy.domain.user.User;
 import com.dku.springstudy.domain.user.dto.SignUpRequestDTO;
+import com.dku.springstudy.domain.user.dto.UserProfileUpdateRequestDTO;
 import com.dku.springstudy.domain.user.repository.UserRepository;
 import com.dku.springstudy.jwt.JwtTokenProvider;
 import com.dku.springstudy.jwt.TokenDto;
@@ -24,6 +25,7 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Transactional
     public TokenDto login(String email, String password) {
         // 1. Login ID/PW 를 기반으로 Authentication 객체 생성
@@ -40,7 +42,7 @@ public class UserService {
     }
 
     @Transactional
-    public Long signUp(@Valid SignUpRequestDTO requestDTO){
+    public Long signUp(@Valid SignUpRequestDTO requestDTO) {
         String bcryptPassword = passwordEncoder.encode(requestDTO.getPassword());
         requestDTO.setPassword(bcryptPassword);
         User user = requestDTO.toEntity();
@@ -53,4 +55,14 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("No user"));
     }
+
+    @Transactional
+    public Long updateProfile(User user, UserProfileUpdateRequestDTO requestDTO) {
+        user.updateNickName(requestDTO.getNickname());
+        user.updateProfileImg(requestDTO.getProfileImgUrl());
+        userRepository.save(user);
+
+        return user.getId();
+    }
+
 }
