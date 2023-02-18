@@ -27,7 +27,7 @@ public class PostController {
 
         Member member = customUserDetails.getMember();
 
-        return postService.createPost(postCreateRequestDto, member.getId());
+        return postService.createPost(postCreateRequestDto, member.getMember_id());
     }
 
     @GetMapping("/post/get/list")

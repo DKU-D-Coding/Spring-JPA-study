@@ -1,39 +1,49 @@
 package com.dku.springstudy.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter //Lombok
 @Setter //Lombok
-@ToString //Lombok
-@Table(name = "Post")
+@Table(name = "POST")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "POSTID")
-    private Long id;
+    private Long post_id;
+
     @ManyToOne
-    @JoinColumn(name = "USERID")
+    @JoinColumn(name = "member_id")
     private Member member;
-    @Column(name = "LIKECOUNT")
-    private int likeCount;
-    @Column(name = "TITLE")
+
+    private int like_count;
+
     private String title;
-    @Column(name = "CONTENT")
+
     private String content;
-    @Column(name = "CREATED")
+
     private Timestamp created;
-    @Column(name = "UPDATED")
-    private Timestamp updated;
-    @Column(name = "PRICE")
+
     private int price;
-    @JoinColumn(name = "CATEGORYID")
-    @Column(name = "STATUS")
-    private String status;
+
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<PostCategory> categories = new ArrayList<>();
+
+    public void addPostCategory(PostCategory postCategory){
+        this.categories.add(postCategory);
+    }
+
+
 }

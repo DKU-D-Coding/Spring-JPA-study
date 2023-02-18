@@ -6,12 +6,14 @@ import jakarta.persistence.EntityTransaction;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
+@Repository
 public class MemberRepository {
     private final EntityManager em;
 

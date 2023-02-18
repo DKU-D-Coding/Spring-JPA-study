@@ -12,8 +12,10 @@ public enum ErrorCode {
     USER_PASSWORD_INCORRECT_ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "User password incorrect"),
     EXPIRED_TOKEN_ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "Expired JWT token"),
     INVALID_TOKEN_ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "Invalid JWT token"),
-
     POST_NOT_FOUND_ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "Post not found"),
+    CATEGORY_ALREADY_EXIST_ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "Category already exist"),
+    CATEGORY_NOT_FOUND_ERROR(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), "Category not found"),
+
     ;
     /**
      * 추가

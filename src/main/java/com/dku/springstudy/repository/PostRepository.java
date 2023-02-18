@@ -17,7 +17,13 @@ public class PostRepository {
     private final EntityManager em;
 
     public void save(Post post){
-        em.persist(post);
+
+        if(Optional.ofNullable(findById(post.getPost_id())).isPresent()){
+            em.merge(post);
+        }else {
+            em.persist(post);
+        }
+
     }
 
     public void remove(Post post){
@@ -32,7 +38,7 @@ public class PostRepository {
     }
 
     public Optional<Post> findById(Long postId){
-        return em.createQuery("select p from Post p where  p.id = :postId", Post.class)
+        return em.createQuery("select p from Post p where  p.post_id = :postId", Post.class)
                 .setParameter("postId",postId)
                 .getResultList().stream().findAny();
     }
