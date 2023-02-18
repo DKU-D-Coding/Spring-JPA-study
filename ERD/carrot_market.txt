@@ -1,0 +1,103 @@
+﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- POSTIMAGE Table Create SQL
+-- 테이블 생성 SQL - POSTIMAGE
+CREATE TABLE POSTIMAGE
+(
+    `Image_id`   INT          NOT NULL    AUTO_INCREMENT, 
+    `post_id`    INT          NULL, 
+    `image_url`  TEXT         NULL, 
+    `created`    TIMESTAMP    NULL, 
+     PRIMARY KEY (Image_id)
+);
+
+
+-- MEMBER Table Create SQL
+-- 테이블 생성 SQL - MEMBER
+CREATE TABLE MEMBER
+(
+    `member_id`  INT             NOT NULL    AUTO_INCREMENT, 
+    `name`       VARCHAR(45)     NULL, 
+    `email`      VARCHAR(45)     NULL, 
+    `password`   VARCHAR(100)    NULL, 
+    `phone`      VARCHAR(45)     NULL, 
+    `address`    VARCHAR(45)     NULL, 
+    `created`    TIMESTAMP       NULL, 
+     PRIMARY KEY (member_id)
+);
+
+
+-- CATEGORY Table Create SQL
+-- 테이블 생성 SQL - CATEGORY
+CREATE TABLE CATEGORY
+(
+    `category`     VARCHAR(45)    NULL, 
+    `created`      TIMESTAMP      NULL, 
+    `category_id`  INT            NOT NULL    AUTO_INCREMENT, 
+     PRIMARY KEY (category_id)
+);
+
+
+-- POST Table Create SQL
+-- 테이블 생성 SQL - POST
+CREATE TABLE POST
+(
+    `post_id`     INT            NOT NULL    AUTO_INCREMENT, 
+    `member_id`   INT            NULL, 
+    `like_count`  TINYINT        NULL, 
+    `title`       VARCHAR(45)    NULL, 
+    `content`     TEXT           NULL, 
+    `created`     TIMESTAMP      NULL, 
+    `price`       INT            NULL, 
+    `Image_id`    INT            NULL, 
+     PRIMARY KEY (post_id)
+);
+
+-- Foreign Key 설정 SQL - POST(member_id) -> MEMBER(member_id)
+ALTER TABLE POST
+    ADD CONSTRAINT FK_POST_member_id_MEMBER_member_id FOREIGN KEY (member_id)
+        REFERENCES MEMBER (member_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - POST(member_id)
+-- ALTER TABLE POST
+-- DROP FOREIGN KEY FK_POST_member_id_MEMBER_member_id;
+
+-- Foreign Key 설정 SQL - POST(Image_id) -> POSTIMAGE(Image_id)
+ALTER TABLE POST
+    ADD CONSTRAINT FK_POST_Image_id_POSTIMAGE_Image_id FOREIGN KEY (Image_id)
+        REFERENCES POSTIMAGE (Image_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - POST(Image_id)
+-- ALTER TABLE POST
+-- DROP FOREIGN KEY FK_POST_Image_id_POSTIMAGE_Image_id;
+
+
+-- POSTCATEGORY Table Create SQL
+-- 테이블 생성 SQL - POSTCATEGORY
+CREATE TABLE POSTCATEGORY
+(
+    `post_category_id`  INT    NOT NULL    AUTO_INCREMENT, 
+    `category_id`       INT    NULL, 
+    `post_id`           INT    NULL, 
+     PRIMARY KEY (post_category_id)
+);
+
+-- Foreign Key 설정 SQL - POSTCATEGORY(category_id) -> CATEGORY(category_id)
+ALTER TABLE POSTCATEGORY
+    ADD CONSTRAINT FK_POSTCATEGORY_category_id_CATEGORY_category_id FOREIGN KEY (category_id)
+        REFERENCES CATEGORY (category_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - POSTCATEGORY(category_id)
+-- ALTER TABLE POSTCATEGORY
+-- DROP FOREIGN KEY FK_POSTCATEGORY_category_id_CATEGORY_category_id;
+
+-- Foreign Key 설정 SQL - POSTCATEGORY(post_id) -> POST(post_id)
+ALTER TABLE POSTCATEGORY
+    ADD CONSTRAINT FK_POSTCATEGORY_post_id_POST_post_id FOREIGN KEY (post_id)
+        REFERENCES POST (post_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- Foreign Key 삭제 SQL - POSTCATEGORY(post_id)
+-- ALTER TABLE POSTCATEGORY
+-- DROP FOREIGN KEY FK_POSTCATEGORY_post_id_POST_post_id;
+
+
